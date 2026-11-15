@@ -243,43 +243,43 @@ button {
   pointer-events: none !important;
 }
 
-/* Enormous Bold Heading: Massive Grand Retro Statement UDBHAV 27 */
+/* Enormous Bold Heading: Ultra Bold Chunky Retro Statement UDBHAV 27 */
 .rm-hero-bold {
-  font-family: 'Space Grotesk', 'Syne', sans-serif !important;
-  font-size: clamp(4.5rem, 19vw, 16.5rem) !important;
+  font-family: 'Anton', 'Syne', 'Impact', 'Space Grotesk', sans-serif !important;
+  font-size: clamp(5.0rem, 20vw, 17.5rem) !important;
   font-weight: 900 !important;
-  letter-spacing: -0.05em !important;
-  line-height: 0.88 !important;
+  letter-spacing: 0.01em !important;
+  line-height: 0.86 !important;
   text-transform: uppercase !important;
   margin: 0 !important;
   color: #0A0D14 !important;
-  background: linear-gradient(180deg, #0A0D14 0%, #1E293B 55%, #334155 100%) !important;
+  background: linear-gradient(180deg, #07090E 0%, #171E2D 48%, #2D3748 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
-  text-shadow: 0 12px 50px rgba(0, 0, 0, 0.12) !important;
-  filter: drop-shadow(0 15px 45px rgba(0, 0, 0, 0.15)) drop-shadow(0 0 50px rgba(255, 87, 34, 0.25)) !important;
-  transition: transform 0.3s ease !important;
+  text-shadow: 0 16px 60px rgba(0, 0, 0, 0.18) !important;
+  filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.20)) drop-shadow(0 0 60px rgba(255, 87, 34, 0.30)) !important;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
   word-break: keep-all !important;
   white-space: nowrap !important;
-  animation: heroTitleFloat 4.5s ease-in-out infinite alternate !important;
+  animation: heroTitleFloat 4.0s ease-in-out infinite alternate !important;
 }
 
 @keyframes heroTitleFloat {
   0% { transform: translateY(0px) scale(1); }
-  100% { transform: translateY(-10px) scale(1.02); }
+  100% { transform: translateY(-10px) scale(1.025); }
 }
 
 @media (max-width: 600px) {
   .rm-hero-bold {
-    font-size: clamp(3.2rem, 16vw, 6.2rem) !important;
-    letter-spacing: -0.04em !important;
+    font-size: clamp(3.6rem, 18vw, 6.8rem) !important;
+    letter-spacing: 0.01em !important;
   }
 }
 
 @media (max-width: 380px) {
   .rm-hero-bold {
-    font-size: clamp(2.4rem, 14vw, 3.8rem) !important;
+    font-size: clamp(2.8rem, 15vw, 4.2rem) !important;
   }
 }
 
