@@ -1,6 +1,11 @@
 {
   "javascript.validate.enable": true,
   "css.lint.vendorPrefix": "ignore",
-  "css.lint.unknownAtRules": "ignore"
+  "css.lint.unknownAtRules": "ignore",
+  "css.lint.zeroUnits": "ignore",
+  "css.lint.duplicateProperties": "ignore",
+  "css.lint.emptyRules": "ignore",
+  "css.lint.important": "ignore",
+  "less.lint.vendorPrefix": "ignore",
+  "scss.lint.vendorPrefix": "ignore"
 }
-

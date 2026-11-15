@@ -11,7 +11,15 @@
     { "source": "/themereveal", "destination": "/index.html" },
     { "source": "/standings", "destination": "/index.html" },
     { "source": "/leaderboard", "destination": "/index.html" },
-    { "source": "/register", "destination": "/index.html" }
+    { "source": "/register", "destination": "/index.html" },
+    { "source": "/timeline", "destination": "/index.html" },
+    { "source": "/schedule", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/team", "destination": "/index.html" },
+    { "source": "/sponsors", "destination": "/index.html" },
+    { "source": "/conduct", "destination": "/index.html" },
+    { "source": "/rules", "destination": "/index.html" },
+    { "source": "/contact", "destination": "/index.html" }
   ],
   "headers": [
     {

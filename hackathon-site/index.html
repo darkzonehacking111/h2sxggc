@@ -85,6 +85,7 @@
   <!-- INSTANT DEDICATED PRELOADER ENGINE (ZERO-DELAY, 100% RELIABLE) -->
   <script>
   (function() {
+    window.loaderEngineActive = true;
     window.loaderDone = false;
     const loader = document.getElementById('loader');
     if (!loader) return;
@@ -134,13 +135,13 @@
     let height = window.innerHeight;
 
     const palettes = [
-      { rim: '#FF5722', fill: 'rgba(255, 87, 34, 0.16)', glow: 'rgba(255, 87, 34, 0.45)' },
-      { rim: '#00F5D4', fill: 'rgba(0, 245, 212, 0.15)', glow: 'rgba(0, 245, 212, 0.45)' },
-      { rim: '#8B5CF6', fill: 'rgba(139, 92, 246, 0.16)', glow: 'rgba(139, 92, 246, 0.45)' },
-      { rim: '#FF4F91', fill: 'rgba(255, 79, 145, 0.16)', glow: 'rgba(255, 79, 145, 0.45)' },
-      { rim: '#3B82F6', fill: 'rgba(59, 130, 246, 0.16)', glow: 'rgba(59, 130, 246, 0.45)' },
-      { rim: '#10B981', fill: 'rgba(16, 185, 129, 0.15)', glow: 'rgba(16, 185, 129, 0.45)' },
-      { rim: '#F59E0B', fill: 'rgba(245, 158, 11, 0.16)', glow: 'rgba(245, 158, 11, 0.45)' }
+      { rim: '#FF5722', fill: 'rgba(255, 87, 34, 0.22)', glow: 'rgba(255, 87, 34, 0.55)' },
+      { rim: '#00F5D4', fill: 'rgba(0, 245, 212, 0.20)', glow: 'rgba(0, 245, 212, 0.55)' },
+      { rim: '#8B5CF6', fill: 'rgba(139, 92, 246, 0.22)', glow: 'rgba(139, 92, 246, 0.55)' },
+      { rim: '#FF3366', fill: 'rgba(255, 51, 102, 0.22)', glow: 'rgba(255, 51, 102, 0.55)' },
+      { rim: '#00E5FF', fill: 'rgba(0, 229, 255, 0.22)', glow: 'rgba(0, 229, 255, 0.55)' },
+      { rim: '#10B981', fill: 'rgba(16, 185, 129, 0.20)', glow: 'rgba(16, 185, 129, 0.55)' },
+      { rim: '#F59E0B', fill: 'rgba(245, 158, 11, 0.22)', glow: 'rgba(245, 158, 11, 0.55)' }
     ];
 
     const bubbles = [];
@@ -313,25 +314,26 @@
     }
 
     // Progression timer
-    const DURATION = 5000;
+    const DURATION = 3800;
     const startEpoch = performance.now();
 
     function finish() {
       if (window.loaderDone) return;
       window.loaderDone = true;
+      window.loaderEngineActive = false;
       loader.classList.add('gone');
       if (typeof window.initScrollAnimations === 'function') window.initScrollAnimations();
       if (typeof window.init3DLiquidFluidEngine === 'function') window.init3DLiquidFluidEngine();
       if (typeof window.initHeroBubbleAnimation === 'function') window.initHeroBubbleAnimation();
       setTimeout(function() {
         if (animId) cancelAnimationFrame(animId);
-        loader.style.display = 'none';
-      }, 750);
+        loader.style.setProperty('display', 'none', 'important');
+      }, 650);
     }
     window.finishLoader = finish;
 
     // Safety auto-open
-    setTimeout(finish, 5200);
+    setTimeout(finish, 4400);
 
     function loop(now) {
       if (window.loaderDone) return;
@@ -441,10 +443,10 @@
           ctx.stroke();
 
           // Specular glossy reflection
-          const shineR = cr * 0.28;
+          const shineR = Math.max(1, cr * 0.28);
           const shineX = b.x - cr * 0.35;
           const shineY = b.y - cr * 0.35;
-          const grad = ctx.createRadialGradient(shineX, shineY, 0, shineX, shineY, shineR * 2);
+          const grad = ctx.createRadialGradient(shineX, shineY, 0, shineX, shineY, Math.max(2, shineR * 2));
           grad.addColorStop(0, '#FFFFFF');
           grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.45)');
           grad.addColorStop(1, 'rgba(255, 255, 255, 0)');

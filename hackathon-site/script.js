@@ -1049,7 +1049,7 @@ function playBubblePopSound(freq = 480) {
 
 function initAnimatedLiquidOceanPreloader() {
   const loader = document.getElementById('loader');
-  if (!loader) {
+  if (!loader || window.loaderDone || window.loaderEngineActive) {
     if (typeof initScrollAnimations === 'function') initScrollAnimations();
     if (typeof init3DLiquidFluidEngine === 'function') init3DLiquidFluidEngine();
     if (typeof initHeroBubbleAnimation === 'function') initHeroBubbleAnimation();
@@ -12819,10 +12819,16 @@ if (document.readyState === 'loading') {
 
 
 
-// Hook into page switch for theme matrix wall
+// Hook into page switch for theme matrix wall and all SPA pages
 window.addEventListener('hashchange', () => {
-  if (window.location.hash.includes('theme')) {
-    setTimeout(initThemeHeroMatrix3D, 80);
+  const hash = window.location.hash.replace('#', '').trim();
+  if (hash) {
+    if (typeof go === 'function') {
+      go(hash);
+    }
+    if (hash.includes('theme') && typeof initThemeHeroMatrix3D === 'function') {
+      setTimeout(initThemeHeroMatrix3D, 80);
+    }
   }
 });
 
