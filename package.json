@@ -1,0 +1,10 @@
+{
+  "name": "hackathon-2027-udbhav",
+  "version": "1.0.0",
+  "description": "Hackathon 2027 - Hack2Skill x Graduate Gateway Club (PIET Jaipur)",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static build complete'",
+    "start": "serve hackathon-site"
+  }
+}

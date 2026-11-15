@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "checkJs": false,
+    "allowJs": true,
+    "noEmit": true
+  },
+  "include": [
+    "hackathon-site/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "scratch",
+    ".system_generated",
+    "dist"
+  ]
+}

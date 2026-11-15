@@ -1,0 +1,8 @@
+# Temporary scratch scripts & logs
+scratch/
+website template samples/
+*.log
+.DS_Store
+Thumbs.db
+.vercel
+

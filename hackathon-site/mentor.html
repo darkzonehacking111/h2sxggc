@@ -1,0 +1,1577 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor Evaluation Portal · HACKATHON 2027 · UDBHAV</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="mentor.css">
+</head>
+<body class="mentor-body">
+
+  <div class="men-ambient-bg" aria-hidden="true"></div>
+  <div class="men-grid-overlay" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       1. MENTOR PASSCODE GATE SCREEN WITH UNIVERSAL NAVIGATION BAR
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="mentorGateScreen" class="men-gate-screen">
+    <!-- Top Utility Bar on Gate Screen -->
+    <header class="men-gate-nav">
+      <div class="men-gate-nav-brand">
+        <span class="mgn-shield">⚖️</span>
+        <span class="mgn-title">UDBHAV 2027 <strong>JURY ENCLAVE</strong></span>
+      </div>
+      <div class="men-gate-nav-links">
+        <a href="index.html" class="mgn-btn" title="Back to Main Site">
+          <span>🏠 MAIN SITE</span>
+        </a>
+        <a href="index.html#theme" class="mgn-btn accent-orange" title="Explore Theme &amp; Problem Statements">
+          <span>🔥 THEME REVEAL</span>
+        </a>
+        <a href="index.html#standings" class="mgn-btn accent-gold" title="View Official Leaderboard">
+          <span>🏆 STANDINGS</span>
+        </a>
+        <a href="admin.html" class="mgn-btn accent-purple" title="Master Admin Console">
+          <span>⚙️ ADMIN ROOM</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="men-gate-card">
+      <div class="men-gate-glow-halo" aria-hidden="true"></div>
+      
+      <div class="men-gate-icon">
+        <span class="men-gate-glow-pulse"></span>
+        <span class="men-icon-symbol">⚖️</span>
+      </div>
+
+      <div class="men-gate-kicker">
+        <span class="mgk-dot"></span>
+        <span>OFFICIAL JURY &amp; EVALUATION CLEARANCE</span>
+      </div>
+
+      <h2 class="men-gate-title">MENTOR EVALUATION HUB</h2>
+
+      <p class="men-gate-desc">
+        Confidential evaluation portal for verified jury members &amp; technical advisors. Review assigned squad repositories, prototype demos, and score projects across the official 4-criteria rubric with real-time sync.
+      </p>
+
+      <form onsubmit="event.preventDefault(); mentorPortal.authenticate();" class="men-gate-form">
+        <!-- Evaluator Profile Selection -->
+        <div class="men-form-group">
+          <label class="men-input-label" for="mentorProfileSelect">SELECT EVALUATOR IDENTITY</label>
+          <div class="men-select-wrap">
+            <select id="mentorProfileSelect" class="men-select">
+              <option value="Rishi (Master Admin & Jury Lead)">👑 Rishi — Master Admin &amp; Jury Lead (Full Clearance)</option>
+              <option value="Dr. Alok Sharma (AI/ML Lead, Hack2Skill)">Dr. Alok Sharma — AI/ML Lead (Hack2Skill)</option>
+              <option value="Priya Nair (Senior Cloud Security Architect)">Priya Nair — Cloud Security Architect</option>
+              <option value="Vikram Solanki (Web3 Research Fellow)">Vikram Solanki — Web3 Research Fellow</option>
+              <option value="Sarah Jenkins (FinTech & Data Advisor)">Sarah Jenkins — FinTech &amp; Data Advisor</option>
+              <option value="Prof. R. K. Joshi (Dean of Innovation, PIET Jaipur)">Prof. R. K. Joshi — Dean of Innovation (PIET Jaipur)</option>
+              <option value="Dr. Aman Verma (HealthTech & AI Specialist)">Dr. Aman Verma — HealthTech &amp; AI Specialist</option>
+              <option value="Ananya Deshmukh (Clean-Tech & ESG Lead)">Ananya Deshmukh — Clean-Tech &amp; ESG Lead</option>
+              <option value="Guest Industry Evaluator">Guest Industry Evaluator</option>
+            </select>
+          </div>
+        </div>
+
+                <!-- Optional Mentor ID Field -->
+        <div class="men-form-group">
+          <label class="men-input-label" for="mentorIdInput">EVALUATOR CODE / ID (OPTIONAL)</label>
+          <div class="men-pass-wrap">
+            <span class="men-pass-icon">🆔</span>
+            <input type="text" id="mentorIdInput" class="men-pass-input" placeholder="e.g. MNT-AI-01 or Admin Master Key" />
+          </div>
+        </div>
+
+        <!-- Passcode Input -->
+        <div class="men-form-group">
+          <label class="men-input-label" for="mentorPassInput">AUTHORIZATION PASSKEY</label>
+          <div class="men-pass-wrap">
+            <span class="men-pass-icon">🔒</span>
+            <input type="password" id="mentorPassInput" class="men-pass-input" placeholder="Enter Mentor Passkey..." autofocus autocomplete="current-password" />
+            <button type="button" class="men-pass-toggle" onclick="mentorPortal.togglePassVisibility()" title="Toggle Password Visibility" aria-label="Toggle password visibility">👁️</button>
+          </div>
+        </div>
+
+        <!-- Quick Autofill Helper -->
+        <div class="men-autofill-row" style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="men-autofill-btn" onclick="mentorPortal.quickFill('mentor@2027')" title="Autofill standard mentor passkey">
+            <span>🔑 Mentor: <strong>mentor@2027</strong></span>
+          </button>
+          <button type="button" class="men-autofill-btn admin-autofill-btn" onclick="mentorPortal.quickFill('Rishi@5630dr')" style="border-color:rgba(255,184,0,0.5); background:rgba(255,184,0,0.12); color:#FFB800; font-weight:700;" title="Login with Master Admin passkey">
+            <span>👑 Master Admin: <strong>Rishi@5630dr</strong></span>
+          </button>
+        </div>
+
+        <button type="submit" id="mentorUnlockBtn" class="men-btn-primary">
+          <span>VERIFY EVALUATOR &amp; ENTER WORKSPACE</span>
+          <span class="btn-arr">➔</span>
+        </button>
+      </form>
+
+      <div id="mentorGateFeedback" class="men-gate-feedback"></div>
+
+      <div class="men-security-footer">
+        <span class="msf-chip">🛡️ AES-256 VAULT</span>
+        <span class="msf-dot">·</span>
+        <span>Direct Jury Terminal</span>
+        <span class="msf-dot">·</span>
+        <span>Real-Time Scoring Embargo Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       2. MENTOR WORKSPACE APP CONTAINER
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="men-app">
+
+    <!-- Luxury Top Navbar with Universal Platform Links -->
+    <header class="men-navbar">
+      <div class="men-nav-island">
+        <!-- Animated Kinetic Border Aura Along Bottom Edge -->
+        <div class="men-nav-aura-glow" aria-hidden="true"></div>
+
+        <a href="index.html" class="men-nav-brand" title="Back to Hackathon 2027 Main Site">
+        <div class="men-brand-shield">⚖️</div>
+        <div class="men-brand-text">
+          <h1>UDBHAV <span class="men-brand-year">2027</span> <span class="men-brand-badge">MENTOR HUB</span></h1>
+          <span class="men-brand-sub">HACK2SKILL &times; GGC &bull; PIET JAIPUR</span>
+        </div>
+      </a>
+
+      <!-- Active Evaluator Status Chip -->
+      <div class="men-mentor-tag" id="menMentorTagWrap" title="Active Verified Juror">
+        <span class="men-mentor-dot"></span>
+        <div class="men-mentor-meta">
+          <span class="men-mentor-role">JURY MEMBER</span>
+          <span id="mentorActiveNameBadge" class="men-mentor-name">Verified Evaluator</span>
+        </div>
+      </div>
+
+      <!-- Live Telemetry Consensus Status -->
+      <div class="men-sync-pill" title="Jury Consensus Status">
+        <span class="msp-pulse"></span>
+        <span class="msp-text">CONSENSUS ENGINE: LIVE</span>
+      </div>
+
+      <!-- Live Jury Clock Telemetry -->
+      <div class="men-clock-badge" id="menClockBadge" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',monospace;font-size:0.75rem;font-weight:700;color:#38bdf8;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 12px;border-radius:999px;letter-spacing:1px;" title="Official Jury Evaluation Telemetry Clock">
+        <span>00:00:00 IST</span>
+      </div>
+
+      <!-- Universal Cross-Platform Navigation Buttons -->
+      <div class="men-nav-links">
+        <a href="https://docs.google.com/spreadsheets/d/10ykklemdk9MIRbnIfySx5-5qkHPyejNNIxoJZSBH-tE/edit?usp=drive_link" target="_blank" rel="noopener" class="men-nav-btn" style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);color:#10B981;font-weight:700;" title="Open Live Registered Teams Google Sheet">
+          <span class="btn-icon">📊</span>
+          <span>GOOGLE SHEET</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="index.html#theme" target="_blank" class="men-nav-btn accent-orange" title="Open Theme Reveal & Problem Statements">
+          <span class="btn-icon">🔥</span>
+          <span>THEME REVEAL</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="index.html#standings" target="_blank" class="men-nav-btn accent-gold" title="Open Official Standings">
+          <span class="btn-icon">🏆</span>
+          <span>STANDINGS</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="admin.html" target="_blank" class="men-nav-btn accent-purple" title="Open Admin Control Room">
+          <span class="btn-icon">⚙️</span>
+          <span>ADMIN ROOM</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="index.html" target="_blank" class="men-nav-btn" title="Open Main Website">
+          <span>MAIN SITE</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <button type="button" class="men-nav-btn danger" onclick="mentorPortal.logout()" title="Log out from Mentor Portal">
+          <span>LOGOUT 🔒</span>
+        </button>
+      </div>
+      <!-- Laser Accent Line Along Bottom of Island -->
+      <div class="men-nav-laser-line" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <main class="men-main-wrap">
+
+      <!-- ════════════════════════════════════════════════════════════════
+           3. JURY EVALUATION RUBRIC & PROTOCOL GUIDE (EXPANDABLE)
+      ════════════════════════════════════════════════════════════════ -->
+      <!-- ════════════════════════════════════════════════════════════════
+           3. JURY EVALUATION RULES & CODE OF CONDUCT (EXPANDABLE)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-rules-card">
+        <div class="men-rules-header" onclick="mentorPortal.toggleRules()" role="button" tabindex="0" title="Click to expand/collapse mentor rules & evaluation conduct">
+          <div class="mrh-left">
+            <span class="mrh-icon">⚖️</span>
+            <div>
+              <h2 class="mrh-title">OFFICIAL MENTOR CODE OF CONDUCT &amp; EVALUATION PROTOCOL</h2>
+              <p class="mrh-sub">7 Cardinal Principles of Jury Governance &bull; Multi-Round Compliance &bull; Real-time Audit Trail</p>
+            </div>
+          </div>
+          <button type="button" class="mrh-toggle-btn" id="rulesToggleBtn" aria-label="Toggle mentor rules details">
+            <span id="rulesToggleText">VIEW JURY RULES</span>
+            <span class="mrh-arr" id="rulesToggleArr">▼</span>
+          </button>
+        </div>
+
+        <div class="men-rules-content" id="menRulesDetails" style="display:none;">
+          <div class="men-rules-grid">
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 01</div>
+              <h4>Mandatory 3-Round Evaluation Cadence</h4>
+              <p>Every assigned squad must be formally reviewed across <strong>Round 1 (Ideation &amp; Feasibility)</strong>, <strong>Round 2 (Architecture &amp; Prototype)</strong>, and <strong>Round 3 (Finale Production &amp; Demo)</strong>. Skipping rounds or scoring only at finale is strictly forbidden.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 02</div>
+              <h4>5 Standardized Parameters (100 Pts / Round)</h4>
+              <p>Each round must be scored on exactly <strong>5 parameters</strong> out of 20 points each: (1) Innovation &amp; Novelty, (2) Technical Architecture, (3) Practical Feasibility, (4) UI/UX Craft, and (5) Live Demo &amp; Defense. Maximum round score is 100 points.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 03</div>
+              <h4>Direct Git Commit Verification</h4>
+              <p>No score may be awarded solely on slide presentations or Figma designs. Mentors must inspect the team's live repository, verify commit cadence during the 36-hour sprint, and confirm that core business logic was authored at Udbhav 2027.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 04</div>
+              <h4>Strict Anti-Plagiarism &amp; Fresh Code Policy</h4>
+              <p>Pre-written codebases and uncredited boilerplate are grounds for immediate disqualification. Open-source libraries and APIs are permitted, but architectural glue, custom algorithms, and system integrations must be fresh sprint commits.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 05</div>
+              <h4>Conflict of Interest &amp; Mandatory Recusal</h4>
+              <p>Mentors must immediately recuse themselves from evaluating squads where personal, familial, collegiate lab, or direct institutional affiliations exist. The Master Admin will reassign alternate jury evaluators.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 06</div>
+              <h4>Constructive Engineering Feedback Mandate</h4>
+              <p>Every evaluated scorecard must contain at least one specific technical commendation and one actionable engineering critique to guide the squad toward production viability.</p>
+            </div>
+
+            <div class="mrg-item mrg-span-2">
+              <div class="mrg-badge accent-purple">RULE 07</div>
+              <h4>Cryptographic Timestamping &amp; Score Lockdown</h4>
+              <p>Locked scores are cryptographically timestamped and transmitted directly to the Master Admin console and live standings. Once locked, adjustments require Master Admin authorization to ensure zero tampering or scoring embargo leaks.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           3B. STANDARDIZED 3-ROUND & 5-PARAMETER EVALUATION RUBRIC (EXPANDABLE)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-rubric-card">
+        <div class="men-rubric-header" onclick="mentorPortal.toggleRubric()" role="button" tabindex="0" title="Click to expand/collapse rubric criteria">
+          <div class="mrh-left">
+            <span class="mrh-icon">📋</span>
+            <div>
+              <h2 class="mrh-title">STANDARDIZED 3-ROUND &amp; 5-PARAMETER EVALUATION RUBRIC</h2>
+              <p class="mrh-sub">5 Parameters &bull; 0–20 pts each &bull; 100 points max per round &bull; 300 points grand total &bull; Click to toggle</p>
+            </div>
+          </div>
+          <button type="button" class="mrh-toggle-btn" id="rubricToggleBtn" aria-label="Toggle rubric details">
+            <span id="rubricToggleText">VIEW RUBRIC CRITERIA</span>
+            <span class="mrh-arr" id="rubricToggleArr">▼</span>
+          </button>
+        </div>
+
+        <div class="men-rubric-content" id="menRubricDetails" style="display:none;">
+          <!-- 3-Round Lifecycle Banner -->
+          <div class="men-rounds-overview-banner">
+            <div class="mrob-item">
+              <span class="mrob-badge round-1">ROUND 1</span>
+              <h5>Ideation &amp; Feasibility</h5>
+              <p>Early check: Problem comprehension, novel approach, architectural blueprint &amp; research validity.</p>
+            </div>
+            <div class="mrob-arrow">&rarr;</div>
+            <div class="mrob-item">
+              <span class="mrob-badge round-2">ROUND 2</span>
+              <h5>Architecture &amp; Prototype</h5>
+              <p>Midway check: Functional core engine, modular code, API/smart contract wiring &amp; test harness.</p>
+            </div>
+            <div class="mrob-arrow">&rarr;</div>
+            <div class="mrob-item">
+              <span class="mrob-badge round-3">ROUND 3</span>
+              <h5>Finale Production &amp; Demo</h5>
+              <p>Final defense: End-to-end working system, zero-crash live demo, UI/UX polish &amp; jury defense.</p>
+            </div>
+          </div>
+
+          <div class="mrc-grid">
+            <div class="mrc-item">
+              <div class="mrc-num">01</div>
+              <div class="mrc-body">
+                <h4>1. Innovation &amp; Conceptual Novelty (0–20 pts)</h4>
+                <p>Originality of core concept, non-trivial approach, uniqueness beyond stock boilerplate templates, creative multi-agent, cryptographic, or algorithmic architecture.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Derivative / Boilerplate</span>
+                  <span><strong>10 pts:</strong> Good Practical Twist</span>
+                  <span><strong>15 pts:</strong> Strong Unique Pivot</span>
+                  <span><strong>20 pts:</strong> Breakthrough Innovation</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">02</div>
+              <div class="mrc-body">
+                <h4>2. Technical Architecture &amp; Code Quality (0–20 pts)</h4>
+                <p>Repository cleanliness, commit cadence, modular system architecture, robust error boundaries, API/smart-contract security, test suite, and performance benchmarks.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Unstructured / Fragile</span>
+                  <span><strong>10 pts:</strong> Functional Modules</span>
+                  <span><strong>15 pts:</strong> Clean &amp; Resilient</span>
+                  <span><strong>20 pts:</strong> Production-Grade Excellence</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">03</div>
+              <div class="mrc-body">
+                <h4>3. Practical Feasibility &amp; Scalability (0–20 pts)</h4>
+                <p>Real-world viability, economic rationale, addressable market impact, infrastructure efficiency, latency bounds, operational maintainability, and cloud/edge scalability.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Theoretical Only</span>
+                  <span><strong>10 pts:</strong> Actionable MVP</span>
+                  <span><strong>15 pts:</strong> High Scalability</span>
+                  <span><strong>20 pts:</strong> Enterprise Ready</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">04</div>
+              <div class="mrc-body">
+                <h4>4. UI/UX Craft &amp; User Experience (0–20 pts)</h4>
+                <p>Visual elegance, intuitive user flow, accessibility, state responsiveness, error feedback, micro-interactions, and clear data visualization.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Rudimentary UI</span>
+                  <span><strong>10 pts:</strong> Clean Layout</span>
+                  <span><strong>15 pts:</strong> Polished UX Flow</span>
+                  <span><strong>20 pts:</strong> World-Class Aesthetic</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">05</div>
+              <div class="mrc-body">
+                <h4>5. Working Prototype, Polish &amp; Jury Defense (0–20 pts)</h4>
+                <p>Live working demonstration with zero runtime crashes, handling of realistic edge cases, articulate technical pitch, and depth of technical defense during mentor Q&amp;A.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Mockups / Crashes</span>
+                  <span><strong>10 pts:</strong> Partial Working Demo</span>
+                  <span><strong>15 pts:</strong> Flawless Live Demo</span>
+                  <span><strong>20 pts:</strong> Exemplary Demo &amp; Defense</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           4. TELEMETRY & METRICS HUD
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-metrics-grid">
+        <!-- Metric 1: Total Squads -->
+        <div class="men-metric-card bc-total">
+          <div class="mmc-content">
+            <div class="men-metric-label">TOTAL REGISTERED SQUADS</div>
+            <div class="men-metric-val" id="menMetricTotal">--</div>
+            <div class="mmc-sub">Across All Tracks &amp; Universities</div>
+          </div>
+          <div class="mmc-icon">👥</div>
+        </div>
+
+        <!-- Metric 2: Evaluated & Locked -->
+        <div class="men-metric-card bc-locked">
+          <div class="mmc-content">
+            <div class="men-metric-label">EVALUATED &amp; LOCKED</div>
+            <div class="men-metric-val" id="menMetricLocked" style="color:var(--men-green);">--</div>
+            <!-- Progress Bar -->
+            <div class="men-audit-bar-wrap">
+              <div class="men-audit-bar-fill" id="menAuditProgressFill" style="width:0%;"></div>
+            </div>
+            <div class="mmc-sub" id="menAuditProgressText">0% Jury Audit Complete</div>
+          </div>
+          <div class="mmc-icon">🔒</div>
+        </div>
+
+        <!-- Metric 3: Pending Review -->
+        <div class="men-metric-card bc-pending">
+          <div class="mmc-content">
+            <div class="men-metric-label">PENDING REVIEW</div>
+            <div class="men-metric-val" id="menMetricPending" style="color:var(--men-orange);">--</div>
+            <div class="mmc-sub">Awaiting Scorecard Submission</div>
+          </div>
+          <div class="mmc-icon">⏳</div>
+        </div>
+
+        <!-- Metric 4: Average Score -->
+        <div class="men-metric-card bc-avg">
+          <div class="mmc-content">
+            <div class="men-metric-label">AVERAGE JURY SCORE</div>
+            <div class="men-metric-val" id="menMetricAvg" style="color:var(--men-cyan);">--</div>
+            <div class="mmc-sub">Mean across locked assessments</div>
+          </div>
+          <div class="mmc-icon">📈</div>
+        </div>
+
+        <!-- Metric 5: Podium Contenders (S-Tier) -->
+        <div class="men-metric-card bc-podium">
+          <div class="mmc-content">
+            <div class="men-metric-label">PODIUM CONTENDERS</div>
+            <div class="men-metric-val" id="menMetricPodium" style="color:#FFD700;">--</div>
+            <div class="mmc-sub">S-Tier (90+ Score Threshold)</div>
+          </div>
+          <div class="mmc-icon">🏆</div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           5. MULTI-FACETED TOOLBAR (SEARCH + DOMAIN + STATUS + SORT)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-toolbar-card">
+        <div class="men-toolbar-top-row">
+          <!-- Search Bar -->
+          <div class="men-search-wrap">
+            <span class="men-search-icon">🔍</span>
+            <input type="text" id="mentorSearchInput" class="men-search-input" placeholder="Search by team name, pass code, leader, track, or PS id..." oninput="mentorPortal.renderTeams()" />
+            <button type="button" class="men-search-clear" onclick="mentorPortal.clearSearch()" id="menSearchClearBtn" title="Clear Search">✕</button>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="men-sort-wrap">
+            <span class="men-sort-label">SORT BY:</span>
+            <select id="mentorSortSelect" class="men-sort-select" onchange="mentorPortal.setSort(this.value)">
+              <option value="score-desc">Highest Score First</option>
+              <option value="score-asc">Lowest Score First</option>
+              <option value="pending-first">Pending Review First</option>
+              <option value="name-asc">Team Name (A–Z)</option>
+              <option value="code-asc">Passcode (A–Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Row 1: Status Filters -->
+        <div class="men-filter-status-row">
+          <span class="men-filter-heading">STATUS:</span>
+          <div class="men-filter-pills" id="menStatusFilterGroup">
+            <button type="button" class="men-filter-btn active" onclick="mentorPortal.setFilter('all', this)">
+              <span>ALL SQUADS</span>
+              <span class="mfb-count" id="countFilterAll">0</span>
+            </button>
+            <button type="button" class="men-filter-btn" onclick="mentorPortal.setFilter('pending', this)">
+              <span>⏳ PENDING</span>
+              <span class="mfb-count" id="countFilterPending">0</span>
+            </button>
+            <button type="button" class="men-filter-btn" onclick="mentorPortal.setFilter('locked', this)">
+              <span>🔒 LOCKED BY ME</span>
+              <span class="mfb-count" id="countFilterLocked">0</span>
+            </button>
+            <button type="button" class="men-filter-btn" onclick="mentorPortal.setFilter('s-tier', this)">
+              <span>🏆 S-TIER PODIUM (90+)</span>
+              <span class="mfb-count" id="countFilterSTier">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Row 2: Track / Domain Filters -->
+        <div class="men-filter-track-row">
+          <span class="men-filter-heading">DOMAIN / TRACK:</span>
+          <div class="men-track-pills" id="menTrackFilterGroup">
+            <button type="button" class="men-track-btn active" onclick="mentorPortal.setTrack('all', this)">All Domains</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('AI/ML', this)">🤖 AI/ML</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('Web3', this)">⚡ Web3</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('CyberSecurity', this)">🛡️ CyberSecurity</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('HealthTech', this)">🏥 HealthTech</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('FinTech', this)">💳 FinTech</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('Open Innovation', this)">🚀 Open Innovation</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           6. SQUADS EVALUATION CARDS GRID
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-teams-section">
+        <div class="men-section-head">
+          <div class="msh-left">
+            <h3 class="msh-title">ASSIGNED SQUADS &amp; EVALUATION DOSSIERS</h3>
+            <span class="msh-counter" id="menShowingSquadsCount">Showing 0 squads</span>
+          </div>
+          <div class="msh-right">
+            <button type="button" class="men-refresh-btn" onclick="mentorPortal.render()" title="Refresh Evaluation Workspace">
+              <span>↻ REFRESH SQUADS</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="men-teams-grid" id="mentorTeamsGrid">
+          <!-- Rendered dynamically via mentor.js -->
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           7. UNIVERSAL PLATFORM FOOTER & SWITCHER
+      ════════════════════════════════════════════════════════════════ -->
+      <footer class="men-footer-deck">
+        <div class="mfd-top">
+          <div class="mfd-brand">
+            <div class="mfd-logo">⚖️ UDBHAV <strong>2027</strong></div>
+            <p>Official Jury &amp; Mentor Terminal &bull; National 36-Hour Innovation Sprint &bull; PIET Jaipur &bull; Hack2Skill &times; GGC</p>
+          </div>
+          <div class="mfd-links">
+            <span class="mfd-links-title">PLATFORM ECOSYSTEM:</span>
+            <a href="index.html" target="_blank" class="mfd-link">🏠 Main Website</a>
+            <a href="index.html#theme" target="_blank" class="mfd-link accent-orange">🔥 Theme Reveal &amp; PS Vault</a>
+            <a href="index.html#standings" target="_blank" class="mfd-link accent-gold">🏆 Official Standings</a>
+            <a href="admin.html" target="_blank" class="mfd-link accent-purple">⚙️ Master Admin Operations</a>
+          </div>
+        </div>
+        <div class="mfd-bottom">
+          <span>&copy; 2027 Udbhav National Hackathon &bull; Jury Clearance Embargo Active &bull; All evaluations timestamped &amp; audited</span>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       8. HIGH-PRECISION EVALUATION & RUBRIC MODAL
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="mentorEvalModal" class="men-modal-backdrop" onclick="if(event.target===this) mentorPortal.closeEvaluationModal()">
+    <div class="men-modal-card">
+      
+      <!-- Modal Header -->
+      <div class="men-modal-head">
+        <div>
+          <div class="men-modal-kicker">
+            <span class="mmk-dot"></span>
+            <span>JURY EVALUATION DOSSIER</span>
+          </div>
+          <h3 id="menModalTeamTitle" class="men-modal-title">Squad Name</h3>
+          <div id="menModalTeamMeta" class="men-modal-meta">Track • PS • Leader</div>
+        </div>
+        <button type="button" class="men-modal-close" onclick="mentorPortal.closeEvaluationModal()" title="Close scorecard (Esc)" aria-label="Close modal">✕</button>
+      </div>
+
+      <!-- Problem Statement Context Banner -->
+      <div class="men-modal-ps-box">
+        <div class="mmps-badge">
+          <span class="mmps-tag" id="menModalPsIdBadge">PS-01</span>
+          <span class="mmps-category" id="menModalPsCategoryBadge">AI/ML</span>
+        </div>
+        <h4 class="mmps-title" id="menModalPsTitle">Problem Statement Title</h4>
+        <p class="mmps-desc" id="menModalPsDesc">Problem statement requirements and target objectives.</p>
+        <a id="menModalPsLink" href="index.html#theme" target="_blank" class="mmps-external-btn">
+          <span>Inspect Full Challenge on Theme Reveal ↗</span>
+        </a>
+      </div>
+
+      <!-- Deliverables Quick Verification Bar -->
+      <div class="men-modal-deliverables-row">
+        <span class="mmd-label">SUBMISSIONS:</span>
+        <div class="mmd-links" id="menModalDeliverables">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- 3-Round Stage Selector Tabs -->
+      <div class="men-round-tabs-wrap">
+        <div class="men-rt-header">
+          <span class="men-rt-title">EVALUATION ROUND:</span>
+          <span class="men-rt-hint" id="menModalRoundHint">Scoring Round 1 of 3 (Ideation &amp; Feasibility)</span>
+        </div>
+        <div class="men-round-tabs">
+          <button type="button" class="men-rtab active" id="menRTab1" onclick="mentorPortal.switchModalRound(1)">
+            <span class="mrt-dot"></span>
+            <div class="mrt-info">
+              <span class="mrt-name">ROUND 1: IDEATION</span>
+              <span class="mrt-sub">Problem &amp; Concept</span>
+            </div>
+            <span class="mrt-badge" id="menRTabBadge1">-- / 100</span>
+          </button>
+          <button type="button" class="men-rtab" id="menRTab2" onclick="mentorPortal.switchModalRound(2)">
+            <span class="mrt-dot"></span>
+            <div class="mrt-info">
+              <span class="mrt-name">ROUND 2: PROTOTYPE</span>
+              <span class="mrt-sub">Architecture &amp; MVP</span>
+            </div>
+            <span class="mrt-badge" id="menRTabBadge2">-- / 100</span>
+          </button>
+          <button type="button" class="men-rtab" id="menRTab3" onclick="mentorPortal.switchModalRound(3)">
+            <span class="mrt-dot"></span>
+            <div class="mrt-info">
+              <span class="mrt-name">ROUND 3: FINALE DEMO</span>
+              <span class="mrt-sub">Production &amp; Defense</span>
+            </div>
+            <span class="mrt-badge" id="menRTabBadge3">-- / 100</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 5 Standardized Parameter Sliders (0 to 20 pts each = 100 pts per round) -->
+      <div class="men-sliders-container">
+
+        <!-- Parameter 1: Innovation & Novelty -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">💡</span>
+              <div>
+                <strong>1. Innovation &amp; Conceptual Novelty (0–20 pts)</strong>
+                <span class="msl-sub">Original concept, non-trivial approach, breakthrough thinking beyond boilerplate templates</span>
+              </div>
+            </div>
+            <div class="msl-score-badge">
+              <span class="men-slider-score-display" id="menValParam1">16</span>
+              <span class="msl-score-max">/ 20</span>
+            </div>
+          </div>
+          <input type="range" id="menRangeParam1" class="men-slider" min="0" max="20" value="16" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(1, 5)">5 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(1, 10)">10 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(1, 15)">15 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(1, 20)">20 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Parameter 2: Technical Architecture -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">⚙️</span>
+              <div>
+                <strong>2. Technical Architecture &amp; Code Quality (0–20 pts)</strong>
+                <span class="msl-sub">Modular design, clean commit cadence, error boundaries, API/smart-contract robustness, tests</span>
+              </div>
+            </div>
+            <div class="msl-score-badge">
+              <span class="men-slider-score-display" id="menValParam2">16</span>
+              <span class="msl-score-max">/ 20</span>
+            </div>
+          </div>
+          <input type="range" id="menRangeParam2" class="men-slider" min="0" max="20" value="16" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(2, 5)">5 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(2, 10)">10 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(2, 15)">15 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(2, 20)">20 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Parameter 3: Practical Feasibility & Scalability -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">📈</span>
+              <div>
+                <strong>3. Practical Feasibility &amp; Scalability (0–20 pts)</strong>
+                <span class="msl-sub">Real-world viability, addressable problem, latency bounds, cloud/edge deployability</span>
+              </div>
+            </div>
+            <div class="msl-score-badge">
+              <span class="men-slider-score-display" id="menValParam3">16</span>
+              <span class="msl-score-max">/ 20</span>
+            </div>
+          </div>
+          <input type="range" id="menRangeParam3" class="men-slider" min="0" max="20" value="16" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(3, 5)">5 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(3, 10)">10 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(3, 15)">15 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(3, 20)">20 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Parameter 4: UI/UX Craft & User Experience -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">🎨</span>
+              <div>
+                <strong>4. UI/UX Craft &amp; User Experience (0–20 pts)</strong>
+                <span class="msl-sub">Visual elegance, frictionless user journey, responsiveness, accessibility, micro-interactions</span>
+              </div>
+            </div>
+            <div class="msl-score-badge">
+              <span class="men-slider-score-display" id="menValParam4">16</span>
+              <span class="msl-score-max">/ 20</span>
+            </div>
+          </div>
+          <input type="range" id="menRangeParam4" class="men-slider" min="0" max="20" value="16" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(4, 5)">5 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(4, 10)">10 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(4, 15)">15 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(4, 20)">20 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Parameter 5: Working Prototype & Defense -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">🚀</span>
+              <div>
+                <strong>5. Working Prototype, Polish &amp; Defense (0–20 pts)</strong>
+                <span class="msl-sub">Functional live demo with zero crashes, edge case resilience, clear pitch &amp; jury defense</span>
+              </div>
+            </div>
+            <div class="msl-score-badge">
+              <span class="men-slider-score-display" id="menValParam5">16</span>
+              <span class="msl-score-max">/ 20</span>
+            </div>
+          </div>
+          <input type="range" id="menRangeParam5" class="men-slider" min="0" max="20" value="16" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(5, 5)">5 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(5, 10)">10 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(5, 15)">15 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal(5, 20)">20 Flawless</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Total Score HUD with 3-Round Summary -->
+      <div class="men-total-box">
+        <div class="mtb-left">
+          <div class="mtb-round-block">
+            <div class="mtb-label">ACTIVE ROUND <span id="menModalActiveRoundNum">1</span> SCORE:</div>
+            <div class="mtb-score-row">
+              <span id="menModalTotalNum" class="mtb-score-val">80</span>
+              <span class="mtb-score-denom">/ 100</span>
+            </div>
+          </div>
+          <div class="mtb-grand-block">
+            <div class="mtb-grand-label">3-ROUND CUMULATIVE:</div>
+            <div class="mtb-grand-row">
+              <span id="menModalGrandTotal" class="mtb-grand-val">240</span>
+              <span class="mtb-grand-denom">/ 300</span>
+              <span id="menModalGrandAvg" class="mtb-grand-avg">(80.0%)</span>
+            </div>
+            <!-- Round Breakdown Pills -->
+            <div class="mtb-pills-row">
+              <span class="mtb-pill" id="menBreakdownR1">R1: 80</span>
+              <span class="mtb-pill" id="menBreakdownR2">R2: --</span>
+              <span class="mtb-pill" id="menBreakdownR3">R3: --</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mtb-right">
+          <span id="menModalTierBadge" class="men-score-tier tier-a">⭐ A-TIER · HIGH MERIT</span>
+          <span class="mtb-evaluator-stamp" id="menModalEvaluatorStamp">Evaluator: Dr. Alok Sharma</span>
+          <span class="mtb-round-status" id="menModalRoundStatusStamp">Round 1: Draft</span>
+        </div>
+      </div>
+
+      <!-- Qualitative Feedback Field with Quick Suggestion Chips -->
+      <div class="men-remarks-section">
+        <div class="mrs-header">
+          <label for="menModalRemarks" class="mrs-label">
+            <span>QUALITATIVE OBSERVATIONS &amp; ROUND <span id="menRemarksRoundNum">1</span> FEEDBACK:</span>
+          </label>
+          <span class="mrs-hint">Click tags below to auto-insert feedback</span>
+        </div>
+
+        <!-- Quick Tags -->
+        <div class="men-quick-tags-row">
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Exceptional modular architecture &amp; clean repo structure.')">+ Clean Architecture</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Flawless live demo with zero runtime crashes.')">+ Solid Live Demo</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Impressive novel application of autonomous agents.')">+ Novel Agentic Approach</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('High aesthetic polish and intuitive user experience.')">+ Exceptional UI Polish</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Recommend hardening API edge-case validation and error bounds.')">+ Add Error Bounds</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Add end-to-end integration test coverage prior to production.')">+ Add Test Coverage</button>
+        </div>
+
+        <textarea id="menModalRemarks" class="men-input" rows="3" placeholder="Highlight technical strengths, code architecture quality, live demo polish, or recommendations for this round..."></textarea>
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="men-modal-actions">
+        <button type="button" class="men-btn-secondary" onclick="mentorPortal.closeEvaluationModal()">
+          <span>CANCEL</span>
+        </button>
+        <button type="button" class="men-btn-draft" onclick="mentorPortal.saveScore(false)">
+          <span>💾 SAVE DRAFT (ROUND <span id="menBtnDraftRoundNum">1</span>)</span>
+        </button>
+        <button type="button" class="men-btn-lock" onclick="mentorPortal.saveScore(true)">
+          <span>🔒 LOCK &amp; SUBMIT (ROUND <span id="menBtnLockRoundNum">1</span>)</span>
+        </button>
+        <button type="button" class="men-btn-lock-all" onclick="mentorPortal.lockAllRounds()">
+          <span>👑 LOCK ALL 3 ROUNDS TO ADMIN</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mentor Evaluation Portal · HACKATHON 2027 · UDBHAV</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚖️</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="mentor.css">
+</head>
+<body class="mentor-body">
+
+  <div class="men-ambient-bg" aria-hidden="true"></div>
+  <div class="men-grid-overlay" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       1. MENTOR PASSCODE GATE SCREEN WITH UNIVERSAL NAVIGATION BAR
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="mentorGateScreen" class="men-gate-screen">
+    <!-- Top Utility Bar on Gate Screen -->
+    <header class="men-gate-nav">
+      <div class="men-gate-nav-brand">
+        <span class="mgn-shield">⚖️</span>
+        <span class="mgn-title">UDBHAV 2027 <strong>JURY ENCLAVE</strong></span>
+      </div>
+      <div class="men-gate-nav-links">
+        <a href="index.html" class="mgn-btn" title="Back to Main Site">
+          <span>🏠 MAIN SITE</span>
+        </a>
+        <a href="index.html#theme" class="mgn-btn accent-orange" title="Explore Theme &amp; Problem Statements">
+          <span>🔥 THEME REVEAL</span>
+        </a>
+        <a href="index.html#standings" class="mgn-btn accent-gold" title="View Official Leaderboard">
+          <span>🏆 STANDINGS</span>
+        </a>
+        <a href="admin.html" class="mgn-btn accent-purple" title="Master Admin Console">
+          <span>⚙️ ADMIN ROOM</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="men-gate-card">
+      <div class="men-gate-glow-halo" aria-hidden="true"></div>
+      
+      <div class="men-gate-icon">
+        <span class="men-gate-glow-pulse"></span>
+        <span class="men-icon-symbol">⚖️</span>
+      </div>
+
+      <div class="men-gate-kicker">
+        <span class="mgk-dot"></span>
+        <span>OFFICIAL JURY &amp; EVALUATION CLEARANCE</span>
+      </div>
+
+      <h2 class="men-gate-title">MENTOR EVALUATION HUB</h2>
+
+      <p class="men-gate-desc">
+        Confidential evaluation portal for verified jury members &amp; technical advisors. Review assigned squad repositories, prototype demos, and score projects across the official 4-criteria rubric with real-time sync.
+      </p>
+
+      <form onsubmit="event.preventDefault(); mentorPortal.authenticate();" class="men-gate-form">
+        <!-- Evaluator Profile Selection -->
+        <div class="men-form-group">
+          <label class="men-input-label" for="mentorProfileSelect">SELECT EVALUATOR IDENTITY</label>
+          <div class="men-select-wrap">
+            <select id="mentorProfileSelect" class="men-select">
+              <option value="Rishi (Master Admin & Jury Lead)">👑 Rishi — Master Admin &amp; Jury Lead (Full Clearance)</option>
+              <option value="Dr. Alok Sharma (AI/ML Lead, Hack2Skill)">Dr. Alok Sharma — AI/ML Lead (Hack2Skill)</option>
+              <option value="Priya Nair (Senior Cloud Security Architect)">Priya Nair — Cloud Security Architect</option>
+              <option value="Vikram Solanki (Web3 Research Fellow)">Vikram Solanki — Web3 Research Fellow</option>
+              <option value="Sarah Jenkins (FinTech & Data Advisor)">Sarah Jenkins — FinTech &amp; Data Advisor</option>
+              <option value="Prof. R. K. Joshi (Dean of Innovation, PIET Jaipur)">Prof. R. K. Joshi — Dean of Innovation (PIET Jaipur)</option>
+              <option value="Dr. Aman Verma (HealthTech & AI Specialist)">Dr. Aman Verma — HealthTech &amp; AI Specialist</option>
+              <option value="Ananya Deshmukh (Clean-Tech & ESG Lead)">Ananya Deshmukh — Clean-Tech &amp; ESG Lead</option>
+              <option value="Guest Industry Evaluator">Guest Industry Evaluator</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Passcode Input -->
+        <div class="men-form-group">
+          <label class="men-input-label" for="mentorPassInput">AUTHORIZATION PASSKEY</label>
+          <div class="men-pass-wrap">
+            <span class="men-pass-icon">🔒</span>
+            <input type="password" id="mentorPassInput" class="men-pass-input" placeholder="Enter Mentor Passkey..." autofocus autocomplete="current-password" />
+            <button type="button" class="men-pass-toggle" onclick="mentorPortal.togglePassVisibility()" title="Toggle Password Visibility" aria-label="Toggle password visibility">👁️</button>
+          </div>
+        </div>
+
+        <!-- Quick Autofill Helper -->
+        <div class="men-autofill-row" style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button type="button" class="men-autofill-btn" onclick="mentorPortal.quickFill('mentor@2027')" title="Autofill standard mentor passkey">
+            <span>🔑 Mentor: <strong>mentor@2027</strong></span>
+          </button>
+          <button type="button" class="men-autofill-btn admin-autofill-btn" onclick="mentorPortal.quickFill('Rishi@5630dr')" style="border-color:rgba(255,184,0,0.5); background:rgba(255,184,0,0.12); color:#FFB800; font-weight:700;" title="Login with Master Admin passkey">
+            <span>👑 Master Admin: <strong>Rishi@5630dr</strong></span>
+          </button>
+        </div>
+
+        <button type="submit" id="mentorUnlockBtn" class="men-btn-primary">
+          <span>VERIFY EVALUATOR &amp; ENTER WORKSPACE</span>
+          <span class="btn-arr">➔</span>
+        </button>
+      </form>
+
+      <div id="mentorGateFeedback" class="men-gate-feedback"></div>
+
+      <div class="men-security-footer">
+        <span class="msf-chip">🛡️ AES-256 VAULT</span>
+        <span class="msf-dot">·</span>
+        <span>Direct Jury Terminal</span>
+        <span class="msf-dot">·</span>
+        <span>Real-Time Scoring Embargo Active</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       2. MENTOR WORKSPACE APP CONTAINER
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="men-app">
+
+    <!-- Luxury Top Navbar with Universal Platform Links -->
+    <header class="men-navbar">
+      <div class="men-nav-island">
+        <!-- Animated Kinetic Border Aura Along Bottom Edge -->
+        <div class="men-nav-aura-glow" aria-hidden="true"></div>
+
+        <a href="index.html" class="men-nav-brand" title="Back to Hackathon 2027 Main Site">
+        <div class="men-brand-shield">⚖️</div>
+        <div class="men-brand-text">
+          <h1>UDBHAV <span class="men-brand-year">2027</span> <span class="men-brand-badge">MENTOR HUB</span></h1>
+          <span class="men-brand-sub">HACK2SKILL &times; GGC &bull; PIET JAIPUR</span>
+        </div>
+      </a>
+
+      <!-- Active Evaluator Status Chip -->
+      <div class="men-mentor-tag" id="menMentorTagWrap" title="Active Verified Juror">
+        <span class="men-mentor-dot"></span>
+        <div class="men-mentor-meta">
+          <span class="men-mentor-role">JURY MEMBER</span>
+          <span id="mentorActiveNameBadge" class="men-mentor-name">Verified Evaluator</span>
+        </div>
+      </div>
+
+      <!-- Live Telemetry Consensus Status -->
+      <div class="men-sync-pill" title="Jury Consensus Status">
+        <span class="msp-pulse"></span>
+        <span class="msp-text">CONSENSUS ENGINE: LIVE</span>
+      </div>
+
+      <!-- Live Jury Clock Telemetry -->
+      <div class="men-clock-badge" id="menClockBadge" style="display:inline-flex;align-items:center;font-family:'Space Grotesk',monospace;font-size:0.75rem;font-weight:700;color:#38bdf8;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 12px;border-radius:999px;letter-spacing:1px;" title="Official Jury Evaluation Telemetry Clock">
+        <span>00:00:00 IST</span>
+      </div>
+
+      <!-- Universal Cross-Platform Navigation Buttons -->
+      <div class="men-nav-links">
+        <a href="https://docs.google.com/spreadsheets/d/10ykklemdk9MIRbnIfySx5-5qkHPyejNNIxoJZSBH-tE/edit?usp=drive_link" target="_blank" rel="noopener" class="men-nav-btn" style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.4);color:#10B981;font-weight:700;" title="Open Live Registered Teams Google Sheet">
+          <span class="btn-icon">📊</span>
+          <span>GOOGLE SHEET</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="index.html#theme" target="_blank" class="men-nav-btn accent-orange" title="Open Theme Reveal & Problem Statements">
+          <span class="btn-icon">🔥</span>
+          <span>THEME REVEAL</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="index.html#standings" target="_blank" class="men-nav-btn accent-gold" title="Open Official Standings">
+          <span class="btn-icon">🏆</span>
+          <span>STANDINGS</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="admin.html" target="_blank" class="men-nav-btn accent-purple" title="Open Admin Control Room">
+          <span class="btn-icon">⚙️</span>
+          <span>ADMIN ROOM</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <a href="index.html" target="_blank" class="men-nav-btn" title="Open Main Website">
+          <span>MAIN SITE</span>
+          <span class="btn-arr">↗</span>
+        </a>
+        <button type="button" class="men-nav-btn danger" onclick="mentorPortal.logout()" title="Log out from Mentor Portal">
+          <span>LOGOUT 🔒</span>
+        </button>
+      </div>
+      <!-- Laser Accent Line Along Bottom of Island -->
+      <div class="men-nav-laser-line" aria-hidden="true"></div>
+      </div>
+    </header>
+
+    <main class="men-main-wrap">
+
+      <!-- ════════════════════════════════════════════════════════════════
+           3. JURY EVALUATION RUBRIC & PROTOCOL GUIDE (EXPANDABLE)
+      ════════════════════════════════════════════════════════════════ -->
+      <!-- ════════════════════════════════════════════════════════════════
+           3. JURY EVALUATION RULES & CODE OF CONDUCT (EXPANDABLE)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-rules-card">
+        <div class="men-rules-header" onclick="mentorPortal.toggleRules()" role="button" tabindex="0" title="Click to expand/collapse mentor rules & evaluation conduct">
+          <div class="mrh-left">
+            <span class="mrh-icon">⚖️</span>
+            <div>
+              <h2 class="mrh-title">OFFICIAL MENTOR CODE OF CONDUCT &amp; EVALUATION PROTOCOL</h2>
+              <p class="mrh-sub">7 Cardinal Principles of Jury Governance &bull; Multi-Round Compliance &bull; Real-time Audit Trail</p>
+            </div>
+          </div>
+          <button type="button" class="mrh-toggle-btn" id="rulesToggleBtn" aria-label="Toggle mentor rules details">
+            <span id="rulesToggleText">VIEW JURY RULES</span>
+            <span class="mrh-arr" id="rulesToggleArr">▼</span>
+          </button>
+        </div>
+
+        <div class="men-rules-content" id="menRulesDetails" style="display:none;">
+          <div class="men-rules-grid">
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 01</div>
+              <h4>Mandatory 3-Round Evaluation Cadence</h4>
+              <p>Every assigned squad must be formally reviewed across <strong>Round 1 (Ideation &amp; Feasibility)</strong>, <strong>Round 2 (Architecture &amp; Prototype)</strong>, and <strong>Round 3 (Finale Production &amp; Demo)</strong>. Skipping rounds or scoring only at finale is strictly forbidden.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 02</div>
+              <h4>5 Standardized Parameters (100 Pts / Round)</h4>
+              <p>Each round must be scored on exactly <strong>5 parameters</strong> out of 20 points each: (1) Innovation &amp; Novelty, (2) Technical Architecture, (3) Practical Feasibility, (4) UI/UX Craft, and (5) Live Demo &amp; Defense. Maximum round score is 100 points.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 03</div>
+              <h4>Direct Git Commit Verification</h4>
+              <p>No score may be awarded solely on slide presentations or Figma designs. Mentors must inspect the team's live repository, verify commit cadence during the 36-hour sprint, and confirm that core business logic was authored at Udbhav 2027.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 04</div>
+              <h4>Strict Anti-Plagiarism &amp; Fresh Code Policy</h4>
+              <p>Pre-written codebases and uncredited boilerplate are grounds for immediate disqualification. Open-source libraries and APIs are permitted, but architectural glue, custom algorithms, and system integrations must be fresh sprint commits.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 05</div>
+              <h4>Conflict of Interest &amp; Mandatory Recusal</h4>
+              <p>Mentors must immediately recuse themselves from evaluating squads where personal, familial, collegiate lab, or direct institutional affiliations exist. The Master Admin will reassign alternate jury evaluators.</p>
+            </div>
+
+            <div class="mrg-item">
+              <div class="mrg-badge">RULE 06</div>
+              <h4>Constructive Engineering Feedback Mandate</h4>
+              <p>Every evaluated scorecard must contain at least one specific technical commendation and one actionable engineering critique to guide the squad toward production viability.</p>
+            </div>
+
+            <div class="mrg-item mrg-span-2">
+              <div class="mrg-badge accent-purple">RULE 07</div>
+              <h4>Cryptographic Timestamping &amp; Score Lockdown</h4>
+              <p>Locked scores are cryptographically timestamped and transmitted directly to the Master Admin console and live standings. Once locked, adjustments require Master Admin authorization to ensure zero tampering or scoring embargo leaks.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           3B. STANDARDIZED 3-ROUND & 5-PARAMETER EVALUATION RUBRIC (EXPANDABLE)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-rubric-card">
+        <div class="men-rubric-header" onclick="mentorPortal.toggleRubric()" role="button" tabindex="0" title="Click to expand/collapse rubric criteria">
+          <div class="mrh-left">
+            <span class="mrh-icon">📋</span>
+            <div>
+              <h2 class="mrh-title">STANDARDIZED 3-ROUND &amp; 5-PARAMETER EVALUATION RUBRIC</h2>
+              <p class="mrh-sub">5 Parameters &bull; 0–20 pts each &bull; 100 points max per round &bull; 300 points grand total &bull; Click to toggle</p>
+            </div>
+          </div>
+          <button type="button" class="mrh-toggle-btn" id="rubricToggleBtn" aria-label="Toggle rubric details">
+            <span id="rubricToggleText">VIEW RUBRIC CRITERIA</span>
+            <span class="mrh-arr" id="rubricToggleArr">▼</span>
+          </button>
+        </div>
+
+        <div class="men-rubric-content" id="menRubricDetails" style="display:none;">
+          <!-- 3-Round Lifecycle Banner -->
+          <div class="men-rounds-overview-banner">
+            <div class="mrob-item">
+              <span class="mrob-badge round-1">ROUND 1</span>
+              <h5>Ideation &amp; Feasibility</h5>
+              <p>Early check: Problem comprehension, novel approach, architectural blueprint &amp; research validity.</p>
+            </div>
+            <div class="mrob-arrow">&rarr;</div>
+            <div class="mrob-item">
+              <span class="mrob-badge round-2">ROUND 2</span>
+              <h5>Architecture &amp; Prototype</h5>
+              <p>Midway check: Functional core engine, modular code, API/smart contract wiring &amp; test harness.</p>
+            </div>
+            <div class="mrob-arrow">&rarr;</div>
+            <div class="mrob-item">
+              <span class="mrob-badge round-3">ROUND 3</span>
+              <h5>Finale Production &amp; Demo</h5>
+              <p>Final defense: End-to-end working system, zero-crash live demo, UI/UX polish &amp; jury defense.</p>
+            </div>
+          </div>
+
+          <div class="mrc-grid">
+            <div class="mrc-item">
+              <div class="mrc-num">01</div>
+              <div class="mrc-body">
+                <h4>1. Innovation &amp; Conceptual Novelty (0–20 pts)</h4>
+                <p>Originality of core concept, non-trivial approach, uniqueness beyond stock boilerplate templates, creative multi-agent, cryptographic, or algorithmic architecture.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Derivative / Boilerplate</span>
+                  <span><strong>10 pts:</strong> Good Practical Twist</span>
+                  <span><strong>15 pts:</strong> Strong Unique Pivot</span>
+                  <span><strong>20 pts:</strong> Breakthrough Innovation</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">02</div>
+              <div class="mrc-body">
+                <h4>2. Technical Architecture &amp; Code Quality (0–20 pts)</h4>
+                <p>Repository cleanliness, commit cadence, modular system architecture, robust error boundaries, API/smart-contract security, test suite, and performance benchmarks.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Unstructured / Fragile</span>
+                  <span><strong>10 pts:</strong> Functional Modules</span>
+                  <span><strong>15 pts:</strong> Clean &amp; Resilient</span>
+                  <span><strong>20 pts:</strong> Production-Grade Excellence</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">03</div>
+              <div class="mrc-body">
+                <h4>3. Practical Feasibility &amp; Scalability (0–20 pts)</h4>
+                <p>Real-world viability, economic rationale, addressable market impact, infrastructure efficiency, latency bounds, operational maintainability, and cloud/edge scalability.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Theoretical Only</span>
+                  <span><strong>10 pts:</strong> Actionable MVP</span>
+                  <span><strong>15 pts:</strong> High Scalability</span>
+                  <span><strong>20 pts:</strong> Enterprise Ready</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">04</div>
+              <div class="mrc-body">
+                <h4>4. UI/UX Craft &amp; User Experience (0–20 pts)</h4>
+                <p>Visual elegance, intuitive user flow, accessibility, state responsiveness, error feedback, micro-interactions, and clear data visualization.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Rudimentary UI</span>
+                  <span><strong>10 pts:</strong> Clean Layout</span>
+                  <span><strong>15 pts:</strong> Polished UX Flow</span>
+                  <span><strong>20 pts:</strong> World-Class Aesthetic</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mrc-item">
+              <div class="mrc-num">05</div>
+              <div class="mrc-body">
+                <h4>5. Working Prototype, Polish &amp; Jury Defense (0–20 pts)</h4>
+                <p>Live working demonstration with zero runtime crashes, handling of realistic edge cases, articulate technical pitch, and depth of technical defense during mentor Q&amp;A.</p>
+                <div class="mrc-rubric-scale">
+                  <span><strong>5 pts:</strong> Mockups / Crashes</span>
+                  <span><strong>10 pts:</strong> Partial Working Demo</span>
+                  <span><strong>15 pts:</strong> Flawless Live Demo</span>
+                  <span><strong>20 pts:</strong> Exemplary Demo &amp; Defense</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           4. TELEMETRY & METRICS HUD
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-metrics-grid">
+        <!-- Metric 1: Total Squads -->
+        <div class="men-metric-card bc-total">
+          <div class="mmc-content">
+            <div class="men-metric-label">TOTAL REGISTERED SQUADS</div>
+            <div class="men-metric-val" id="menMetricTotal">--</div>
+            <div class="mmc-sub">Across All Tracks &amp; Universities</div>
+          </div>
+          <div class="mmc-icon">👥</div>
+        </div>
+
+        <!-- Metric 2: Evaluated & Locked -->
+        <div class="men-metric-card bc-locked">
+          <div class="mmc-content">
+            <div class="men-metric-label">EVALUATED &amp; LOCKED</div>
+            <div class="men-metric-val" id="menMetricLocked" style="color:var(--men-green);">--</div>
+            <!-- Progress Bar -->
+            <div class="men-audit-bar-wrap">
+              <div class="men-audit-bar-fill" id="menAuditProgressFill" style="width:0%;"></div>
+            </div>
+            <div class="mmc-sub" id="menAuditProgressText">0% Jury Audit Complete</div>
+          </div>
+          <div class="mmc-icon">🔒</div>
+        </div>
+
+        <!-- Metric 3: Pending Review -->
+        <div class="men-metric-card bc-pending">
+          <div class="mmc-content">
+            <div class="men-metric-label">PENDING REVIEW</div>
+            <div class="men-metric-val" id="menMetricPending" style="color:var(--men-orange);">--</div>
+            <div class="mmc-sub">Awaiting Scorecard Submission</div>
+          </div>
+          <div class="mmc-icon">⏳</div>
+        </div>
+
+        <!-- Metric 4: Average Score -->
+        <div class="men-metric-card bc-avg">
+          <div class="mmc-content">
+            <div class="men-metric-label">AVERAGE JURY SCORE</div>
+            <div class="men-metric-val" id="menMetricAvg" style="color:var(--men-cyan);">--</div>
+            <div class="mmc-sub">Mean across locked assessments</div>
+          </div>
+          <div class="mmc-icon">📈</div>
+        </div>
+
+        <!-- Metric 5: Podium Contenders (S-Tier) -->
+        <div class="men-metric-card bc-podium">
+          <div class="mmc-content">
+            <div class="men-metric-label">PODIUM CONTENDERS</div>
+            <div class="men-metric-val" id="menMetricPodium" style="color:#FFD700;">--</div>
+            <div class="mmc-sub">S-Tier (90+ Score Threshold)</div>
+          </div>
+          <div class="mmc-icon">🏆</div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           5. MULTI-FACETED TOOLBAR (SEARCH + DOMAIN + STATUS + SORT)
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-toolbar-card">
+        <div class="men-toolbar-top-row">
+          <!-- Search Bar -->
+          <div class="men-search-wrap">
+            <span class="men-search-icon">🔍</span>
+            <input type="text" id="mentorSearchInput" class="men-search-input" placeholder="Search by team name, pass code, leader, track, or PS id..." oninput="mentorPortal.renderTeams()" />
+            <button type="button" class="men-search-clear" onclick="mentorPortal.clearSearch()" id="menSearchClearBtn" title="Clear Search">✕</button>
+          </div>
+
+          <!-- Sort Selector -->
+          <div class="men-sort-wrap">
+            <span class="men-sort-label">SORT BY:</span>
+            <select id="mentorSortSelect" class="men-sort-select" onchange="mentorPortal.setSort(this.value)">
+              <option value="score-desc">Highest Score First</option>
+              <option value="score-asc">Lowest Score First</option>
+              <option value="pending-first">Pending Review First</option>
+              <option value="name-asc">Team Name (A–Z)</option>
+              <option value="code-asc">Passcode (A–Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Row 1: Status Filters -->
+        <div class="men-filter-status-row">
+          <span class="men-filter-heading">STATUS:</span>
+          <div class="men-filter-pills" id="menStatusFilterGroup">
+            <button type="button" class="men-filter-btn active" onclick="mentorPortal.setFilter('all', this)">
+              <span>ALL SQUADS</span>
+              <span class="mfb-count" id="countFilterAll">0</span>
+            </button>
+            <button type="button" class="men-filter-btn" onclick="mentorPortal.setFilter('pending', this)">
+              <span>⏳ PENDING</span>
+              <span class="mfb-count" id="countFilterPending">0</span>
+            </button>
+            <button type="button" class="men-filter-btn" onclick="mentorPortal.setFilter('locked', this)">
+              <span>🔒 LOCKED BY ME</span>
+              <span class="mfb-count" id="countFilterLocked">0</span>
+            </button>
+            <button type="button" class="men-filter-btn" onclick="mentorPortal.setFilter('s-tier', this)">
+              <span>🏆 S-TIER PODIUM (90+)</span>
+              <span class="mfb-count" id="countFilterSTier">0</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Row 2: Track / Domain Filters -->
+        <div class="men-filter-track-row">
+          <span class="men-filter-heading">DOMAIN / TRACK:</span>
+          <div class="men-track-pills" id="menTrackFilterGroup">
+            <button type="button" class="men-track-btn active" onclick="mentorPortal.setTrack('all', this)">All Domains</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('AI/ML', this)">🤖 AI/ML</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('Web3', this)">⚡ Web3</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('CyberSecurity', this)">🛡️ CyberSecurity</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('HealthTech', this)">🏥 HealthTech</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('FinTech', this)">💳 FinTech</button>
+            <button type="button" class="men-track-btn" onclick="mentorPortal.setTrack('Open Innovation', this)">🚀 Open Innovation</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           6. SQUADS EVALUATION CARDS GRID
+      ════════════════════════════════════════════════════════════════ -->
+      <section class="men-teams-section">
+        <div class="men-section-head">
+          <div class="msh-left">
+            <h3 class="msh-title">ASSIGNED SQUADS &amp; EVALUATION DOSSIERS</h3>
+            <span class="msh-counter" id="menShowingSquadsCount">Showing 0 squads</span>
+          </div>
+          <div class="msh-right">
+            <button type="button" class="men-refresh-btn" onclick="mentorPortal.render()" title="Refresh Evaluation Workspace">
+              <span>↻ REFRESH SQUADS</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="men-teams-grid" id="mentorTeamsGrid">
+          <!-- Rendered dynamically via mentor.js -->
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           7. UNIVERSAL PLATFORM FOOTER & SWITCHER
+      ════════════════════════════════════════════════════════════════ -->
+      <footer class="men-footer-deck">
+        <div class="mfd-top">
+          <div class="mfd-brand">
+            <div class="mfd-logo">⚖️ UDBHAV <strong>2027</strong></div>
+            <p>Official Jury &amp; Mentor Terminal &bull; National 36-Hour Innovation Sprint &bull; PIET Jaipur &bull; Hack2Skill &times; GGC</p>
+          </div>
+          <div class="mfd-links">
+            <span class="mfd-links-title">PLATFORM ECOSYSTEM:</span>
+            <a href="index.html" target="_blank" class="mfd-link">🏠 Main Website</a>
+            <a href="index.html#theme" target="_blank" class="mfd-link accent-orange">🔥 Theme Reveal &amp; PS Vault</a>
+            <a href="index.html#standings" target="_blank" class="mfd-link accent-gold">🏆 Official Standings</a>
+            <a href="admin.html" target="_blank" class="mfd-link accent-purple">⚙️ Master Admin Operations</a>
+          </div>
+        </div>
+        <div class="mfd-bottom">
+          <span>&copy; 2027 Udbhav National Hackathon &bull; Jury Clearance Embargo Active &bull; All evaluations timestamped &amp; audited</span>
+        </div>
+      </footer>
+
+    </main>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       8. HIGH-PRECISION EVALUATION & RUBRIC MODAL
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="mentorEvalModal" class="men-modal-backdrop" onclick="if(event.target===this) mentorPortal.closeEvaluationModal()">
+    <div class="men-modal-card">
+      
+      <!-- Modal Header -->
+      <div class="men-modal-head">
+        <div>
+          <div class="men-modal-kicker">
+            <span class="mmk-dot"></span>
+            <span>JURY EVALUATION DOSSIER</span>
+          </div>
+          <h3 id="menModalTeamTitle" class="men-modal-title">Squad Name</h3>
+          <div id="menModalTeamMeta" class="men-modal-meta">Track • PS • Leader</div>
+        </div>
+        <button type="button" class="men-modal-close" onclick="mentorPortal.closeEvaluationModal()" title="Close scorecard (Esc)" aria-label="Close modal">✕</button>
+      </div>
+
+      <!-- Problem Statement Context Banner -->
+      <div class="men-modal-ps-box">
+        <div class="mmps-badge">
+          <span class="mmps-tag" id="menModalPsIdBadge">PS-01</span>
+          <span class="mmps-category" id="menModalPsCategoryBadge">AI/ML</span>
+        </div>
+        <h4 class="mmps-title" id="menModalPsTitle">Problem Statement Title</h4>
+        <p class="mmps-desc" id="menModalPsDesc">Problem statement requirements and target objectives.</p>
+        <a id="menModalPsLink" href="index.html#theme" target="_blank" class="mmps-external-btn">
+          <span>Inspect Full Challenge on Theme Reveal ↗</span>
+        </a>
+      </div>
+
+      <!-- Deliverables Quick Verification Bar -->
+      <div class="men-modal-deliverables-row">
+        <span class="mmd-label">SUBMISSIONS:</span>
+        <div class="mmd-links" id="menModalDeliverables">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- 4 Standardized Sliders -->
+      <div class="men-sliders-container">
+
+        <!-- Slider 1: Innovation -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">💡</span>
+              <div>
+                <strong>1. Innovation &amp; Novelty</strong>
+                <span class="msl-sub">Breakthrough idea, unique multi-agent/cryptographic pivot, non-trivial approach</span>
+              </div>
+            </div>
+            <span class="men-slider-score-display" id="menValInnovation">20</span>
+          </div>
+          <input type="range" id="menRangeInnovation" class="men-slider" min="0" max="25" value="20" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Innovation', 10)">10 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Innovation', 15)">15 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Innovation', 20)">20 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Innovation', 25)">25 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Slider 2: Technical Execution -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">⚙️</span>
+              <div>
+                <strong>2. Technical Execution &amp; Code Quality</strong>
+                <span class="msl-sub">Clean modular architecture, repo health, commit cadence, resilience</span>
+              </div>
+            </div>
+            <span class="men-slider-score-display" id="menValTechnical">20</span>
+          </div>
+          <input type="range" id="menRangeTechnical" class="men-slider" min="0" max="25" value="20" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Technical', 10)">10 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Technical', 15)">15 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Technical', 20)">20 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Technical', 25)">25 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Slider 3: Practical Feasibility -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">📈</span>
+              <div>
+                <strong>3. Practical Feasibility &amp; Scalability</strong>
+                <span class="msl-sub">Real-world deployment readiness, viable unit economics, addressable market</span>
+              </div>
+            </div>
+            <span class="men-slider-score-display" id="menValFeasibility">20</span>
+          </div>
+          <input type="range" id="menRangeFeasibility" class="men-slider" min="0" max="25" value="20" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Feasibility', 10)">10 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Feasibility', 15)">15 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Feasibility', 20)">20 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Feasibility', 25)">25 Flawless</button>
+          </div>
+        </div>
+
+        <!-- Slider 4: UI/UX & Presentation -->
+        <div class="men-score-slider-row">
+          <div class="men-slider-label-wrap">
+            <div class="msl-title">
+              <span class="msl-icon">🎨</span>
+              <div>
+                <strong>4. UI/UX Polish &amp; Pitch Delivery</strong>
+                <span class="msl-sub">Visual elegance, frictionless flow, live demo clarity, technical defense</span>
+              </div>
+            </div>
+            <span class="men-slider-score-display" id="menValPresentation">20</span>
+          </div>
+          <input type="range" id="menRangePresentation" class="men-slider" min="0" max="25" value="20" oninput="mentorPortal.onSliderInput()" />
+          <!-- Presets -->
+          <div class="men-slider-presets">
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Presentation', 10)">10 Basic</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Presentation', 15)">15 Good</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Presentation', 20)">20 Strong</button>
+            <button type="button" class="msp-preset-btn" onclick="mentorPortal.setCriterionVal('Presentation', 25)">25 Flawless</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Live Total Score HUD -->
+      <div class="men-total-box">
+        <div class="mtb-left">
+          <div class="mtb-label">AGGREGATE JURY SCORE</div>
+          <div class="mtb-score-row">
+            <span id="menModalTotalNum" class="mtb-score-val">80</span>
+            <span class="mtb-score-denom">/ 100</span>
+          </div>
+        </div>
+        <div class="mtb-right">
+          <span id="menModalTierBadge" class="men-score-tier tier-a">⭐ A-TIER · HIGH MERIT</span>
+          <span class="mtb-evaluator-stamp" id="menModalEvaluatorStamp">Evaluator: Dr. Alok Sharma</span>
+        </div>
+      </div>
+
+      <!-- Qualitative Feedback Field with Quick Suggestion Chips -->
+      <div class="men-remarks-section">
+        <div class="mrs-header">
+          <label for="menModalRemarks" class="mrs-label">
+            <span>QUALITATIVE OBSERVATIONS &amp; JURY FEEDBACK:</span>
+          </label>
+          <span class="mrs-hint">Click tags below to auto-insert feedback</span>
+        </div>
+
+        <!-- Quick Tags -->
+        <div class="men-quick-tags-row">
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Exceptional modular architecture &amp; clean repo structure.')">+ Clean Architecture</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Flawless live demo with zero runtime crashes.')">+ Solid Live Demo</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Impressive novel application of autonomous agents.')">+ Novel Agentic Approach</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('High aesthetic polish and intuitive user experience.')">+ Exceptional UI Polish</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Recommend hardening API edge-case validation and error bounds.')">+ Add Error Bounds</button>
+          <button type="button" class="mqt-btn" onclick="mentorPortal.insertRemark('Add end-to-end integration test coverage prior to production.')">+ Add Test Coverage</button>
+        </div>
+
+        <textarea id="menModalRemarks" class="men-input" rows="3" placeholder="Highlight technical strengths, code architecture quality, live demo polish, or recommendations for the final podium round..."></textarea>
+      </div>
+
+      <!-- Modal Action Buttons -->
+      <div class="men-modal-actions">
+        <button type="button" class="men-btn-secondary" onclick="mentorPortal.closeEvaluationModal()">
+          <span>CANCEL</span>
+        </button>
+        <button type="button" class="men-btn-draft" onclick="mentorPortal.saveScore(false)">
+          <span>💾 SAVE DRAFT (EDITABLE)</span>
+        </button>
+        <button type="button" class="men-btn-lock" onclick="mentorPortal.saveScore(true)">
+          <span>🔒 LOCK &amp; SUBMIT SCORE TO ADMIN</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="mentor.js"></script>
+  <!-- Toast Notification Container -->
+  <div id="menToast" class="men-toast" aria-live="polite"></div>
+</body>
+</html>
+
+

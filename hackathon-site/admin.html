@@ -1,0 +1,752 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Orchestration Console · HACKATHON 2027</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- Ambient Cyber Backdrop -->
+  <div class="adm-ambient-bg" aria-hidden="true"></div>
+  <div class="adm-grid-overlay" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       MASTER PASSCODE AUTHENTICATION GATE
+  ════════════════════════════════════════════════════════════════ -->
+    <div id="adminGateScreen" class="adm-gate-screen">
+    <div class="adm-gate-card">
+      <div class="adm-gate-icon">
+        <span class="adm-gate-glow-pulse"></span>
+        <span class="adm-icon-symbol">&#128274;</span>
+      </div>
+      <div class="adm-gate-kicker">&#128274; CONFIDENTIAL &bull; LEVEL 4 ORGANIZER CLEARANCE</div>
+      <h2 class="adm-gate-title">ADMIN CONTROL TERMINAL</h2>
+      <p class="adm-gate-desc">
+        Restricted orchestration terminal for Udbhav 2027 organizers. Manage Problem Statements, team submissions, scoring embargo, and live podium standings.
+      </p>
+
+      <form onsubmit="event.preventDefault(); admOrchestrator.authenticate();">
+        <div class="adm-pass-wrap">
+          <span class="adm-pass-icon">&#9919;</span>
+          <input type="password" id="adminMasterPassInput" class="adm-pass-input" placeholder="Enter Master Passcode..." autofocus autocomplete="current-password" />
+          <button type="button" class="adm-pass-toggle" onclick="admOrchestrator.togglePassVisibility()" title="Toggle Password Visibility">&#128065;</button>
+        </div>
+        <button type="submit" id="adminUnlockBtn" class="adm-btn-primary">
+          <span>UNLOCK MASTER CONSOLE</span>
+          <span>&#10140;</span>
+        </button>
+        <button type="button" class="adm-btn-sec" onclick="admOrchestrator.quickFillPass('Rishi@5630dr')" style="margin-top:12px;width:100%;background:rgba(255,87,34,0.14);border:1.5px solid rgba(255,87,34,0.45);color:#FF5722;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;cursor:pointer;font-size:0.85rem;" title="One-click unlock with Master Organizer Passcode">
+          <span>👑 ONE-CLICK MASTER UNLOCK (Rishi@5630dr)</span>
+        </button>
+      </form>
+
+      <div id="adminGateFeedback" class="adm-gate-feedback"></div>
+
+      <div class="adm-security-footer">
+        <span>&#128274; Confidential Organizer Console &bull; Direct Link Only &bull; 256-Bit TLS</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       ADMIN APP MAIN CONTAINER
+  ════════════════════════════════════════════════════════════════ -->
+  <div class="adm-app">
+
+    <!-- Navbar -->
+    <header class="adm-navbar">
+      <a href="admin.html" class="adm-nav-brand">
+        <div class="adm-brand-shield">⚙️</div>
+        <div class="adm-brand-text">
+          <h1>HACKATHON 2027 <span class="adm-brand-badge">ADMIN</span></h1>
+        </div>
+      </a>
+
+      <div class="adm-clock-badge" id="admClockBadge" style="font-family:'Space Grotesk',monospace;font-size:0.75rem;font-weight:700;color:#00f5d4;background:rgba(0,245,212,0.08);border:1px solid rgba(0,245,212,0.25);padding:6px 12px;border-radius:999px;letter-spacing:1px;" title="Synchronized IST Mission Control Telemetry">
+        <span>00:00:00 IST</span>
+      </div>
+
+      <div class="adm-nav-links">
+        <a href="index.html#theme" target="_blank" class="adm-nav-btn accent" title="Open Theme Reveal">
+          <span>THEME REVEAL</span>
+          <span>↗</span>
+        </a>
+        <a href="mentor.html" target="_blank" class="adm-nav-btn" title="Open Mentor Evaluation Portal">
+          <span>MENTOR PORTAL</span>
+          <span>↗</span>
+        </a>
+        <a href="index.html#standings" target="_blank" class="adm-nav-btn" title="Open Official Standings">
+          <span>STANDINGS</span>
+          <span>↗</span>
+        </a>
+        <a href="index.html" target="_blank" class="adm-nav-btn" title="Open Main Website">
+          <span>MAIN SITE</span>
+          <span>↗</span>
+        </a>
+        <button type="button" class="adm-nav-btn danger" onclick="admOrchestrator.logout()" title="Log out from Admin console">
+          <span>LOGOUT</span>
+          <span>🔒</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="adm-main-wrap">
+
+      <!-- Metrics Row -->
+      <section class="adm-metrics-grid">
+        <div class="adm-metric-card">
+          <div class="adm-metric-info">
+            <span class="adm-metric-label">REGISTERED TEAMS</span>
+            <span class="adm-metric-val" id="metricTotalTeams">--</span>
+          </div>
+          <div class="adm-metric-icon">👥</div>
+        </div>
+
+        <div class="adm-metric-card">
+          <div class="adm-metric-info">
+            <span class="adm-metric-label">SUBMISSIONS RECEIVED</span>
+            <span class="adm-metric-val" id="metricSubmissions">--</span>
+          </div>
+          <div class="adm-metric-icon">📦</div>
+        </div>
+
+        <div class="adm-metric-card">
+          <div class="adm-metric-info">
+            <span class="adm-metric-label">SCORED BY MENTORS</span>
+            <span class="adm-metric-val" id="metricMentorLocked">--</span>
+          </div>
+          <div class="adm-metric-icon">⚖️</div>
+        </div>
+
+        <div class="adm-metric-card">
+          <div class="adm-metric-info">
+            <span class="adm-metric-label">ADMIN FINAL APPROVED</span>
+            <span class="adm-metric-val" id="metricAdminApproved">--</span>
+          </div>
+          <div class="adm-metric-icon">✓</div>
+        </div>
+
+        <div class="adm-metric-card">
+          <div class="adm-metric-info">
+            <span class="adm-metric-label">STANDINGS PUBLISHED</span>
+            <span class="adm-metric-val" id="metricStandingsStatus" style="font-size:1.6rem;">--</span>
+          </div>
+          <div class="adm-metric-icon">🏆</div>
+        </div>
+      </section>
+
+      <!-- Tab Controller -->
+      <nav class="adm-tab-bar" aria-label="Admin Navigation Tabs">
+        <button class="adm-tab-btn active" data-tab="theme" onclick="admOrchestrator.switchTab('theme')">
+          <span>⚡ THEME & SYSTEM CONTROL</span>
+        </button>
+        <button class="adm-tab-btn" data-tab="ps" onclick="admOrchestrator.switchTab('ps')">
+          <span>📋 10 PROBLEM STATEMENTS</span>
+          <span class="adm-tab-count" id="countTabPS">10</span>
+        </button>
+        <button class="adm-tab-btn" data-tab="teams" onclick="admOrchestrator.switchTab('teams')">
+          <span>👥 TEAMS & SUBMISSIONS</span>
+          <span class="adm-tab-count" id="countTabTeams">0</span>
+        </button>
+        <button class="adm-tab-btn" data-tab="scores" onclick="admOrchestrator.switchTab('scores')">
+          <span>🏆 MENTOR SCORES & FINAL LOCK</span>
+          <span class="adm-tab-count" id="countTabScores">0</span>
+        </button>
+        <button class="adm-tab-btn" data-tab="mentors" onclick="admOrchestrator.switchTab('mentors')">
+          <span>👨‍🏫 MENTORS & JURY</span>
+          <span class="adm-tab-count" id="countTabMentors">0</span>
+        </button>
+        <button class="adm-tab-btn" data-tab="data" onclick="admOrchestrator.switchTab('data')">
+          <span>💾 DATA & BACKUP</span>
+        </button>
+      </nav>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           TAB 1: THEME REVEAL & SYSTEM CONTROL
+      ════════════════════════════════════════════════════════════════ -->
+      <section id="tab-theme" class="adm-panel-section active">
+        <div class="adm-grid-2col">
+
+          <!-- Left: Theme Reveal Privacy & Stage Controls -->
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <h3 class="adm-card-title">👁️ THEME REVEAL EMBARGO & PRIVACY</h3>
+              <span id="themeCurrentStatusPill" class="adm-badge orange">LOCKED</span>
+            </div>
+            <p class="adm-card-sub">
+              Control whether the official Hackathon theme and 10 Problem Statements are public, or restricted strictly to Admin preview.
+            </p>
+
+            <!-- Toggle: Just Visible To Me -->
+            <div class="adm-toggle-row">
+              <div class="adm-toggle-text">
+                <strong>JUST VISIBLE TO ME (ADMIN ONLY MODE)</strong>
+                <span>When activated, public visitors on <code>/theme-reveal</code> see the locked countdown vault. Only logged-in admin can view live problem statements.</span>
+              </div>
+              <label class="adm-switch">
+                <input type="checkbox" id="toggleThemeAdminOnly" onchange="admOrchestrator.toggleThemeAdminOnly(this.checked)">
+                <span class="adm-slider"></span>
+              </label>
+            </div>
+
+            <!-- State Trigger Buttons -->
+            <div style="margin-top:20px;">
+              <span class="adm-metric-label">SET REVEAL STATE:</span>
+              <div class="adm-btn-row">
+                <button type="button" class="adm-btn-sec btn-theme-state" data-state="locked" onclick="admOrchestrator.setThemeState('locked')">
+                  <span>🔒 LOCK VAULT</span>
+                </button>
+                <button type="button" class="adm-btn-sec btn-theme-state" data-state="countdown" onclick="admOrchestrator.setThemeState('countdown')">
+                  <span>🏁 TRIGGER 10s F1 COUNTDOWN</span>
+                </button>
+                <button type="button" class="adm-btn-sec btn-theme-state" data-state="live" onclick="admOrchestrator.setThemeState('live')">
+                  <span>🟢 MAKE PUBLICLY LIVE</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Direct Preview Link -->
+            <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--adm-border);">
+              <a href="index.html#theme" target="_blank" class="adm-btn-primary" style="text-decoration:none;">
+                <span>PREVIEW THEME REVEAL PAGE IN NEW TAB</span>
+                <span>↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Right: Leaderboard & Standings Publisher -->
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <h3 class="adm-card-title">🏆 STANDINGS & LEADERBOARD PUBLISHER</h3>
+            </div>
+            <p class="adm-card-sub">
+              Once mentors complete scoring and admin reviews the results, publish the official standings so teams and guests can view their positions.
+            </p>
+
+            <!-- Toggle: Publish Standings -->
+            <div class="adm-toggle-row">
+              <div class="adm-toggle-text">
+                <strong>PUBLISH OFFICIAL STANDINGS TO PUBLIC</strong>
+                <span>When enabled, the final rankings and podium showcase become publicly viewable on <code>/standings</code> and on <code>/theme-reveal</code>.</span>
+              </div>
+              <label class="adm-switch">
+                <input type="checkbox" id="toggleStandingsPublished" onchange="admOrchestrator.toggleStandingsPublished(this.checked)">
+                <span class="adm-slider"></span>
+              </label>
+            </div>
+
+            <!-- Standings Quick Actions -->
+            <div style="margin-top:20px;">
+              <span class="adm-metric-label">QUICK ACTIONS:</span>
+              <div class="adm-btn-row">
+                <button type="button" class="adm-btn-sec" onclick="admOrchestrator.approveAllEvaluatedTeams()">
+                  <span>✓ BATCH APPROVE ALL EVALUATED TEAMS</span>
+                </button>
+                <a href="index.html#standings" target="_blank" class="adm-btn-sec" style="text-decoration:none;">
+                  <span>VIEW STANDINGS PAGE ↗</span>
+                </a>
+              </div>
+            </div>
+
+            <div style="margin-top:24px;padding-top:18px;border-top:1px solid var(--adm-border);font-family:var(--adm-font-mono);font-size:0.75rem;color:var(--adm-text-muted);">
+              <strong>💡 Pro Tip:</strong> Teams can be scored by multiple mentors on the <a href="mentor.html" target="_blank" style="color:var(--adm-orange);">Mentor Portal</a>. Admin has final override and locking authority.
+            </div>
+          </div>
+
+          <!-- ════════════════════════════════════════════════════════════════
+               360° MATRIX WALL & THEME REVEAL COMMAND CONTROLLER
+          ════════════════════════════════════════════════════════════════ -->
+          <div class="adm-card adm-theme-matrix-card" style="grid-column: 1 / -1; margin-top: 10px; border: 1px solid rgba(255, 87, 34, 0.4); background: linear-gradient(180deg, #161b22 0%, #0d1117 100%); box-shadow: 0 10px 30px rgba(0,0,0,0.45);">
+            <div class="adm-card-head" style="border-bottom: 1px solid var(--adm-border); padding-bottom: 14px;">
+              <div>
+                <h3 class="adm-card-title" style="display: flex; align-items: center; gap: 8px;">
+                  <span>🧩 360° MATRIX WALL &amp; THEME REVEAL COMMAND CONSOLE</span>
+                </h3>
+                <p class="adm-card-sub" style="margin: 4px 0 0;">
+                  Set the official Hackathon Theme Name, tagline, and trigger the synchronized 360° matrix wall flip and reveal broadcast across all connected public screens.
+                </p>
+              </div>
+              <div style="display: flex; align-items: center; gap: 10px;">
+                <span id="admMatrixSyncBadge" class="adm-badge green" style="font-size: 0.72rem; padding: 4px 10px;">
+                  ● LIVE BROADCAST SYNC ACTIVE
+                </span>
+              </div>
+            </div>
+
+            <!-- Inputs for Theme Name & Tagline -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 18px;">
+              <div>
+                <label style="display: block; font-family: var(--adm-font-mono); font-size: 0.75rem; color: var(--adm-text-muted); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                  OFFICIAL THEME NAME (Displayed on 360° Matrix Wall)
+                </label>
+                <input type="text" id="admThemeNameInput" class="adm-search-input" style="width: 100%; font-size: 0.95rem; font-weight: 700; color: #ff5722; border-color: rgba(255, 87, 34, 0.4);" placeholder="e.g. EXPONENTIAL INTELLIGENCE &amp; DECENTRALIZED PROTOCOLS" value="EXPONENTIAL INTELLIGENCE &amp; DECENTRALIZED PROTOCOLS" oninput="this.dataset.userEdited='true'" />
+              </div>
+              <div>
+                <label style="display: block; font-family: var(--adm-font-mono); font-size: 0.75rem; color: var(--adm-text-muted); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                  THEME TAGLINE / FOCUS AREAS (Unveiled on Decryption)
+                </label>
+                <input type="text" id="admThemeTaglineInput" class="adm-search-input" style="width: 100%; font-size: 0.9rem;" placeholder="e.g. Autonomous Agents, Web3 Sovereignty, Neuro-Symbolic Computing &amp; Climate Intelligence" value="Autonomous Agents, Web3 Sovereignty, Neuro-Symbolic Computing &amp; Climate Intelligence" oninput="this.dataset.userEdited='true'" />
+              </div>
+            </div>
+
+            <!-- Scheduled Reveal Date & Time Picker + Auto Trigger -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 16px; align-items: center;">
+              <div>
+                <label style="display: block; font-family: var(--adm-font-mono); font-size: 0.75rem; color: var(--adm-text-muted); margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                  SCHEDULED OFFICIAL REVEAL DATE &amp; TIME (IST)
+                </label>
+                <div style="display: flex; gap: 10px;">
+                  <input type="datetime-local" id="admThemeScheduleInput" class="adm-search-input" style="flex: 1; font-size: 0.85rem;" value="2027-01-28T09:00" />
+                  <button type="button" class="adm-btn-sec" onclick="admOrchestrator.saveThemeDetails()" style="white-space: nowrap;">
+                    <span>💾 SAVE DETAILS</span>
+                  </button>
+                </div>
+              </div>
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px dashed var(--adm-border); border-radius: 8px; padding: 12px 16px;">
+                <div style="font-family: var(--adm-font-mono); font-size: 0.75rem; color: var(--adm-text-muted); margin-bottom: 4px;">CURRENT MATRIX WALL STATE:</div>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                  <span id="admMatrixWallStatusText" style="font-size: 0.92rem; font-weight: 800; color: #ff5722;">LOCKED (AES-256 CIPHER TILES)</span>
+                  <span style="font-size: 0.75rem; color: var(--adm-text-muted);">Channels: hs27_theme_sync</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Command Action Buttons -->
+            <div style="margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--adm-border);">
+              <label style="display: block; font-family: var(--adm-font-mono); font-size: 0.75rem; color: var(--adm-text-muted); margin-bottom: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+                LIVE BROADCAST COMMANDS (Executes Instantly Across All Devices):
+              </label>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button type="button" class="adm-btn-primary" style="background: linear-gradient(135deg, #ff5722 0%, #ff8a00 100%); font-weight: 800; padding: 12px 24px; box-shadow: 0 4px 18px rgba(255, 87, 34, 0.4);" onclick="admOrchestrator.trigger360ThemeReveal()">
+                  <span>🚀 TRIGGER 360° THEME REVEAL NOW</span>
+                </button>
+                <button type="button" class="adm-btn-sec" style="font-weight: 700;" onclick="admOrchestrator.reLockMatrixWall()">
+                  <span>🔒 RE-LOCK MATRIX WALL (CIPHER MODE)</span>
+                </button>
+                <button type="button" class="adm-btn-sec" style="font-weight: 700;" onclick="admOrchestrator.broadcastMatrixSpin360()">
+                  <span>🔄 PREVIEW 360° ROTATION SPIN</span>
+                </button>
+                <button type="button" class="adm-btn-sec" style="font-weight: 700;" onclick="admOrchestrator.broadcastMatrixTileRipple()">
+                  <span>⚡ PULSE MATRIX CASCADE WAVE</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           TAB 2: 10 PROBLEM STATEMENTS MANAGER
+      ════════════════════════════════════════════════════════════════ -->
+      <section id="tab-ps" class="adm-panel-section">
+        <div class="adm-card" style="margin-bottom:24px;">
+          <div class="adm-card-head">
+            <div>
+              <h3 class="adm-card-title">📋 10 OFFICIAL PROBLEM STATEMENTS</h3>
+              <p class="adm-card-sub" style="margin:4px 0 0;">
+                Edit titles, technical descriptions, domains, and capacity limits. Changes synchronize instantly across the entire platform.
+              </p>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button type="button" class="adm-btn-sec" onclick="admOrchestrator.resetProblemStatementsToDefault()">
+                <span>RESTORE DEFAULTS</span>
+              </button>
+              <button type="button" class="adm-btn-primary" style="padding:10px 20px;font-size:0.8rem;" onclick="admOrchestrator.saveAllProblemStatements()">
+                <span>SAVE ALL 10 STATEMENTS 💾</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Problem Statements Grid -->
+          <div class="adm-ps-grid" id="adminPsGrid">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           TAB 3: TEAMS & SUBMISSIONS ROSTER
+      ════════════════════════════════════════════════════════════════ -->
+      <section id="tab-teams" class="adm-panel-section">
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <h3 class="adm-card-title">👥 REGISTERED TEAMS & REPOSITORIES</h3>
+            <div style="display:flex;gap:10px;">
+              <button type="button" class="adm-btn-sec" onclick="admOrchestrator.exportCSV()">
+                <span>📊 EXPORT CSV</span>
+              </button>
+              <button type="button" class="adm-btn-sec" onclick="admOrchestrator.seedDemoSubmissions()">
+                <span>↻ RE-SEED DEMO SQUADS</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Filter Toolbar -->
+          <div class="adm-table-toolbar">
+            <div class="adm-search-wrap">
+              <span class="adm-search-icon">🔍</span>
+              <input type="text" id="adminTeamSearchInput" class="adm-search-input" placeholder="Search by team name, pass code, or lead name..." oninput="admOrchestrator.renderTeamsRoster()" />
+            </div>
+
+            <select id="adminTeamTrackFilter" class="adm-filter-select" onchange="admOrchestrator.renderTeamsRoster()">
+              <option value="all">ALL TRACKS</option>
+              <option value="AI/ML">AI/ML</option>
+              <option value="Web3">Web3</option>
+              <option value="CyberSecurity">CyberSecurity</option>
+              <option value="HealthTech">HealthTech</option>
+              <option value="FinTech">FinTech</option>
+              <option value="Smart Cities">Smart Cities</option>
+              <option value="ClimateTech">ClimateTech</option>
+              <option value="EdTech">EdTech</option>
+              <option value="IoT/Robotics">IoT/Robotics</option>
+              <option value="Open Innovation">Open Innovation</option>
+            </select>
+          </div>
+
+          <!-- Table -->
+          <div class="adm-table-responsive">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>TEAM / CODE</th>
+                  <th>LEAD / INSTITUTION</th>
+                  <th>TRACK / PS</th>
+                  <th>DELIVERABLES</th>
+                  <th>TOTAL SCORE</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="adminTeamsTableBody">
+                <!-- Rendered via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           TAB 4: MENTOR SCORES & FINAL LOCK
+      ════════════════════════════════════════════════════════════════ -->
+      <section id="tab-scores" class="adm-panel-section">
+        <div class="adm-card" style="margin-bottom:24px;">
+          <div class="adm-card-head">
+            <div>
+              <h3 class="adm-card-title">⚖️ MENTOR EVALUATION & FINAL APPROVAL BOARD</h3>
+              <p class="adm-card-sub" style="margin:4px 0 0;">
+                Review scores submitted by mentors across Innovation, Technical Complexity, Feasibility, and Presentation (100 pts total). Lock scores to confirm final positions.
+              </p>
+            </div>
+            <div style="display:flex;gap:10px;">
+              <button type="button" class="adm-btn-primary" style="padding:10px 20px;font-size:0.8rem;" onclick="admOrchestrator.approveAllEvaluatedTeams()">
+                <span>APPROVE & LOCK ALL EVALUATED ✓</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Ranked List -->
+          <div id="adminScoringSummaryList">
+            <!-- Rendered via JS -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           TAB 5: DATA & BACKUP HUB
+      ════════════════════════════════════════════════════════════════ -->
+      <section id="tab-data" class="adm-panel-section">
+        <div class="adm-grid-2col">
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <h3 class="adm-card-title">📥 EXPORT & DOWNLOADS</h3>
+            </div>
+            <p class="adm-card-sub">
+              Download clean spreadsheet and JSON backups for accreditation, jury audits, and presentation.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <button type="button" class="adm-btn-sec" style="justify-content:space-between;" onclick="admOrchestrator.exportCSV()">
+                <span>📊 EXPORT FULL STANDINGS & MARKSHEET (CSV)</span>
+                <span>➔</span>
+              </button>
+              <button type="button" class="adm-btn-sec" style="justify-content:space-between;" onclick="admOrchestrator.exportJSON()">
+                <span>💾 EXPORT COMPLETE SYSTEM SNAPSHOT (JSON)</span>
+                <span>➔</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="adm-card">
+            <div class="adm-card-head">
+              <h3 class="adm-card-title">↺ DEMO DATA RE-INITIALIZER</h3>
+            </div>
+            <p class="adm-card-sub">
+              Reset the local test database with 10 realistic hackathon teams, code repositories, and pre-calculated scores.
+            </p>
+            <button type="button" class="adm-btn-sec" style="color:var(--adm-orange);border-color:var(--adm-border-glow);" onclick="admOrchestrator.seedDemoSubmissions()">
+              <span>RE-SEED 10 REALISTIC DEMO SUBMISSIONS</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+          <!-- ════════════════════════════════════════════════════════════════
+           TAB 6: MENTORS & JURY DIRECTORY
+      ════════════════════════════════════════════════════════════════ -->
+      <section id="tab-mentors" class="adm-panel-section">
+        <div class="adm-card">
+          <div class="adm-card-head" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>
+              <h2 class="adm-card-title">👨‍🏫 MENTORS & JURY DIRECTORY</h2>
+              <p class="adm-card-sub">
+                Only Admin can add and manage mentors. Mentors added here can log into the Mentor Portal and appear on the Squad & Mentors page.
+              </p>
+            </div>
+            <button class="adm-btn adm-btn-primary" style="background:#ff5722;color:#fff;border:none;padding:10px 20px;border-radius:8px;font-weight:800;cursor:pointer;" onclick="admOrchestrator.openMentorModal()" type="button">
+              <span>+ ADD NEW MENTOR</span>
+            </button>
+          </div>
+
+          <div class="adm-table-wrap">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>MENTOR ID</th>
+                  <th>MENTOR NAME</th>
+                  <th>ROLE & COMPANY</th>
+                  <th>TRACK</th>
+                  <th>PASSCODE</th>
+                  <th>EMAIL</th>
+                  <th>ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="adminMentorsTableBody">
+                <!-- Dynamically populated -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ════════════════════════════════════════════════════════════════
+       SCORE REVIEW & OVERRIDE MODAL
+  ════════════════════════════════════════════════════════════════ -->
+  <div id="adminScoreModal" class="adm-modal-backdrop">
+    <div class="adm-modal-card">
+      <div class="adm-modal-head">
+        <div>
+          <h3 id="modalTeamTitle" style="font-family:var(--adm-font-head);font-size:1.35rem;margin:0;color:#fff;">Team Name</h3>
+          <span id="modalTeamSubtitle" style="font-family:var(--adm-font-mono);font-size:0.75rem;color:var(--adm-orange);">Track</span>
+        </div>
+        <button type="button" class="adm-modal-close" onclick="admOrchestrator.closeScoreModal()">✕</button>
+      </div>
+
+      <!-- 4 Criteria Sliders -->
+      <div class="adm-slider-field">
+        <div class="adm-slider-label-row">
+          <span>1. Innovation & Originality (0–25)</span>
+          <span class="adm-slider-val" id="valInnovation">20</span>
+        </div>
+        <input type="range" id="rangeInnovation" class="adm-range-input" min="0" max="25" value="20" oninput="admOrchestrator.onModalScoreSliderChange()">
+      </div>
+
+      <div class="adm-slider-field">
+        <div class="adm-slider-label-row">
+          <span>2. Technical Complexity & Architecture (0–25)</span>
+          <span class="adm-slider-val" id="valTechnical">20</span>
+        </div>
+        <input type="range" id="rangeTechnical" class="adm-range-input" min="0" max="25" value="20" oninput="admOrchestrator.onModalScoreSliderChange()">
+      </div>
+
+      <div class="adm-slider-field">
+        <div class="adm-slider-label-row">
+          <span>3. Practical Impact & Viability (0–25)</span>
+          <span class="adm-slider-val" id="valFeasibility">20</span>
+        </div>
+        <input type="range" id="rangeFeasibility" class="adm-range-input" min="0" max="25" value="20" oninput="admOrchestrator.onModalScoreSliderChange()">
+      </div>
+
+      <div class="adm-slider-field">
+        <div class="adm-slider-label-row">
+          <span>4. UI/UX Design & Presentation (0–25)</span>
+          <span class="adm-slider-val" id="valPresentation">20</span>
+        </div>
+        <input type="range" id="rangePresentation" class="adm-range-input" min="0" max="25" value="20" oninput="admOrchestrator.onModalScoreSliderChange()">
+      </div>
+
+      <!-- Total Score Display -->
+      <div style="background:rgba(0,0,0,0.4);border:1px solid var(--adm-border);border-radius:12px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;margin:20px 0;">
+        <span style="font-family:var(--adm-font-mono);font-size:0.85rem;color:var(--adm-text-sub);">TOTAL EVALUATION SCORE:</span>
+        <span style="font-family:var(--adm-font-head);font-size:2rem;font-weight:900;color:var(--adm-green);"><span id="modalTotalScore">80</span> / 100</span>
+      </div>
+
+      <!-- Remarks Input -->
+      <div style="margin-bottom:24px;">
+        <label for="modalRemarksInput" style="display:block;font-size:0.82rem;font-family:var(--adm-font-mono);color:var(--adm-text-sub);margin-bottom:6px;">JURY / MENTOR REMARKS:</label>
+        <textarea id="modalRemarksInput" class="adm-input" rows="3" placeholder="Key strengths, architectural notes, and areas of improvement..."></textarea>
+      </div>
+
+      <div style="display:flex;gap:12px;justify-content:flex-end;">
+        <button type="button" class="adm-btn-sec" onclick="admOrchestrator.closeScoreModal()">Cancel</button>
+        <button type="button" class="adm-btn-primary" style="width:auto;padding:12px 28px;" onclick="admOrchestrator.saveModalScore()">SAVE & LOCK SCORE ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+  <!-- MODAL: ADD / EDIT MENTOR -->
+  <div id="modalMentorEditor" class="adm-modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;padding:20px;">
+    <div class="adm-modal-box" style="background:#0d1117;border:1px solid #30363d;border-radius:16px;max-width:540px;width:100%;padding:24px;color:#f0f6fc;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
+        <h3 id="mmeTitle" style="margin:0;font-size:1.25rem;">Add New Mentor</h3>
+        <button onclick="admOrchestrator.closeMentorModal()" type="button" style="background:none;border:none;color:#8b949e;font-size:1.5rem;cursor:pointer;">&times;</button>
+      </div>
+      <div>
+        <input type="hidden" id="mmeIndex" value="-1" />
+        <div style="margin-bottom:12px;display:grid;grid-template-columns:1fr 130px;gap:10px;align-items:flex-end;">
+          <div>
+            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Assigned Mentor ID *</label>
+            <input type="text" id="mmeMentorId" class="adm-input" placeholder="e.g. MNT-AI-01" required style="width:100%;box-sizing:border-box;font-family:monospace;font-weight:700;color:#00e5ff;" />
+          </div>
+          <button type="button" onclick="admOrchestrator.autoGenerateMentorId()" class="adm-btn-sec" style="padding:9px 12px;font-size:0.75rem;font-weight:700;background:rgba(0,229,255,0.1);color:#00e5ff;border:1px solid rgba(0,229,255,0.3);border-radius:6px;cursor:pointer;">
+            ⚡ AUTO ID
+          </button>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Mentor Full Name *</label>
+          <input type="text" id="mmeName" class="adm-input" placeholder="e.g. Dr. Alok Sharma" required style="width:100%;box-sizing:border-box;" />
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+          <div>
+            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Role / Designation *</label>
+            <input type="text" id="mmeRole" class="adm-input" placeholder="e.g. AI/ML Lead & Jury Chair" required style="width:100%;box-sizing:border-box;" />
+          </div>
+          <div>
+            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Organization / Company *</label>
+            <input type="text" id="mmeCompany" class="adm-input" placeholder="e.g. Hack2Skill / Google" required style="width:100%;box-sizing:border-box;" />
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+          <div>
+            <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Track Specialization</label>
+            <select id="mmeTrack" class="adm-input" style="width:100%;box-sizing:border-box;">
+              <option value="Agentic AI & Autonomy">Agentic AI & Autonomy</option>
+              <option value="Web3 & Decentralization">Web3 & Decentralization</option>
+              <option value="CyberSecurity & Defense">CyberSecurity & Defense</option>
+              <option value="HealthTech & Diagnostics">HealthTech & Diagnostics</option>
+              <option value="FinTech & Algorithmic Fraud">FinTech & Algorithmic Fraud</option>
+              <option value="Smart Cities & Logistics">Smart Cities & Logistics</option>
+            </select>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <label style="font-size:0.8rem;color:#8b949e;">Assigned Passcode *</label>
+              <button type="button" onclick="admOrchestrator.generateRandomPasscode()" style="background:none;border:none;color:#ff5722;font-size:0.75rem;cursor:pointer;padding:0;font-weight:700;">🎲 Random</button>
+            </div>
+            <input type="text" id="mmePasscode" class="adm-input" placeholder="e.g. Mnt#9821" required style="width:100%;box-sizing:border-box;font-family:monospace;font-weight:700;" />
+          </div>
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Email Address</label>
+          <input type="email" id="mmeEmail" class="adm-input" placeholder="e.g. mentor@piet.poornima.org" style="width:100%;box-sizing:border-box;" />
+        </div>
+        <div style="margin-bottom:12px;">
+          <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Photo URL</label>
+          <input type="url" id="mmePhoto" class="adm-input" placeholder="https://images.unsplash.com/..." style="width:100%;box-sizing:border-box;" />
+        </div>
+        <div style="margin-bottom:18px;">
+          <label style="display:block;font-size:0.8rem;color:#8b949e;margin-bottom:4px;">Bio / Milestones</label>
+          <textarea id="mmeBio" class="adm-input" rows="2" placeholder="Brief technical credentials and judging milestones..." style="width:100%;box-sizing:border-box;"></textarea>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button onclick="admOrchestrator.closeMentorModal()" type="button" class="adm-btn-sec" style="padding:8px 16px;">Cancel</button>
+        <button onclick="admOrchestrator.saveMentorFromModal()" type="button" class="adm-btn-primary" style="background:#ff5722;color:#fff;border:none;padding:8px 20px;border-radius:6px;font-weight:800;cursor:pointer;">Save Mentor ✓</button>
+      </div>
+    </div>
+  </div>
+  <!-- MODAL: VIEW TEAM TICKET & REGISTRATION PASS -->
+  <div id="adminTicketModal" class="adm-modal-backdrop" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+    <div class="adm-modal-box" style="background:#0d1117;border:1px solid #30363d;border-radius:18px;max-width:680px;width:100%;padding:28px;color:#f0f6fc;box-shadow:0 24px 60px rgba(0,0,0,0.6);position:relative;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:16px;">
+        <div>
+          <span style="font-family:var(--adm-font-mono);font-size:0.75rem;color:#ff5722;letter-spacing:0.12em;font-weight:700;">UDBHAV 2027 &bull; OFFICIAL SQUAD PASS</span>
+          <h3 id="atmTeamTitle" style="margin:4px 0 0;font-size:1.45rem;color:#fff;">Team Name</h3>
+        </div>
+        <button type="button" class="adm-modal-close" onclick="admOrchestrator.closeTicketModal()" style="background:none;border:none;color:#8b949e;font-size:1.5rem;cursor:pointer;">&times;</button>
+      </div>
+
+      <!-- Ticket Card Visual Representation -->
+      <div id="atmTicketVisual" style="background:linear-gradient(135deg, #161b22, #0d1117);border:2px dashed rgba(255,87,34,0.4);border-radius:16px;padding:22px;margin-bottom:20px;position:relative;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:10px;">
+          <span style="font-family:var(--adm-font-mono);font-size:0.8rem;color:#58a6ff;font-weight:700;" id="atmTicketId">TICKET-ID</span>
+          <span style="background:rgba(255,87,34,0.15);color:#ff5722;border:1px solid rgba(255,87,34,0.3);font-family:var(--adm-font-mono);font-size:0.75rem;padding:3px 10px;border-radius:999px;font-weight:700;" id="atmPassCode">HS-PASS-XXXX</span>
+        </div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+          <div>
+            <span style="font-size:0.72rem;color:#8b949e;display:block;">SQUAD LEADER</span>
+            <strong style="font-size:0.95rem;color:#fff;" id="atmLeaderName">--</strong>
+            <div style="font-size:0.78rem;color:#58a6ff;" id="atmLeaderEmail">--</div>
+            <div style="font-size:0.78rem;color:#8b949e;" id="atmLeaderPhone">--</div>
+          </div>
+          <div>
+            <span style="font-size:0.72rem;color:#8b949e;display:block;">INSTITUTION &amp; COURSE</span>
+            <strong style="font-size:0.95rem;color:#fff;" id="atmCollege">--</strong>
+            <div style="font-size:0.78rem;color:#8b949e;" id="atmCourseYear">--</div>
+            <div style="font-size:0.78rem;color:#ff7b72;" id="atmDomain">--</div>
+          </div>
+        </div>
+
+        <!-- Roster Members -->
+        <div style="border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;margin-bottom:14px;">
+          <span style="font-size:0.72rem;color:#8b949e;display:block;margin-bottom:6px;">SQUAD MEMBERS</span>
+          <div id="atmMembersList" style="font-size:0.82rem;color:#c9d1d9;display:flex;flex-direction:column;gap:4px;"></div>
+        </div>
+
+        <!-- Cloud Registry Attribution -->
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(0,0,0,0.3);border-radius:8px;padding:8px 12px;font-size:0.75rem;color:#8b949e;">
+          <span>📅 Registered: <strong id="atmRegisteredAt" style="color:#fff;">--</strong></span>
+          <span style="color:#3fb950;">✓ Stored in Google Sheet &amp; Drive</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+        <div style="display:flex;gap:8px;">
+          <a href="https://docs.google.com/spreadsheets/d/10ykklemdk9MIRbnIfySx5-5qkHPyejNNIxoJZSBH-tE/edit?usp=drive_link" target="_blank" rel="noopener" class="adm-btn-sec" style="font-size:0.8rem;text-decoration:none;">
+            📊 Sheet
+          </a>
+          <a href="https://drive.google.com/drive/folders/1-jo3KWLEZIh8wGSVDU1VPd4vQO_5wQse?usp=sharing" target="_blank" rel="noopener" class="adm-btn-sec" style="font-size:0.8rem;text-decoration:none;">
+            📁 Drive Folder
+          </a>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button type="button" class="adm-btn-sec" onclick="admOrchestrator.copyPassCodeFromModal()" style="font-size:0.8rem;">
+            📋 Copy Passcode
+          </button>
+          <button type="button" class="adm-btn-primary" onclick="admOrchestrator.printTicket()" style="font-size:0.8rem;padding:6px 14px;">
+            🖨️ Print Ticket
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Toast Notification Container -->
+  <div id="adminToast" class="adm-toast" aria-live="polite"></div>
+</body>
+</html>
+
+
