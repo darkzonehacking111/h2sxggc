@@ -1322,8 +1322,8 @@ function initAnimatedLiquidOceanPreloader() {
     if (!window.loaderDone) {
       displayPct = 100;
       if (pctNum) pctNum.textContent = '100%';
-      if (wavePath) wavePath.style.strokeDashoffset = '0';
-      if (waveBead) waveBead.style.left = '100%';
+      if (wavePath) wavePath.style.setProperty('stroke-dashoffset', '0', 'important');
+      if (waveBead) waveBead.style.setProperty('left', '100%', 'important');
       finishLiquidOceanLoader();
     }
   }, 5200);
@@ -1466,8 +1466,8 @@ function initAnimatedLiquidOceanPreloader() {
     if (elapsed >= LOAD_DURATION || displayPct >= 100) {
       displayPct = 100;
       if (pctNum) pctNum.textContent = '100%';
-      if (wavePath) wavePath.style.strokeDashoffset = '0';
-      if (waveBead) waveBead.style.left = '100%';
+      if (wavePath) wavePath.style.setProperty('stroke-dashoffset', '0', 'important');
+      if (waveBead) waveBead.style.setProperty('left', '100%', 'important');
       finishLiquidOceanLoader();
       return;
     }

@@ -100,9 +100,11 @@
     if (wavePath && typeof wavePath.getTotalLength === 'function') {
       try {
         waveLength = wavePath.getTotalLength();
-        wavePath.style.strokeDasharray = waveLength;
-        wavePath.style.strokeDashoffset = waveLength;
       } catch (e) { waveLength = 1200; }
+    }
+    if (wavePath) {
+      wavePath.style.setProperty('stroke-dasharray', waveLength, 'important');
+      wavePath.style.setProperty('stroke-dashoffset', waveLength, 'important');
     }
 
     // Audio chime
@@ -369,14 +371,15 @@
       }
 
       if (wavePath && waveLength > 0) {
-        wavePath.style.strokeDashoffset = waveLength * (1 - (displayPct / 100));
+        const offset = waveLength * (1 - (displayPct / 100));
+        wavePath.style.setProperty('stroke-dashoffset', offset, 'important');
         if (waveBead) {
           try {
             const pt = wavePath.getPointAtLength((displayPct / 100) * waveLength);
-            waveBead.style.left = ((pt.x / 1200) * 100) + '%';
-            waveBead.style.top = ((pt.y / 40) * 100) + '%';
+            waveBead.style.setProperty('left', ((pt.x / 1200) * 100) + '%', 'important');
+            waveBead.style.setProperty('top', ((pt.y / 40) * 100) + '%', 'important');
           } catch (e) {
-            waveBead.style.left = displayPct + '%';
+            waveBead.style.setProperty('left', displayPct + '%', 'important');
           }
         }
       }
@@ -391,8 +394,8 @@
 
       if (elapsed >= DURATION || displayPct >= 100) {
         if (pctNum) pctNum.textContent = '100%';
-        if (wavePath) wavePath.style.strokeDashoffset = '0';
-        if (waveBead) waveBead.style.left = '100%';
+        if (wavePath) wavePath.style.setProperty('stroke-dashoffset', '0', 'important');
+        if (waveBead) waveBead.style.setProperty('left', '100%', 'important');
         finish();
         return;
       }
