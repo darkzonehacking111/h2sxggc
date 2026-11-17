@@ -85,8 +85,8 @@
   <!-- INSTANT DEDICATED PRELOADER ENGINE (ZERO-DELAY, 100% RELIABLE) -->
   <script>
   (function() {
-    window.loaderEngineActive = true;
     window.loaderDone = false;
+    window._ldInlineActive = true;
     const loader = document.getElementById('loader');
     if (!loader) return;
 
@@ -135,13 +135,13 @@
     let height = window.innerHeight;
 
     const palettes = [
-      { rim: '#FF5722', fill: 'rgba(255, 87, 34, 0.22)', glow: 'rgba(255, 87, 34, 0.55)' },
-      { rim: '#00F5D4', fill: 'rgba(0, 245, 212, 0.20)', glow: 'rgba(0, 245, 212, 0.55)' },
-      { rim: '#8B5CF6', fill: 'rgba(139, 92, 246, 0.22)', glow: 'rgba(139, 92, 246, 0.55)' },
-      { rim: '#FF3366', fill: 'rgba(255, 51, 102, 0.22)', glow: 'rgba(255, 51, 102, 0.55)' },
-      { rim: '#00E5FF', fill: 'rgba(0, 229, 255, 0.22)', glow: 'rgba(0, 229, 255, 0.55)' },
-      { rim: '#10B981', fill: 'rgba(16, 185, 129, 0.20)', glow: 'rgba(16, 185, 129, 0.55)' },
-      { rim: '#F59E0B', fill: 'rgba(245, 158, 11, 0.22)', glow: 'rgba(245, 158, 11, 0.55)' }
+      { rim: '#FF5722', fill: 'rgba(255, 87, 34, 0.16)', glow: 'rgba(255, 87, 34, 0.45)' },
+      { rim: '#00F5D4', fill: 'rgba(0, 245, 212, 0.15)', glow: 'rgba(0, 245, 212, 0.45)' },
+      { rim: '#8B5CF6', fill: 'rgba(139, 92, 246, 0.16)', glow: 'rgba(139, 92, 246, 0.45)' },
+      { rim: '#FF4F91', fill: 'rgba(255, 79, 145, 0.16)', glow: 'rgba(255, 79, 145, 0.45)' },
+      { rim: '#3B82F6', fill: 'rgba(59, 130, 246, 0.16)', glow: 'rgba(59, 130, 246, 0.45)' },
+      { rim: '#10B981', fill: 'rgba(16, 185, 129, 0.15)', glow: 'rgba(16, 185, 129, 0.45)' },
+      { rim: '#F59E0B', fill: 'rgba(245, 158, 11, 0.16)', glow: 'rgba(245, 158, 11, 0.45)' }
     ];
 
     const bubbles = [];
@@ -313,27 +313,48 @@
       }
     }
 
-    // Progression timer
+    // Progression timer (Smooth 3.8s journey to 100%)
     const DURATION = 3800;
     const startEpoch = performance.now();
 
     function finish() {
       if (window.loaderDone) return;
       window.loaderDone = true;
-      window.loaderEngineActive = false;
       loader.classList.add('gone');
-      if (typeof window.initScrollAnimations === 'function') window.initScrollAnimations();
-      if (typeof window.init3DLiquidFluidEngine === 'function') window.init3DLiquidFluidEngine();
-      if (typeof window.initHeroBubbleAnimation === 'function') window.initHeroBubbleAnimation();
+
+      // Unhide & reveal all content on active page immediately (no blank space)
+      const activePage = document.querySelector('.page.active');
+      if (activePage) {
+        activePage.querySelectorAll('.rv').forEach(function(el) {
+          el.classList.add('visible', 'in-view');
+        });
+      }
+
+      // Trigger all primary experiential engines
+      try { if (typeof window.initScrollAnimations === 'function') window.initScrollAnimations(); } catch (e) {}
+      try { if (typeof window.init3DLiquidFluidEngine === 'function') window.init3DLiquidFluidEngine(); } catch (e) {}
+      try { if (typeof window.initHeroBubbleAnimation === 'function') window.initHeroBubbleAnimation(); } catch (e) {}
+      try { if (typeof window.initHomeTelemetryEqualizer === 'function') window.initHomeTelemetryEqualizer(); } catch (e) {}
+      try { if (typeof window.initRotatingRing3D === 'function') window.initRotatingRing3D(); } catch (e) {}
+      try { if (typeof window.initPixelDisintegration === 'function') window.initPixelDisintegration(); } catch (e) {}
+      try { if (typeof window.initFloatingProjectStack === 'function') window.initFloatingProjectStack(); } catch (e) {}
+
       setTimeout(function() {
         if (animId) cancelAnimationFrame(animId);
-        loader.style.setProperty('display', 'none', 'important');
-      }, 650);
+        loader.style.display = 'none';
+      }, 700);
     }
     window.finishLoader = finish;
 
-    // Safety auto-open
-    setTimeout(finish, 4400);
+    // Safety auto-open guarantee
+    setTimeout(finish, 4100);
+
+    // Keyboard instant skip
+    document.addEventListener('keydown', function(e) {
+      if (!window.loaderDone && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) {
+        finish();
+      }
+    });
 
     function loop(now) {
       if (window.loaderDone) return;
@@ -443,10 +464,10 @@
           ctx.stroke();
 
           // Specular glossy reflection
-          const shineR = Math.max(1, cr * 0.28);
+          const shineR = cr * 0.28;
           const shineX = b.x - cr * 0.35;
           const shineY = b.y - cr * 0.35;
-          const grad = ctx.createRadialGradient(shineX, shineY, 0, shineX, shineY, Math.max(2, shineR * 2));
+          const grad = ctx.createRadialGradient(shineX, shineY, 0, shineX, shineY, shineR * 2);
           grad.addColorStop(0, '#FFFFFF');
           grad.addColorStop(0.5, 'rgba(255, 255, 255, 0.45)');
           grad.addColorStop(1, 'rgba(255, 255, 255, 0)');

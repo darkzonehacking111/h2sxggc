@@ -1048,8 +1048,12 @@ function playBubblePopSound(freq = 480) {
 }
 
 function initAnimatedLiquidOceanPreloader() {
+  if (window.loaderDone || window._ldInlineActive) {
+    return;
+  }
   const loader = document.getElementById('loader');
-  if (!loader || window.loaderDone || window.loaderEngineActive) {
+  if (!loader || loader.classList.contains('gone') || loader.style.display === 'none') {
+    window.loaderDone = true;
     if (typeof initScrollAnimations === 'function') initScrollAnimations();
     if (typeof init3DLiquidFluidEngine === 'function') init3DLiquidFluidEngine();
     if (typeof initHeroBubbleAnimation === 'function') initHeroBubbleAnimation();
@@ -2394,7 +2398,10 @@ function go(pageId) {
   const target = document.getElementById('page-' + pageId) || (pageId === 'conduct' ? document.getElementById('page-rules') : null) || (pageId === 'rules' ? document.getElementById('page-conduct') : null);
   if (target) {
     target.classList.add('active');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    target.querySelectorAll('.rv, .reveal, .bento-card, .track-card, .why-card, .prize-card').forEach(el => {
+      el.classList.add('visible', 'in-view');
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   document.querySelectorAll('.nl').forEach(a => {
@@ -12819,16 +12826,10 @@ if (document.readyState === 'loading') {
 
 
 
-// Hook into page switch for theme matrix wall and all SPA pages
+// Hook into page switch for theme matrix wall
 window.addEventListener('hashchange', () => {
-  const hash = window.location.hash.replace('#', '').trim();
-  if (hash) {
-    if (typeof go === 'function') {
-      go(hash);
-    }
-    if (hash.includes('theme') && typeof initThemeHeroMatrix3D === 'function') {
-      setTimeout(initThemeHeroMatrix3D, 80);
-    }
+  if (window.location.hash.includes('theme')) {
+    setTimeout(initThemeHeroMatrix3D, 80);
   }
 });
 
