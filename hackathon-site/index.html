@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -13,10 +13,10 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="theme-reveal.css" />
   <link rel="stylesheet" href="standings.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
 </head>
 
 <body>
@@ -93,6 +93,45 @@
     window.loaderDone = false;
     window._ldInlineActive = true;
     const loader = document.getElementById('loader');
+
+    // Immediate Global Exit Handlers: defined at the absolute top so any skip or enter works instantly
+    function finishLoader() {
+      if (window.loaderDone) return;
+      window.loaderDone = true;
+      if (loader) {
+        loader.classList.add('gone');
+        setTimeout(function() {
+          loader.style.display = 'none';
+        }, 750);
+      }
+      try {
+        const activePage = document.querySelector('.page.active');
+        if (activePage) {
+          activePage.querySelectorAll('.rv, .reveal, .bento-card, .track-card, .why-card, .prize-card').forEach(function(el) {
+            el.classList.add('visible', 'in-view');
+          });
+        }
+      } catch (e) {}
+      try { if (typeof window.initScrollAnimations === 'function') window.initScrollAnimations(); } catch (e) {}
+      try { if (typeof window.init3DLiquidFluidEngine === 'function') window.init3DLiquidFluidEngine(); } catch (e) {}
+      try { if (typeof window.initHeroBubbleAnimation === 'function') window.initHeroBubbleAnimation(); } catch (e) {}
+      try { if (typeof window.initHomeTelemetryEqualizer === 'function') window.initHomeTelemetryEqualizer(); } catch (e) {}
+      try { if (typeof window.initRotatingRing3D === 'function') window.initRotatingRing3D(); } catch (e) {}
+      try { if (typeof window.initPixelDisintegration === 'function') window.initPixelDisintegration(); } catch (e) {}
+      try { if (typeof window.initFloatingProjectStack === 'function') window.initFloatingProjectStack(); } catch (e) {}
+    }
+    window.finishLoader = finishLoader;
+
+    // Safety auto-open guarantee: website ALWAYS opens within 4.2 seconds even in background tab
+    setTimeout(finishLoader, 4200);
+
+    // Keyboard instant skip
+    document.addEventListener('keydown', function(e) {
+      if (!window.loaderDone && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) {
+        finishLoader();
+      }
+    });
+
     if (!loader) return;
 
     const canvas = document.getElementById('loaderRetroCanvas');
@@ -101,15 +140,16 @@
     const wavePath = document.getElementById('loWavePathActive');
     const waveBead = document.getElementById('loWaveCrestBead');
 
-    let waveLength = 1200;
-    if (wavePath && typeof wavePath.getTotalLength === 'function') {
-      try {
-        waveLength = wavePath.getTotalLength();
-      } catch (e) { waveLength = 1200; }
-    }
+    let waveLength = 1250;
+    try {
+      if (wavePath && typeof wavePath.getTotalLength === 'function') {
+        const l = wavePath.getTotalLength();
+        if (l && l > 100) waveLength = l;
+      }
+    } catch (e) {}
     if (wavePath) {
-      wavePath.style.setProperty('stroke-dasharray', waveLength, 'important');
-      wavePath.style.setProperty('stroke-dashoffset', waveLength, 'important');
+      wavePath.style.setProperty('stroke-dasharray', waveLength + 'px', 'important');
+      wavePath.style.setProperty('stroke-dashoffset', waveLength + 'px', 'important');
     }
 
     // Interactive Liquid Pop Audio Synthesis
@@ -303,15 +343,16 @@
 
     // DRAW VISCOUS METABALL SLIME BRIDGE
     function drawSlimeBridge(b1, b2, r1, r2, col1, col2) {
-      const dx = b2.x - b1.x;
-      const dy = b2.y - b1.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (!b1 || !b2 || !col1 || !col2) return;
+      const dx = (b2.x - b1.x) || 0.001;
+      const dy = (b2.y - b1.y) || 0.001;
+      const dist = Math.hypot(dx, dy);
       const maxDist = (r1 + r2) * 1.48;
-      if (dist <= 0 || dist >= maxDist || dist <= Math.abs(r1 - r2)) return;
+      if (dist <= 1 || dist >= maxDist || dist <= Math.abs(r1 - r2)) return;
 
       const angle = Math.atan2(dy, dx);
       const ratio = dist / maxDist;
-      const tension = Math.pow(1 - ratio, 0.75);
+      const tension = Math.pow(Math.max(0, 1 - ratio), 0.75);
       const halfPi = Math.PI * 0.5;
 
       const a1 = angle + halfPi * tension;
@@ -366,21 +407,26 @@
 
     // DRAW GELATINOUS SLIME BUBBLE WITH SPECULAR HIGHLIGHTS
     function drawSlimeBubble(b, scaleW, scaleH) {
+      if (!b) return;
+      const r = Math.max(3, b.r || b.baseR || 10);
+      const sw = Math.max(0.1, scaleW || 1);
+      const sh = Math.max(0.1, scaleH || 1);
+
       ctx.save();
       ctx.translate(b.x, b.y);
-      ctx.scale(scaleW || 1, scaleH || 1);
+      ctx.scale(sw, sh);
 
       ctx.shadowColor = b.pal.glow;
       ctx.shadowBlur = 12;
 
       // Radial body
-      const bodyGrad = ctx.createRadialGradient(-b.r * 0.3, -b.r * 0.3, 0, 0, 0, b.r);
+      const bodyGrad = ctx.createRadialGradient(-r * 0.3, -r * 0.3, 0, 0, 0, r);
       bodyGrad.addColorStop(0, b.pal.core);
       bodyGrad.addColorStop(0.55, b.pal.fill);
       bodyGrad.addColorStop(1, b.pal.rim);
 
       ctx.beginPath();
-      ctx.arc(0, 0, b.r, 0, Math.PI * 2);
+      ctx.arc(0, 0, r, 0, Math.PI * 2);
       ctx.fillStyle = bodyGrad;
       ctx.fill();
 
@@ -392,13 +438,13 @@
       // Glossy crescent reflection
       ctx.shadowBlur = 0;
       ctx.beginPath();
-      ctx.ellipse(-b.r * 0.32, -b.r * 0.35, b.r * 0.36, b.r * 0.20, -Math.PI / 4, 0, Math.PI * 2);
+      ctx.ellipse(-r * 0.32, -r * 0.35, Math.max(1, r * 0.36), Math.max(1, r * 0.20), -Math.PI / 4, 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.70)';
       ctx.fill();
 
       // Tiny glint dot
       ctx.beginPath();
-      ctx.arc(b.r * 0.36, b.r * 0.36, Math.max(1.5, b.r * 0.12), 0, Math.PI * 2);
+      ctx.arc(r * 0.36, r * 0.36, Math.max(1.5, r * 0.12), 0, Math.PI * 2);
       ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
       ctx.fill();
 
@@ -409,214 +455,185 @@
     const DURATION = 3800;
     const startEpoch = performance.now();
 
-    function finish() {
-      if (window.loaderDone) return;
-      window.loaderDone = true;
-      loader.classList.add('gone');
-
-      const activePage = document.querySelector('.page.active');
-      if (activePage) {
-        activePage.querySelectorAll('.rv, .reveal, .bento-card, .track-card, .why-card, .prize-card').forEach(function(el) {
-          el.classList.add('visible', 'in-view');
-        });
-      }
-
-      try { if (typeof window.initScrollAnimations === 'function') window.initScrollAnimations(); } catch (e) {}
-      try { if (typeof window.init3DLiquidFluidEngine === 'function') window.init3DLiquidFluidEngine(); } catch (e) {}
-      try { if (typeof window.initHeroBubbleAnimation === 'function') window.initHeroBubbleAnimation(); } catch (e) {}
-      try { if (typeof window.initHomeTelemetryEqualizer === 'function') window.initHomeTelemetryEqualizer(); } catch (e) {}
-      try { if (typeof window.initRotatingRing3D === 'function') window.initRotatingRing3D(); } catch (e) {}
-      try { if (typeof window.initPixelDisintegration === 'function') window.initPixelDisintegration(); } catch (e) {}
-      try { if (typeof window.initFloatingProjectStack === 'function') window.initFloatingProjectStack(); } catch (e) {}
-
-      setTimeout(function() {
-        if (animId) cancelAnimationFrame(animId);
-        loader.style.display = 'none';
-      }, 700);
-    }
-    window.finishLoader = finish;
-
-    // Safety auto-open guarantee
-    setTimeout(finish, 4100);
-
-    // Keyboard instant skip
-    document.addEventListener('keydown', function(e) {
-      if (!window.loaderDone && (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape')) {
-        finish();
-      }
-    });
-
     function loop(now) {
       if (window.loaderDone) return;
 
-      const elapsed = Math.max(0, (now || performance.now()) - startEpoch);
-      const p = Math.min(1.0, elapsed / DURATION);
-      const eased = 1 - Math.pow(1 - p, 2.2);
-      const displayPct = Math.min(100, Math.floor(eased * 100));
+      try {
+        const elapsed = Math.max(0, (now || performance.now()) - startEpoch);
+        const p = Math.min(1.0, elapsed / DURATION);
+        const eased = 1 - Math.pow(1 - p, 2.2);
+        const displayPct = Math.min(100, Math.floor(eased * 100));
 
-      if (pctNum) {
-        pctNum.textContent = String(displayPct).padStart(2, '0') + '%';
-      }
-
-      if (wavePath && waveLength > 0) {
-        const offset = waveLength * (1 - (displayPct / 100));
-        wavePath.style.setProperty('stroke-dashoffset', offset, 'important');
-        if (waveBead) {
-          try {
-            const pt = wavePath.getPointAtLength((displayPct / 100) * waveLength);
-            waveBead.style.setProperty('left', ((pt.x / 1200) * 100) + '%', 'important');
-            waveBead.style.setProperty('top', ((pt.y / 40) * 100) + '%', 'important');
-          } catch (e) {
-            waveBead.style.setProperty('left', displayPct + '%', 'important');
-          }
+        if (pctNum) {
+          pctNum.textContent = String(displayPct).padStart(2, '0') + '%';
         }
-      }
 
-      if (statusLabel) {
-        if (displayPct < 22) statusLabel.textContent = 'INITIALIZING LIQUID ENVIRONMENT';
-        else if (displayPct < 52) statusLabel.textContent = 'SYNCHRONIZING SLIME SHADERS';
-        else if (displayPct < 82) statusLabel.textContent = 'PREPARING 36-HOUR CHALLENGE ARENA';
-        else if (displayPct < 100) statusLabel.textContent = 'EXPERIENCE DISCOVERY READY';
-        else statusLabel.textContent = 'SYSTEM ONLINE // WELCOME TO UDBHAV 27';
-      }
-
-      if (elapsed >= DURATION || displayPct >= 100) {
-        if (pctNum) pctNum.textContent = '100%';
-        if (wavePath) wavePath.style.setProperty('stroke-dashoffset', '0', 'important');
-        if (waveBead) waveBead.style.setProperty('left', '100%', 'important');
-        finish();
-        return;
-      }
-
-      // Smooth pointer spring tracking
-      if (pointer.active) {
-        pointer.x += (pointer.targetX - pointer.x) * 0.22;
-        pointer.y += (pointer.targetY - pointer.y) * 0.22;
-      }
-
-      // Render Canvas Frame
-      if (ctx && width > 0 && height > 0) {
-        ctx.clearRect(0, 0, width, height);
-
-        // Update bubble positions & wobble
-        for (let i = 0; i < bubbles.length; i++) {
-          const b = bubbles[i];
-          b.x += b.vx;
-          b.y += b.vy;
-          b.phase += b.speed;
-          b.wobblePhase += b.wobbleSpeed;
-
-          b.r = b.baseR + Math.sin(b.phase) * b.amp;
-          b.scaleW = 1 + Math.sin(b.wobblePhase) * b.wobbleAmp;
-          b.scaleH = 1 - Math.sin(b.wobblePhase) * b.wobbleAmp;
-
-          // Wrap screen bounds
-          if (b.y + b.r < -30) {
-            b.y = height + b.r + 30;
-            b.x = Math.random() * width;
-          }
-          if (b.x - b.r > width + 30) b.x = -b.r;
-          if (b.x + b.r < -30) b.x = width + b.r;
-
-          // Pointer interaction: slime magnetic pull
-          if (pointer.active) {
-            const dx = pointer.x - b.x;
-            const dy = pointer.y - b.y;
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            const attractRange = (pointer.radius + b.r) * 2.2;
-            if (dist < attractRange && dist > 1) {
-              const pull = (1 - dist / attractRange) * 0.08;
-              b.x += dx * pull;
-              b.y += dy * pull;
+        if (wavePath && waveLength > 0) {
+          const offset = waveLength * (1 - (displayPct / 100));
+          wavePath.style.setProperty('stroke-dashoffset', offset + 'px', 'important');
+          if (waveBead) {
+            try {
+              const pt = wavePath.getPointAtLength((displayPct / 100) * waveLength);
+              if (pt) {
+                waveBead.style.setProperty('left', ((pt.x / 1200) * 100) + '%', 'important');
+                waveBead.style.setProperty('top', ((pt.y / 40) * 100) + '%', 'important');
+              }
+            } catch (e) {
+              waveBead.style.setProperty('left', displayPct + '%', 'important');
             }
           }
         }
 
-        // 1. Draw Viscous Slime Bridges between nearby bubbles
-        for (let i = 0; i < bubbles.length; i++) {
-          const b1 = bubbles[i];
-          for (let j = i + 1; j < bubbles.length; j++) {
-            const b2 = bubbles[j];
-            const dist = Math.hypot(b2.x - b1.x, b2.y - b1.y);
-            if (dist < (b1.r + b2.r) * 1.48) {
-              drawSlimeBridge(b1, b2, b1.r, b2.r, b1.pal, b2.pal);
+        if (statusLabel) {
+          if (displayPct < 22) statusLabel.textContent = 'INITIALIZING LIQUID ENVIRONMENT';
+          else if (displayPct < 52) statusLabel.textContent = 'SYNCHRONIZING SLIME SHADERS';
+          else if (displayPct < 82) statusLabel.textContent = 'PREPARING 36-HOUR CHALLENGE ARENA';
+          else if (displayPct < 100) statusLabel.textContent = 'EXPERIENCE DISCOVERY READY';
+          else statusLabel.textContent = 'SYSTEM ONLINE // WELCOME TO UDBHAV 27';
+        }
+
+        if (elapsed >= DURATION || displayPct >= 100) {
+          if (pctNum) pctNum.textContent = '100%';
+          if (wavePath) wavePath.style.setProperty('stroke-dashoffset', '0px', 'important');
+          if (waveBead) waveBead.style.setProperty('left', '100%', 'important');
+          finishLoader();
+          return;
+        }
+
+        // Smooth pointer spring tracking
+        if (pointer.active) {
+          pointer.x += (pointer.targetX - pointer.x) * 0.22;
+          pointer.y += (pointer.targetY - pointer.y) * 0.22;
+        }
+
+        // Render Canvas Frame
+        if (ctx && width > 0 && height > 0) {
+          ctx.clearRect(0, 0, width, height);
+
+          // Update bubble positions & wobble
+          for (let i = 0; i < bubbles.length; i++) {
+            const b = bubbles[i];
+            b.x += b.vx;
+            b.y += b.vy;
+            b.phase += b.speed;
+            b.wobblePhase += b.wobbleSpeed;
+
+            b.r = Math.max(3, b.baseR + Math.sin(b.phase) * b.amp);
+            b.scaleW = Math.max(0.1, 1 + Math.sin(b.wobblePhase) * b.wobbleAmp);
+            b.scaleH = Math.max(0.1, 1 - Math.sin(b.wobblePhase) * b.wobbleAmp);
+
+            // Wrap screen bounds
+            if (b.y + b.r < -30) {
+              b.y = height + b.r + 30;
+              b.x = Math.random() * width;
+            }
+            if (b.x - b.r > width + 30) b.x = -b.r;
+            if (b.x + b.r < -30) b.x = width + b.r;
+
+            // Pointer interaction: slime magnetic pull
+            if (pointer.active) {
+              const dx = pointer.x - b.x;
+              const dy = pointer.y - b.y;
+              const dist = Math.hypot(dx, dy);
+              const attractRange = (pointer.radius + b.r) * 2.2;
+              if (dist < attractRange && dist > 1) {
+                const pull = (1 - dist / attractRange) * 0.08;
+                b.x += dx * pull;
+                b.y += dy * pull;
+              }
             }
           }
 
-          // Draw slime strand between pointer and nearby bubbles!
-          if (pointer.active) {
-            const distP = Math.hypot(pointer.x - b1.x, pointer.y - b1.y);
-            if (distP < (pointer.radius + b1.r) * 1.9) {
-              drawSlimeBridge(pointer, b1, pointer.radius, b1.r, pointer.pal, b1.pal);
+          // 1. Draw Viscous Slime Bridges between nearby bubbles
+          for (let i = 0; i < bubbles.length; i++) {
+            const b1 = bubbles[i];
+            for (let j = i + 1; j < bubbles.length; j++) {
+              const b2 = bubbles[j];
+              const dist = Math.hypot(b2.x - b1.x, b2.y - b1.y);
+              if (dist < (b1.r + b2.r) * 1.48) {
+                drawSlimeBridge(b1, b2, b1.r, b2.r, b1.pal, b2.pal);
+              }
+            }
+
+            // Draw slime strand between pointer and nearby bubbles!
+            if (pointer.active) {
+              const distP = Math.hypot(pointer.x - b1.x, pointer.y - b1.y);
+              if (distP < (pointer.radius + b1.r) * 1.9) {
+                drawSlimeBridge(pointer, b1, pointer.radius, b1.r, pointer.pal, b1.pal);
+              }
             }
           }
-        }
 
-        // 2. Draw Trail Droplets
-        for (let t = trailDroplets.length - 1; t >= 0; t--) {
-          const td = trailDroplets[t];
-          td.x += td.vx;
-          td.y += td.vy;
-          td.r *= 0.94;
-          td.alpha -= 0.035;
-          if (td.alpha <= 0 || td.r < 1) {
-            trailDroplets.splice(t, 1);
-            continue;
+          // 2. Draw Trail Droplets
+          for (let t = trailDroplets.length - 1; t >= 0; t--) {
+            const td = trailDroplets[t];
+            td.x += td.vx;
+            td.y += td.vy;
+            td.r *= 0.94;
+            td.alpha -= 0.035;
+            if (td.alpha <= 0 || td.r < 1) {
+              trailDroplets.splice(t, 1);
+              continue;
+            }
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, td.alpha);
+            ctx.beginPath();
+            ctx.arc(td.x, td.y, td.r, 0, Math.PI * 2);
+            ctx.fillStyle = td.pal.fill;
+            ctx.strokeStyle = td.pal.rim;
+            ctx.lineWidth = 1.4;
+            ctx.fill();
+            ctx.stroke();
+            ctx.restore();
           }
-          ctx.save();
-          ctx.globalAlpha = Math.max(0, td.alpha);
-          ctx.beginPath();
-          ctx.arc(td.x, td.y, td.r, 0, Math.PI * 2);
-          ctx.fillStyle = td.pal.fill;
-          ctx.strokeStyle = td.pal.rim;
-          ctx.lineWidth = 1.4;
-          ctx.fill();
-          ctx.stroke();
-          ctx.restore();
-        }
 
-        // 3. Draw Slime Bubbles
-        for (let i = 0; i < bubbles.length; i++) {
-          const b = bubbles[i];
-          drawSlimeBubble(b, b.scaleW, b.scaleH);
-        }
-
-        // 4. Draw Pointer Slime Core if active
-        if (pointer.active && pointer.x > 0 && pointer.y > 0) {
-          drawSlimeBubble({
-            x: pointer.x,
-            y: pointer.y,
-            r: pointer.radius,
-            pal: pointer.pal
-          }, 1.05, 0.95);
-        }
-
-        // 5. Draw Splash particles
-        for (let sp = splashParticles.length - 1; sp >= 0; sp--) {
-          const pt = splashParticles[sp];
-          pt.x += pt.vx;
-          pt.y += pt.vy;
-          pt.vy += 0.14; // soft liquid gravity
-          pt.vx *= 0.96;
-          pt.vy *= 0.96;
-          pt.alpha -= pt.decay;
-          if (pt.alpha <= 0) {
-            splashParticles.splice(sp, 1);
-            continue;
+          // 3. Draw Slime Bubbles
+          for (let i = 0; i < bubbles.length; i++) {
+            const b = bubbles[i];
+            drawSlimeBubble(b, b.scaleW, b.scaleH);
           }
-          ctx.save();
-          ctx.globalAlpha = Math.max(0, pt.alpha);
-          ctx.beginPath();
-          ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
-          ctx.fillStyle = pt.color;
-          ctx.shadowColor = pt.color;
-          ctx.shadowBlur = 6;
-          ctx.fill();
-          ctx.restore();
+
+          // 4. Draw Pointer Slime Core if active
+          if (pointer.active && pointer.x > 0 && pointer.y > 0) {
+            drawSlimeBubble({
+              x: pointer.x,
+              y: pointer.y,
+              r: pointer.radius,
+              pal: pointer.pal
+            }, 1.05, 0.95);
+          }
+
+          // 5. Draw Splash particles
+          for (let sp = splashParticles.length - 1; sp >= 0; sp--) {
+            const pt = splashParticles[sp];
+            pt.x += pt.vx;
+            pt.y += pt.vy;
+            pt.vy += 0.14;
+            pt.vx *= 0.96;
+            pt.vy *= 0.96;
+            pt.alpha -= pt.decay;
+            if (pt.alpha <= 0) {
+              splashParticles.splice(sp, 1);
+              continue;
+            }
+            ctx.save();
+            ctx.globalAlpha = Math.max(0, pt.alpha);
+            ctx.beginPath();
+            ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+            ctx.fillStyle = pt.color;
+            ctx.shadowColor = pt.color;
+            ctx.shadowBlur = 6;
+            ctx.fill();
+            ctx.restore();
+          }
         }
+      } catch (loopErr) {
+        console.warn('Slime loop tick:', loopErr);
       }
 
-      animId = requestAnimationFrame(loop);
+      if (!window.loaderDone) {
+        animId = requestAnimationFrame(loop);
+      }
     }
 
     animId = requestAnimationFrame(loop);

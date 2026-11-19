@@ -31990,6 +31990,8 @@ body.dark-theme .lo-wave-path-bg,
   stroke-width: 4.8px !important;
   stroke-linecap: round !important;
   stroke-linejoin: round !important;
+  stroke-dasharray: 1250 !important;
+  stroke-dashoffset: 1250 !important;
   filter: drop-shadow(0 0 12px rgba(255, 87, 34, 0.9)) drop-shadow(0 0 25px rgba(0, 229, 255, 0.75)) !important;
 }
 
