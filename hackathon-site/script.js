@@ -2385,10 +2385,12 @@ function go(pageId) {
     return;
   }
 
-  // Seamless alias mapping for rules <-> conduct
+  // Seamless alias mapping for all pages and routes
   const requestedPage = pageId;
   if (pageId === 'rules') {
     pageId = 'conduct';
+  } else if (pageId === 'journey' || pageId === 'schedule' || pageId === 'itinerary') {
+    pageId = 'timeline';
   }
 
   toggleNav(true);
@@ -2523,9 +2525,19 @@ window.addEventListener('keydown', (e) => {
 });
 
 function scrollToId(id) {
-  playCyberSound('click');
+  try { playCyberSound('click'); } catch (e) {}
   const el = document.getElementById(id);
-  if (el) {
+  if (!el) return;
+
+  const parentPage = el.closest('.page');
+  if (parentPage && !parentPage.classList.contains('active')) {
+    const pageId = parentPage.id.replace('page-', '');
+    go(pageId);
+    setTimeout(() => {
+      const targetEl = document.getElementById(id);
+      if (targetEl) targetEl.scrollIntoView({ behavior: 'smooth' });
+    }, 180);
+  } else {
     el.scrollIntoView({ behavior: 'smooth' });
   }
 }
@@ -12829,9 +12841,26 @@ if (document.readyState === 'loading') {
 
 
 
-// Hook into page switch for theme matrix wall
+// Universal Router: Hook into hashchange for seamless deep linking across all pages and sections
 window.addEventListener('hashchange', () => {
-  if (window.location.hash.includes('theme')) {
+  const raw = (window.location.hash || '').replace('#', '').trim();
+  if (!raw) return;
+  if (raw === 'admin' || raw === 'mentor') {
+    window.location.href = raw + '.html';
+    return;
+  }
+  const targetPage = document.getElementById('page-' + raw) ||
+    (raw === 'rules' ? document.getElementById('page-conduct') : null) ||
+    ((raw === 'journey' || raw === 'schedule') ? document.getElementById('page-timeline') : null);
+  if (targetPage) {
+    go(raw);
+  } else {
+    const targetEl = document.getElementById(raw);
+    if (targetEl && typeof scrollToId === 'function') {
+      scrollToId(raw);
+    }
+  }
+  if (raw.includes('theme') && typeof initThemeHeroMatrix3D === 'function') {
     setTimeout(initThemeHeroMatrix3D, 80);
   }
 });
