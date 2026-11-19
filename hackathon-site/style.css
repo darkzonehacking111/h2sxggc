@@ -240,8 +240,47 @@ button {
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  margin-bottom: 3rem !important;
+  margin-bottom: 2.5rem !important;
   pointer-events: none !important;
+}
+
+/* Minimalist Meta Pill & Flavor Tag */
+.rm-pill-meta {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: rgba(15, 23, 42, 0.05) !important;
+  border: 1px solid rgba(15, 23, 42, 0.09) !important;
+  border-radius: 999px !important;
+  padding: 6px 16px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: clamp(0.68rem, 1.2vw, 0.8rem) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  color: #334155 !important;
+  text-transform: uppercase !important;
+  margin-bottom: 0.85rem !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.rm-pill-dot {
+  width: 7px !important;
+  height: 7px !important;
+  border-radius: 50% !important;
+  background: #FF5722 !important;
+  box-shadow: 0 0 10px #FF5722 !important;
+  animation: rmPulse 1.5s infinite !important;
+}
+
+.rm-tag-flavor {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: clamp(0.65rem, 1.1vw, 0.75rem) !important;
+  letter-spacing: 0.18em !important;
+  color: #64748B !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  margin-top: 0.35rem !important;
+  opacity: 0.85 !important;
 }
 
 /* Massive, Ultra-Bold Headline Typography: UDBHAV 27 */
