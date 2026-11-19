@@ -1,4 +1,4 @@
-
+﻿
 /* ============================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================================
    DIGITAL CODING TELEMETRY EQUALIZER ENGINE (#equalizerCanvasHome)
    Dynamic Multi-Band Frequency Wave, Neon Spectrum, Particle Drift
@@ -2424,6 +2424,9 @@ function go(pageId) {
     if (pageId === 'standings' && typeof initStandingsExperience === 'function') { initStandingsExperience(); }
     if (pageId === 'theme' && typeof initThemeRevealEngines === 'function') {
       initThemeRevealEngines();
+    }
+    if (pageId === 'theme' && typeof initAestheticsMultiverseEngine === 'function') {
+      initAestheticsMultiverseEngine();
     }
     if (pageId === 'timeline' && typeof initTimelinePage3D === 'function') {
       initTimelinePage3D();
@@ -13719,3 +13722,942 @@ window.sprayEffect = function(card) {
   }
 };
 
+
+
+/* ==========================================================================
+   THE 39 AESTHETICS MULTIVERSE ENGINE (INTERACTIVE DESIGN MOVEMENTS ARENA)
+   ========================================================================== */
+
+(function() {
+  'use strict';
+
+  // 1. DATASET OF ALL 39 DESIGN MOVEMENTS
+  window.damThemes = {
+    'minimalism': {
+      id: 'minimalism',
+      num: '01',
+      name: 'Minimalism',
+      cat: 'tech',
+      era: '1960s Modernism',
+      font: '\'Inter\', \'Helvetica Neue\', sans-serif',
+      colors: ["#000000","#FFFFFF","#E2E8F0","#64748B"],
+      tagline: 'Less is infinitely more',
+      desc: 'Extreme reduction, mathematical breathing whitespace, monochromatic elegance, and razor-sharp typographic discipline.',
+      tip: 'Focus on 1 hero action per screen, 8pt spatial grid, and zero decorative clutter.'
+    },
+    'maximalism': {
+      id: 'maximalism',
+      num: '02',
+      name: 'Maximalism',
+      cat: 'counter',
+      era: 'Post-Digital 2020s',
+      font: '\'Anton\', \'Syne\', sans-serif',
+      colors: ["#FF0055","#00F5D4","#FFE600","#7928CA"],
+      tagline: 'More is more, chaos is art',
+      desc: 'Vibrant sensory saturation, dense sticker bombs, clashing neon layers, and explosive multi-pattern kinetic energy.',
+      tip: 'Layer bold badges, contrasting animated gradients, and high-octane sticker flair.'
+    },
+    'futuristic': {
+      id: 'futuristic',
+      num: '03',
+      name: 'Futuristic',
+      cat: 'tech',
+      era: '2077 Sci-Fi HUD',
+      font: '\'Orbitron\', \'JetBrains Mono\', monospace',
+      colors: ["#00E5FF","#0F172A","#1E293B","#38BDF8"],
+      tagline: 'Quantum telemetry & deep space interface',
+      desc: 'Holographic scanlines, orbital coordinate radar, telemetry HUD gauges, and glowing cyan optic fiber arrays.',
+      tip: 'Use monospace telemetry badges, glowing vector grids, and live real-time latency dials.'
+    },
+    'vector-art': {
+      id: 'vector-art',
+      num: '04',
+      name: 'Vector Art',
+      cat: 'tactile',
+      era: 'Modern Digital Graphic',
+      font: '\'Plus Jakarta Sans\', sans-serif',
+      colors: ["#FF5722","#2563EB","#10B981","#FBBF24"],
+      tagline: 'Infinite resolution, pure geometric curves',
+      desc: 'Crisp mathematical Bezier curves, bold flat color blocking, dynamic stroke weights, and scalable SVG vectors.',
+      tip: 'Implement custom SVG spot illustrations, dynamic morphing paths, and solid color fields.'
+    },
+    'collage-art': {
+      id: 'collage-art',
+      num: '05',
+      name: 'Collage Art',
+      cat: 'counter',
+      era: 'Dadaist & Mixed Media',
+      font: '\'Space Grotesk\', serif',
+      colors: ["#FAF5EF","#1E1E1E","#D97706","#BE123C"],
+      tagline: 'Analog memory meets digital juxtaposition',
+      desc: 'Layered torn paper borders, vintage halftone newsprint, Polaroid camera snaps, and taped archival ephemera.',
+      tip: 'Overlay distressed paper masks, taped photo cards, and mixed typography styles.'
+    },
+    'retro': {
+      id: 'retro',
+      num: '06',
+      name: 'Retro 80s',
+      cat: 'counter',
+      era: '1980s Arcade & Synthwave',
+      font: '\'Press Start 2P\', \'Orbitron\', cursive',
+      colors: ["#FF007F","#00F0FF","#1A0933","#7000FF"],
+      tagline: 'Outrun sunsets & neon arcade nostalgia',
+      desc: 'Synthwave wireframe horizons, CRT television phosphor glow, chromatic chrome lettering, and vector suns.',
+      tip: 'Add perspective ground grid lines, glowing magenta borders, and retro arcade audio chimes.'
+    },
+    'cyberpunk': {
+      id: 'cyberpunk',
+      num: '07',
+      name: 'Cyberpunk',
+      cat: 'tech',
+      era: 'High Tech, Low Life',
+      font: '\'JetBrains Mono\', \'Anton\', monospace',
+      colors: ["#00FF66","#FF0055","#0B0E14","#FFE600"],
+      tagline: 'Neon rain on dark silicon sprawl',
+      desc: 'Hyper-contrast neon cyan and hot pink, circuit board etchings, glitching Japanese kanji, and carbon mesh.',
+      tip: 'Incorporate terminal command-line modules, glowing neon borders, and glitch jitter on hover.'
+    },
+    'pop-art': {
+      id: 'pop-art',
+      num: '08',
+      name: 'Pop Art',
+      cat: 'classic',
+      era: '1960s Warhol & Lichtenstein',
+      font: '\'Impact\', \'Bebas Neue\', sans-serif',
+      colors: ["#FFE500","#FF2A00","#0044FF","#000000"],
+      tagline: 'Comic book punch, Ben-Day dots, mass culture',
+      desc: 'High-contrast primary hues, oversized Ben-Day halftone dot screening, black comic contour strokes, and action bursts.',
+      tip: 'Use heavy 3.5px black borders, comic speech balloons, and primary color drop-shadow blocks.'
+    },
+    'glassmorphism': {
+      id: 'glassmorphism',
+      num: '09',
+      name: 'Glassmorphism',
+      cat: 'tech',
+      era: '2020s Apple & Big Sur',
+      font: '\'Inter\', sans-serif',
+      colors: ["rgba(255,255,255,0.7)","rgba(255,255,255,0.12)","#3B82F6","#0F172A"],
+      tagline: 'Translucent optical blur & frosted light',
+      desc: 'Deep multi-layer backdrop-filter blur, luminous refractive edge highlights, floating depth, and soft light dispersion.',
+      tip: 'Stack translucent glass cards over vivid floating colored blur orbs with 1px border highlight.'
+    },
+    'clay-style': {
+      id: 'clay-style',
+      num: '10',
+      name: 'Clay Style',
+      cat: 'tactile',
+      era: '3D Claymorphism 2022',
+      font: '\'Plus Jakarta Sans\', sans-serif',
+      colors: ["#F87171","#60A5FA","#34D399","#FBBF24"],
+      tagline: 'Tactile puffy 3D marshmallow playfulness',
+      desc: 'Pillowy soft 3D inflated cards, extruded outer shadows combined with inset corner highlights, and velvety matte finishes.',
+      tip: 'Pair 32px rounded pill radii with dual outer/inner box-shadows for a squishy toy look.'
+    },
+    'pixel-art': {
+      id: 'pixel-art',
+      num: '11',
+      name: 'Pixel Art',
+      cat: 'counter',
+      era: '8-Bit Golden Era',
+      font: '\'Press Start 2P\', monospace',
+      colors: ["#000000","#00E5FF","#FF0055","#00FF66"],
+      tagline: 'Grid-locked retro gaming precision',
+      desc: 'Stepped staircase pixel borders, vibrant 8-bit color palettes, crisp non-anti-aliased sprites, and arcade coin HUDs.',
+      tip: 'Use image-rendering: pixelated, stepped box-shadow borders, and 8-bit sound effects.'
+    },
+    'editorial': {
+      id: 'editorial',
+      num: '12',
+      name: 'Editorial',
+      cat: 'classic',
+      era: 'High Fashion Magazine',
+      font: '\'Playfair Display\', serif',
+      colors: ["#0F172A","#F8FAFC","#C5A880","#64748B"],
+      tagline: 'Haute couture typography & asymmetric luxury',
+      desc: 'Dramatic high-contrast Didone serifs, generous magazine leading, oversized drop-caps, and editorial pull-quotes.',
+      tip: 'Use large italic serif headlines paired with ultra-clean monospace metadata sub-labels.'
+    },
+    'y2k': {
+      id: 'y2k',
+      num: '13',
+      name: 'Y2K Aesthetic',
+      cat: 'tech',
+      era: 'Late 1990s & Millennium',
+      font: '\'Space Grotesk\', sans-serif',
+      colors: ["#E0E7FF","#FF70A6","#70D6FF","#FF9770"],
+      tagline: 'Futuristic optimism, liquid chrome & glitter',
+      desc: 'Cyber-star sparkles, iridescent metallic sheen, bubble gum pastels, translucent hardware plastic, and CD-ROM halos.',
+      tip: 'Add 4-point sparkle stars, metallic gradient pill badges, and holographic shimmer ribbons.'
+    },
+    'swiss-design': {
+      id: 'swiss-design',
+      num: '14',
+      name: 'Swiss Design',
+      cat: 'classic',
+      era: '1950s International Style',
+      font: '\'Helvetica Neue\', \'Inter\', sans-serif',
+      colors: ["#FF0000","#000000","#FFFFFF","#E5E5E5"],
+      tagline: 'Mathematical grid clarity & objective order',
+      desc: 'Strict asymmetric column layouts, neutral sans-serif typography, stark red and black palette, and universal clarity.',
+      tip: 'Anchor all elements to an uncompromising mathematical grid with bold red accent bars.'
+    },
+    'surreal-design': {
+      id: 'surreal-design',
+      num: '15',
+      name: 'Surreal Design',
+      cat: 'classic',
+      era: 'Dali & Magritte Dreamscape',
+      font: '\'Syne\', \'Playfair Display\', sans-serif',
+      colors: ["#1E1B4B","#F43F5E","#38BDF8","#FEF08A"],
+      tagline: 'Impossible geometry & dreamlike physics',
+      desc: 'Levitating floating architectural obelisks, melting temporal clocks, celestial skies, and paradox perspective illusions.',
+      tip: 'Animate floating 3D elements that defy gravity using CSS perspective and floating keyframes.'
+    },
+    'bohemian': {
+      id: 'bohemian',
+      num: '16',
+      name: 'Bohemian',
+      cat: 'tactile',
+      era: 'Earthy Artisanal Modern',
+      font: '\'Manrope\', cursive',
+      colors: ["#C27D56","#D4A373","#CCD5AE","#E9D8A6"],
+      tagline: 'Organic sunbursts, warm terracotta & soul',
+      desc: 'Hand-drawn natural arches, warm earthy clay and olive botanical palettes, woven textures, and relaxed artisanal warmth.',
+      tip: 'Incorporate warm desert tones, gentle pill-shaped arches, and subtle botanical iconography.'
+    },
+    'victorian-style': {
+      id: 'victorian-style',
+      num: '17',
+      name: 'Victorian Style',
+      cat: 'classic',
+      era: '19th Century Industrial Empire',
+      font: '\'Cinzel\', serif',
+      colors: ["#2D1B36","#D4AF37","#8B0000","#FAF0E6"],
+      tagline: 'Ornate gilded filigree & engraved grandeur',
+      desc: 'Intricate golden acanthus leaves, heraldic flourishes, dark velvet backdrops, engraved vintage cameo frames, and wax seals.',
+      tip: 'Use gilded 2px ornate borders, gold metallic gradients, and vintage serif typography.'
+    },
+    'graffiti': {
+      id: 'graffiti',
+      num: '18',
+      name: 'Graffiti Street',
+      cat: 'counter',
+      era: 'Urban Street Art Revolution',
+      font: '\'Permanent Marker\', \'Anton\', cursive',
+      colors: ["#FF003C","#00F5D4","#FFE500","#121212"],
+      tagline: 'Raw spray paint drips, stencils & rebellion',
+      desc: 'Street spray aerosol splatters, dynamic drip runs, layered asphalt concrete, neon marker strokes, and wildstyle stencils.',
+      tip: 'Add spray paint drip SVGs, bold slanted stencil headlines, and gritty urban backdrops.'
+    },
+    'aurora': {
+      id: 'aurora',
+      num: '19',
+      name: 'Aurora Borealis',
+      cat: 'tactile',
+      era: 'Atmospheric Polar Phenomenon',
+      font: '\'Inter\', sans-serif',
+      colors: ["#00F5D4","#8B5CF6","#3B82F6","#10B981"],
+      tagline: 'Celestial polar plasma in continuous motion',
+      desc: 'Harmonic flowing waves of emerald green, deep cosmic violet, and solar cyan drifting smoothly across a night sky.',
+      tip: 'Layer fluid multi-stop radial gradients animated with CSS background-position keyframes.'
+    },
+    'handwritten': {
+      id: 'handwritten',
+      num: '20',
+      name: 'Handwritten Doodles',
+      cat: 'tactile',
+      era: 'Human Sketchbook & Studio',
+      font: '\'Caveat\', cursive',
+      colors: ["#FFFBEB","#0F172A","#F59E0B","#EF4444"],
+      tagline: 'Raw ink scribbles, sticky notes & honesty',
+      desc: 'Spontaneous cursive ink annotations, taped yellow sticky notes, hand-drawn circle highlights, and marker arrows.',
+      tip: 'Highlight critical CTA buttons with playful hand-drawn SVG arrows and taped paper notes.'
+    },
+    'skeuomorphism': {
+      id: 'skeuomorphism',
+      num: '21',
+      name: 'Skeuomorphism',
+      cat: 'tactile',
+      era: 'Early iOS & Tactile Realism',
+      font: '\'SF Pro Display\', sans-serif',
+      colors: ["#3E2723","#D7CCC8","#795548","#BCAAA4"],
+      tagline: 'Realistic stitched leather & brushed steel',
+      desc: 'Deep physical realism, beveled embossed buttons, realistic stitched leather textures, and tactile volume knobs.',
+      tip: 'Apply realistic multi-layer drop and inner shadows that emulate real-world physical light.'
+    },
+    'neumorphism': {
+      id: 'neumorphism',
+      num: '22',
+      name: 'Neumorphism',
+      cat: 'tech',
+      era: 'Soft UI 2020',
+      font: '\'Inter\', sans-serif',
+      colors: ["#E0E5EC","#A3B1C6","#FFFFFF","#31456A"],
+      tagline: 'Seamless extruded plastic from the surface',
+      desc: 'Soft tactile monochrome interface where buttons appear extruded directly from the background with light/dark shadow pairs.',
+      tip: 'Calculate complementary positive and negative box-shadows matched to background color.'
+    },
+    'art-nouveau': {
+      id: 'art-nouveau',
+      num: '23',
+      name: 'Art Nouveau',
+      cat: 'classic',
+      era: 'Belle Époque 1890s',
+      font: '\'Marcellus\', serif',
+      colors: ["#2E4F4F","#0E8388","#CBE4DE","#D4AF37"],
+      tagline: 'Whiplash curves, flowing vines & nature',
+      desc: 'Elegantly flowing whiplash organic curves, golden botanical tendrils, stylized floral symmetry, and sinuous beauty.',
+      tip: 'Decorate card corners with winding golden vine flourishes and organic archway frames.'
+    },
+    'liquid-chrome': {
+      id: 'liquid-chrome',
+      num: '24',
+      name: 'Liquid Chrome',
+      cat: 'tech',
+      era: 'Y3K Metallic Mercury',
+      font: '\'Space Grotesk\', sans-serif',
+      colors: ["#E2E8F0","#94A3B8","#38BDF8","#0F172A"],
+      tagline: 'Reflective molten mercury in zero gravity',
+      desc: 'Hyper-reflective molten silver ripples, distorted metallic reflections, chromatic aberration, and specular highlights.',
+      tip: 'Use dynamic metallic linear gradients with high-contrast chrome stops and soft blur glow.'
+    },
+    'de-stijl': {
+      id: 'de-stijl',
+      num: '25',
+      name: 'De Stijl',
+      cat: 'classic',
+      era: '1917 Mondrian & Theo',
+      font: '\'Space Grotesk\', sans-serif',
+      colors: ["#E50914","#0044FF","#FFCC00","#FFFFFF"],
+      tagline: 'Pure primary blocks & orthogonal black grids',
+      desc: 'Thick black vertical and horizontal lines framing pure primary color rectangles (red, blue, yellow) and clean white space.',
+      tip: 'Construct asymmetric bento cards bounded by heavy 4px solid black grid lines.'
+    },
+    'memphis': {
+      id: 'memphis',
+      num: '26',
+      name: 'Memphis Design',
+      cat: 'tactile',
+      era: '1981 Milan Ettore Sottsass',
+      font: '\'Syne\', sans-serif',
+      colors: ["#FF6B6B","#4ECDC4","#FFE66D","#292F36"],
+      tagline: 'Postmodern squiggles, confetti & joy',
+      desc: 'Playful clashing pastel hues, chaotic black confetti sprinkles, geometric squiggles, triangles, and uninhibited optimism.',
+      tip: 'Scatter geometric zig-zags, polka-dot fills, and asymmetrical pastel cards across the screen.'
+    },
+    'psychedelic': {
+      id: 'psychedelic',
+      num: '27',
+      name: 'Psychedelic 60s',
+      cat: 'counter',
+      era: '1960s Summer of Love',
+      font: '\'Righteous\', cursive',
+      colors: ["#FF007F","#FF7700","#7700FF","#00FF77"],
+      tagline: 'Fluid optical swirls & mind-expanding waves',
+      desc: 'Warped melting typography, hallucinogenic vibrating color contrasts, concentric optical waves, and fluid kaleidoscope motion.',
+      tip: 'Animate hypnotic multi-layer gradient waves with high-saturation vibrating colors.'
+    },
+    'vaporwave': {
+      id: 'vaporwave',
+      num: '28',
+      name: 'Vaporwave',
+      cat: 'counter',
+      era: '2010s Internet Nostalgia',
+      font: '\'MS Gothic\', \'Space Grotesk\', sans-serif',
+      colors: ["#FF71CE","#01CDFE","#05FFA1","#B967FF"],
+      tagline: 'Aesthetic Greek statues, Arizona tea & anime',
+      desc: 'Glitchy Japanese typography, pastel pink/cyan sunsets, classical marble statues, and endless wireframe perspective grids.',
+      tip: 'Combine Japanese glyph annotations with pastel sunset gradients and 90s OS dialog bars.'
+    },
+    'steampunk': {
+      id: 'steampunk',
+      num: '29',
+      name: 'Steampunk',
+      cat: 'counter',
+      era: 'Victorian Science Romance',
+      font: '\'Cinzel Decorative\', serif',
+      colors: ["#8B4513","#CD7F32","#B8860B","#2F1810"],
+      tagline: 'Brass clockwork, steam pipes & copper gears',
+      desc: 'Industrial Victorian brass mechanisms, exposed copper gears, vintage glass pressure gauges, and riveted iron plates.',
+      tip: 'Add rotating CSS brass gear animations, copper foil border gradients, and vintage dial gauges.'
+    },
+    'grunge': {
+      id: 'grunge',
+      num: '30',
+      name: 'Grunge 90s',
+      cat: 'counter',
+      era: '1990s Pacific Northwest',
+      font: '\'Permanent Marker\', sans-serif',
+      colors: ["#1C1917","#78716C","#D6D3D1","#991B1B"],
+      tagline: 'Photocopy noise, distress & raw rebellion',
+      desc: 'High-grain distressed textures, photocopy bleed, smeared ink stains, ripped masking tape, and underground fanzine ethos.',
+      tip: 'Apply grain overlays, angled tape badge strips, and gritty high-contrast black/white imagery.'
+    },
+    'paper-cutout': {
+      id: 'paper-cutout',
+      num: '31',
+      name: 'Paper Cutout',
+      cat: 'tactile',
+      era: 'Layered Craft Art',
+      font: '\'Manrope\', sans-serif',
+      colors: ["#064E3B","#047857","#10B981","#A7F3D0"],
+      tagline: 'Multi-layered dimensional silhouette depth',
+      desc: 'Stacked layered paper silhouettes with deep directional drop-shadows, creating organic topographic caverns and peaks.',
+      tip: 'Layer 4-5 stacked SVG curves with progressive box-shadows to simulate real paper depth.'
+    },
+    'glitch': {
+      id: 'glitch',
+      num: '32',
+      name: 'Glitch Art',
+      cat: 'tech',
+      era: 'Digital Error Aesthetics',
+      font: '\'JetBrains Mono\', monospace',
+      colors: ["#FF0055","#00FFFF","#0F172A","#FFFFFF"],
+      tagline: 'Beauty in signal corruption & data decay',
+      desc: 'RGB chromatic aberration color-split, horizontal digital displacement slices, scanline sync errors, and cyber twitching.',
+      tip: 'Implement CSS clip-path slice animations that trigger spontaneous RGB channel shifts on hover.'
+    },
+    'anti-design': {
+      id: 'anti-design',
+      num: '33',
+      name: 'Anti-Design',
+      cat: 'counter',
+      era: 'Raw Web Brutalism',
+      font: '\'Courier New\', monospace',
+      colors: ["#0000FF","#FFFF00","#000000","#FFFFFF"],
+      tagline: 'Breaking all conventional rules with pride',
+      desc: 'Deliberately jarring layouts, default browser form elements, unstyled raw links, overlapping text, and unapologetic chaos.',
+      tip: 'Use raw default button styles, monospace code blocks, and aggressive color collisions.'
+    },
+    '3d-inflated': {
+      id: '3d-inflated',
+      num: '34',
+      name: '3D Inflated',
+      cat: 'tactile',
+      era: 'Modern 3D Foil Balloons',
+      font: '\'Syne\', \'Anton\', sans-serif',
+      colors: ["#EC4899","#8B5CF6","#3B82F6","#F43F5E"],
+      tagline: 'Glossy bouncy inflated metallic balloons',
+      desc: 'Soft, plump, inflated balloon typography with specular mirror reflections, bouncy squishy physics, and air pressure depth.',
+      tip: 'Use multi-stop specular radial highlights to give elements an inflated helium foil balloon look.'
+    },
+    'isometric': {
+      id: 'isometric',
+      num: '35',
+      name: 'Isometric 3D',
+      cat: 'tech',
+      era: 'Orthographic Architecture',
+      font: '\'Space Grotesk\', sans-serif',
+      colors: ["#3B82F6","#1D4ED8","#93C5FD","#1E293B"],
+      tagline: '30-degree architectural precision & voxel dioramas',
+      desc: 'Axonometric 30-degree orthographic projection, miniature modular tech buildings, cube voxel grids, and diorama clarity.',
+      tip: 'Use CSS rotateX(60deg) rotateZ(-45deg) transforms to construct genuine isometric 3D cubes.'
+    },
+    'ukiyo-e': {
+      id: 'ukiyo-e',
+      num: '36',
+      name: 'Ukiyo-e',
+      cat: 'classic',
+      era: 'Edo Period Japan 1600s',
+      font: '\'Cinzel\', serif',
+      colors: ["#1E3A8A","#0284C7","#FEF3C7","#DC2626"],
+      tagline: 'The Great Wave & floating world woodblocks',
+      desc: 'Hokusai-inspired oceanic wave crests, sumi-e ink woodblock lines, traditional Edo vermillion stamps, and paper texture.',
+      tip: 'Incorporate stylized wave crest SVGs, Japanese vermillion seal stamps, and parchment paper backdrops.'
+    },
+    'brutalism': {
+      id: 'brutalism',
+      num: '37',
+      name: 'Brutalism',
+      cat: 'counter',
+      era: 'Architectural Beton Brut',
+      font: '\'Anton\', \'Impact\', sans-serif',
+      colors: ["#000000","#FFFFFF","#FF5722","#E2E8F0"],
+      tagline: 'Raw concrete, massive black slabs & honesty',
+      desc: 'Heavy unpolished concrete textures, massive high-contrast solid black borders, hard zero-radius corners, and uncompromising weight.',
+      tip: 'Use 3.5px solid black borders, hard 8px solid black box-shadows, and ultra-bold sans-serif headlines.'
+    },
+    'bauhaus': {
+      id: 'bauhaus',
+      num: '38',
+      name: 'Bauhaus',
+      cat: 'classic',
+      era: '1919 Weimar Walter Gropius',
+      font: '\'Space Grotesk\', sans-serif',
+      colors: ["#DC2626","#2563EB","#EAB308","#0F172A"],
+      tagline: 'Form follows function, primary geometry',
+      desc: 'Primary geometry: circle, triangle, square. Strict functionalism, primary red, blue, yellow, and industrial modernist elegance.',
+      tip: 'Base UI components around pure primary geometric shapes and functionalist typography.'
+    },
+    'mid-century': {
+      id: 'mid-century',
+      num: '39',
+      name: 'Mid-Century Modern',
+      cat: 'classic',
+      era: '1950s Golden Age Design',
+      font: '\'Syne\', \'Manrope\', sans-serif',
+      colors: ["#0D9488","#D97706","#BE185D","#FEF3C7"],
+      tagline: 'Atomic starbursts, walnut wood & optimism',
+      desc: 'Eames-era atomic boomerang shapes, retro teal and mustard starbursts, organic walnut warmth, and postwar optimism.',
+      tip: 'Use organic boomerang curve dividers, mustard and teal palettes, and playful retro starbursts.'
+    },
+  };
+
+  // State
+  let currentThemeId = 'minimalism';
+  let currentCategory = 'all';
+  let studioCanvas = null;
+  let studioCtx = null;
+  let studioAnimId = null;
+  let studioParticles = [];
+  let studioStartTime = 0;
+
+  // Sound Synth for Aesthetics Arena
+  function playDamSound(type, freq) {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!window._damAudioCtx) window._damAudioCtx = new AudioCtx();
+      const ctx = window._damAudioCtx;
+      if (ctx.state === 'suspended') ctx.resume().catch(function() {});
+
+      const now = ctx.currentTime;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      if (type === 'pixel') {
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(freq || 587.33, now);
+        osc.frequency.setValueAtTime((freq || 587.33) * 1.5, now + 0.05);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.13);
+      } else if (type === 'cyber') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(880, now + 0.14);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.17);
+      } else if (type === 'pop') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(320, now);
+        osc.frequency.exponentialRampToValueAtTime(740, now + 0.08);
+        gain.gain.setValueAtTime(0.16, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.09);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.095);
+      } else {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq || 523.25, now);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.16);
+      }
+    } catch (e) {}
+  }
+
+  // 2. THEME SELECTION & MASTER STUDIO UPDATER
+  window.damSelectTheme = function(id) {
+    const theme = window.damThemes[id];
+    if (!theme) return;
+    currentThemeId = id;
+
+    // Active Card Highlighting
+    const cards = document.querySelectorAll('.dam-card');
+    cards.forEach(c => {
+      c.classList.toggle('active', c.getAttribute('data-id') === id);
+    });
+
+    // Update Master Studio Display
+    const numEl = document.getElementById('damStudioNum');
+    const catEl = document.getElementById('damStudioCat');
+    const eraEl = document.getElementById('damStudioEra');
+    const nameEl = document.getElementById('damStudioName');
+    const taglineEl = document.getElementById('damStudioTagline');
+    const descEl = document.getElementById('damStudioDesc');
+    const fontEl = document.getElementById('damStudioFont');
+    const tipEl = document.getElementById('damStudioTip');
+    const paletteEl = document.getElementById('damStudioPalette');
+    const screenEl = document.getElementById('damStudioScreen');
+    const feedbackEl = document.getElementById('damDemoFeedback');
+    const demoBtnText = document.getElementById('damDemoBtnText');
+
+    if (numEl) numEl.textContent = theme.num + ' / 39';
+    if (catEl) catEl.textContent = theme.cat.toUpperCase();
+    if (eraEl) eraEl.textContent = theme.era;
+    if (nameEl) nameEl.textContent = theme.name.toUpperCase();
+    if (taglineEl) taglineEl.innerHTML = '&ldquo;' + theme.tagline + '&rdquo;';
+    if (descEl) descEl.textContent = theme.desc;
+    if (fontEl) fontEl.textContent = theme.font;
+    if (tipEl) tipEl.textContent = theme.tip;
+
+    if (demoBtnText) {
+      demoBtnText.innerHTML = '&#9889; TEST ' + theme.name.toUpperCase() + ' INTERACTION';
+    }
+    if (feedbackEl) {
+      feedbackEl.textContent = 'Active movement: ' + theme.name + ' (' + theme.era + '). Click above to test dynamic widget.';
+      feedbackEl.style.color = theme.colors[0] === '#000000' && theme.colors[1] ? theme.colors[1] : theme.colors[0];
+    }
+
+    // Palette Dots
+    if (paletteEl && theme.colors) {
+      paletteEl.innerHTML = '';
+      theme.colors.forEach(col => {
+        const dot = document.createElement('span');
+        dot.className = 'dam-color-dot';
+        dot.style.background = col;
+        dot.title = col + ' - Click to copy';
+        dot.onclick = function() { window.damCopyColor(col); };
+        paletteEl.appendChild(dot);
+      });
+    }
+
+    // Studio Screen Style Transformation
+    if (screenEl) {
+      screenEl.style.borderColor = theme.colors[0];
+      screenEl.style.boxShadow = '0 20px 50px rgba(0,0,0,0.4), 0 0 30px ' + theme.colors[0] + '33';
+    }
+
+    // Reset Studio Canvas for Selected Aesthetic
+    initStudioCanvasTheme(theme);
+    playDamSound('chime', 440 + parseInt(theme.num, 10) * 12);
+  };
+
+  // 3. COPY COLOR HELPER
+  window.damCopyColor = function(color) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(color).then(function() {
+        showDamToast('Color ' + color + ' copied to clipboard!');
+        playDamSound('chime', 784);
+      }).catch(function() {
+        showDamToast('Color: ' + color);
+      });
+    } else {
+      showDamToast('Color: ' + color);
+    }
+  };
+
+  function showDamToast(msg) {
+    const feedbackEl = document.getElementById('damDemoFeedback');
+    if (feedbackEl) {
+      feedbackEl.textContent = '✓ ' + msg;
+      feedbackEl.style.color = '#00F5D4';
+      setTimeout(function() {
+        const cur = window.damThemes[currentThemeId];
+        if (cur && feedbackEl) {
+          feedbackEl.textContent = 'Active movement: ' + cur.name + ' (' + cur.era + ').';
+        }
+      }, 2200);
+    }
+  }
+
+  // 4. INTERACTIVE WIDGET TRIGGER
+  window.damTriggerInteractiveWidget = function() {
+    const theme = window.damThemes[currentThemeId];
+    if (!theme) return;
+
+    const screenEl = document.getElementById('damStudioScreen');
+    const feedbackEl = document.getElementById('damDemoFeedback');
+    const demoBtn = document.getElementById('damDemoBtn');
+
+    if (screenEl) {
+      screenEl.classList.remove('dam-pulse-fx');
+      void screenEl.offsetWidth; // Reflow
+      screenEl.classList.add('dam-pulse-fx');
+    }
+
+    if (demoBtn) {
+      demoBtn.classList.remove('dam-btn-activated');
+      void demoBtn.offsetWidth;
+      demoBtn.classList.add('dam-btn-activated');
+    }
+
+    // Audio & Custom Feedback according to theme
+    let soundType = 'chime';
+    let actionDesc = '';
+
+    if (['cyberpunk', 'glitch', 'futuristic', 'liquid-chrome'].includes(theme.id)) {
+      soundType = 'cyber';
+      actionDesc = '⚡ Quantum Cyber Shaders Engaged // High-frequency scanline pulse';
+    } else if (['pixel-art', 'retro', 'vaporwave', 'y2k'].includes(theme.id)) {
+      soundType = 'pixel';
+      actionDesc = '👾 8-Bit Chiptune Synthwave Pulse Triggered // Retro CRT phosphor flare';
+    } else if (['clay-style', '3d-inflated', 'neumorphism', 'skeuomorphism'].includes(theme.id)) {
+      soundType = 'pop';
+      actionDesc = '🎈 3D Tactile Elastic Squish Physics Activated // Soft bounce response';
+    } else {
+      soundType = 'chime';
+      actionDesc = '✦ ' + theme.name + ' Dynamic Aesthetic Matrix Synchronized // Golden ratio layout';
+    }
+
+    playDamSound(soundType);
+
+    if (feedbackEl) {
+      feedbackEl.textContent = actionDesc;
+      feedbackEl.style.color = theme.colors[0] === '#000000' && theme.colors[1] ? theme.colors[1] : theme.colors[0];
+    }
+
+    // Burst particles on studio canvas
+    burstStudioParticles(theme);
+  };
+
+  // 5. CATEGORY FILTERING & LIVE SEARCH
+  window.damFilterCategory = function(cat) {
+    currentCategory = cat;
+
+    // Update pill buttons
+    const pills = document.querySelectorAll('#damFilterPills .dam-pill');
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('data-filter') === cat);
+    });
+
+    applyDamFilterAndSearch();
+    playDamSound('chime', 520);
+  };
+
+  window.damClearSearch = function() {
+    const searchInput = document.getElementById('damSearchInput');
+    if (searchInput) searchInput.value = '';
+    currentCategory = 'all';
+
+    const pills = document.querySelectorAll('#damFilterPills .dam-pill');
+    pills.forEach(p => {
+      p.classList.toggle('active', p.getAttribute('data-filter') === 'all');
+    });
+
+    applyDamFilterAndSearch();
+  };
+
+  function applyDamFilterAndSearch() {
+    const searchInput = document.getElementById('damSearchInput');
+    const query = (searchInput ? searchInput.value : '').trim().toLowerCase();
+    const cards = document.querySelectorAll('.dam-card');
+    let visibleCount = 0;
+
+    cards.forEach(card => {
+      const cat = card.getAttribute('data-cat') || '';
+      const name = (card.getAttribute('data-name') || '').toLowerCase();
+      const era = (card.getAttribute('data-era') || '').toLowerCase();
+      const text = card.textContent.toLowerCase();
+
+      const matchesCat = (currentCategory === 'all' || cat === currentCategory);
+      const matchesQuery = (!query || name.includes(query) || era.includes(query) || text.includes(query));
+
+      if (matchesCat && matchesQuery) {
+        card.style.display = '';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    const noResEl = document.getElementById('damNoResults');
+    if (noResEl) {
+      noResEl.style.display = (visibleCount === 0) ? 'block' : 'none';
+    }
+  }
+
+  // 6. STUDIO CANVAS GRAPHICS ENGINE
+  function initStudioCanvasTheme(theme) {
+    if (!studioCanvas || !studioCtx) return;
+    studioParticles = [];
+    const count = 36;
+    const w = studioCanvas.width;
+    const h = studioCanvas.height;
+
+    for (let i = 0; i < count; i++) {
+      studioParticles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        r: Math.random() * 4 + 2,
+        color: theme.colors[i % theme.colors.length] || '#00F5D4',
+        phase: Math.random() * Math.PI * 2
+      });
+    }
+  }
+
+  function burstStudioParticles(theme) {
+    if (!studioCanvas || !studioCtx) return;
+    const w = studioCanvas.width;
+    const h = studioCanvas.height;
+    const cx = w * 0.5;
+    const cy = h * 0.5;
+
+    for (let i = 0; i < 24; i++) {
+      const angle = (Math.PI * 2 / 24) * i;
+      const speed = Math.random() * 4.5 + 2;
+      studioParticles.push({
+        x: cx,
+        y: cy,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r: Math.random() * 5 + 2.5,
+        color: theme.colors[Math.floor(Math.random() * theme.colors.length)] || '#FF5722',
+        decay: 0.02,
+        alpha: 1.0
+      });
+    }
+  }
+
+  function renderStudioFrame(time) {
+    if (!studioCanvas || !studioCtx) return;
+    const w = studioCanvas.width;
+    const h = studioCanvas.height;
+    if (w <= 0 || h <= 0) {
+      studioAnimId = requestAnimationFrame(renderStudioFrame);
+      return;
+    }
+
+    studioCtx.clearRect(0, 0, w, h);
+
+    const theme = window.damThemes[currentThemeId] || window.damThemes['minimalism'];
+    const elapsed = (time - studioStartTime) * 0.001;
+
+    // Movement-Specific Atmospheric Background FX
+    if (['cyberpunk', 'futuristic', 'glitch'].includes(theme.id)) {
+      // Futuristic grid scanlines
+      studioCtx.strokeStyle = 'rgba(0, 245, 212, 0.08)';
+      studioCtx.lineWidth = 1;
+      const step = 28;
+      for (let x = 0; x < w; x += step) {
+        studioCtx.beginPath();
+        studioCtx.moveTo(x, 0);
+        studioCtx.lineTo(x, h);
+        studioCtx.stroke();
+      }
+      for (let y = 0; y < h; y += step) {
+        studioCtx.beginPath();
+        studioCtx.moveTo(0, y);
+        studioCtx.lineTo(w, y);
+        studioCtx.stroke();
+      }
+    } else if (['aurora', 'vaporwave', 'psychedelic'].includes(theme.id)) {
+      // Sine wave ribbon
+      studioCtx.beginPath();
+      studioCtx.moveTo(0, h * 0.5);
+      for (let x = 0; x <= w; x += 10) {
+        const y = h * 0.5 + Math.sin(x * 0.02 + elapsed * 2) * 25 + Math.cos(x * 0.01 - elapsed) * 15;
+        studioCtx.lineTo(x, y);
+      }
+      studioCtx.strokeStyle = theme.colors[0] || '#8B5CF6';
+      studioCtx.lineWidth = 2.5;
+      studioCtx.stroke();
+    } else if (['bauhaus', 'de-stijl', 'swiss-design'].includes(theme.id)) {
+      // Primary geometric backdrop
+      studioCtx.fillStyle = 'rgba(220, 38, 38, 0.12)';
+      studioCtx.fillRect(w * 0.7, 20, 60, 60);
+      studioCtx.beginPath();
+      studioCtx.arc(w * 0.2, h * 0.75, 35, 0, Math.PI * 2);
+      studioCtx.fillStyle = 'rgba(37, 99, 235, 0.12)';
+      studioCtx.fill();
+    }
+
+    // Connect particles with harmonic constellation lines
+    for (let i = 0; i < studioParticles.length; i++) {
+      const p1 = studioParticles[i];
+      p1.x += p1.vx;
+      p1.y += p1.vy;
+
+      if (p1.alpha !== undefined) {
+        p1.alpha -= p1.decay || 0.015;
+        if (p1.alpha <= 0) {
+          studioParticles.splice(i, 1);
+          i--;
+          continue;
+        }
+      } else {
+        if (p1.x < 0 || p1.x > w) p1.vx *= -1;
+        if (p1.y < 0 || p1.y > h) p1.vy *= -1;
+      }
+
+      for (let j = i + 1; j < studioParticles.length; j++) {
+        const p2 = studioParticles[j];
+        const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+        if (dist < 80) {
+          studioCtx.beginPath();
+          studioCtx.moveTo(p1.x, p1.y);
+          studioCtx.lineTo(p2.x, p2.y);
+          studioCtx.strokeStyle = 'rgba(255, 255, 255, ' + ((1 - dist / 80) * 0.12) + ')';
+          studioCtx.lineWidth = 1;
+          studioCtx.stroke();
+        }
+      }
+
+      studioCtx.save();
+      if (p1.alpha !== undefined) studioCtx.globalAlpha = p1.alpha;
+      studioCtx.beginPath();
+      studioCtx.arc(p1.x, p1.y, p1.r, 0, Math.PI * 2);
+      studioCtx.fillStyle = p1.color;
+      studioCtx.fill();
+      studioCtx.restore();
+    }
+
+    studioAnimId = requestAnimationFrame(renderStudioFrame);
+  }
+
+  // 7. INITIALIZE AESTHETICS MULTIVERSE ENGINE
+  window.initAestheticsMultiverseEngine = function() {
+    const section = document.getElementById('designMultiverseSection');
+    if (!section) return;
+
+    // Attach Search Input listener
+    const searchInput = document.getElementById('damSearchInput');
+    if (searchInput && !searchInput._damBound) {
+      searchInput._damBound = true;
+      searchInput.addEventListener('input', function() {
+        applyDamFilterAndSearch();
+      });
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') window.damClearSearch();
+      });
+    }
+
+    // Studio Canvas Setup
+    studioCanvas = document.getElementById('damStudioCanvas');
+    if (studioCanvas && !studioCanvas._damReady) {
+      studioCanvas._damReady = true;
+      studioCtx = studioCanvas.getContext('2d');
+
+      function resizeStudioCanvas() {
+        const parent = studioCanvas.parentElement;
+        if (!parent) return;
+        const rect = parent.getBoundingClientRect();
+        studioCanvas.width = Math.max(300, Math.floor(rect.width));
+        studioCanvas.height = Math.max(220, Math.floor(rect.height));
+      }
+
+      resizeStudioCanvas();
+      window.addEventListener('resize', resizeStudioCanvas, { passive: true });
+
+      studioStartTime = performance.now();
+      if (studioAnimId) cancelAnimationFrame(studioAnimId);
+      studioAnimId = requestAnimationFrame(renderStudioFrame);
+    }
+
+    // Select initial theme
+    window.damSelectTheme('minimalism');
+  };
+
+  // Auto-init on DOMContentLoaded if element exists
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      window.initAestheticsMultiverseEngine();
+    });
+  } else {
+    window.initAestheticsMultiverseEngine();
+  }
+})();

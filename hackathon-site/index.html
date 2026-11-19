@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7954,10 +7954,7 @@
         </div>
       </div>
     </div>
-  </div>
-  <!-- ----------------------------------------
-     PAGE: OFFICIAL HACKATHON STANDINGS & LIVE LEADERBOARD
----------------------------------------- -->
+
     <!-- =====================================================================
          03. BEYOND TOMORROW (CYBERPUNK, LIQUID CHROME & AURORA GLITCH)
          ===================================================================== -->
@@ -8009,7 +8006,1482 @@
           </div>
         </div>
       </div>
+        </section>
+
+    <!-- =====================================================================
+         04. THE 39 AESTHETICS MULTIVERSE (INTERACTIVE DESIGN MOVEMENTS ARENA)
+         ===================================================================== -->
+    <section class="design-aesthetics-multiverse-sec rv" id="designMultiverseSection">
+      <div class="dam-ambient-bg" aria-hidden="true">
+        <div class="dam-orb dam-orb-1"></div>
+        <div class="dam-orb dam-orb-2"></div>
+        <div class="dam-grid-lines"></div>
+      </div>
+
+      <div class="dam-container">
+        <!-- Section Header -->
+        <div class="dam-header">
+          <div class="dam-pill-meta">
+            <span class="dam-meta-dot"></span>
+            <span>39 ICONIC DESIGN MOVEMENTS &bull; VISUAL MULTIVERSE STUDIO</span>
+            <span class="dam-meta-badge">INTERACTIVE ARENA</span>
+          </div>
+
+          <h2 class="dam-title">
+            <span class="dam-title-top">THE DESIGN</span>
+            <span class="dam-title-gradient">MULTIVERSE</span>
+            <span class="dam-title-sub">39 VISUAL MOVEMENTS TRANSFORMING MODERN CODE</span>
+          </h2>
+
+          <p class="dam-lead">
+            Explore the complete spectrum of visual aesthetics from <strong>Swiss precision</strong> and <strong>Cyberpunk neon</strong> to <strong>Liquid Chrome</strong>, <strong>Claymorphism</strong>, <strong>Bauhaus</strong>, and <strong>Ukiyo-e</strong>. Click any aesthetic card below to activate the live interactive studio canvas, motion shaders, and UI tokens.
+          </p>
+
+          <!-- Interactive Search & Filter Control Bar -->
+          <div class="dam-control-bar">
+            <div class="dam-search-box">
+              <span class="dam-search-icon">&#128269;</span>
+              <input type="text" id="damSearchInput" class="dam-search-input" placeholder="Search 39 visual styles (e.g. Cyberpunk, Clay, Memphis, Bauhaus)..." aria-label="Search design movements">
+              <button type="button" id="damSearchClear" class="dam-search-clear" onclick="damClearSearch()" title="Clear Search">&times;</button>
+            </div>
+
+            <div class="dam-filter-pills" id="damFilterPills">
+              <button type="button" class="dam-pill active" data-filter="all" onclick="damFilterCategory('all')">
+                <span>ALL MOVEMENTS</span>
+                <span class="dam-pill-count">39</span>
+              </button>
+              <button type="button" class="dam-pill" data-filter="tech" onclick="damFilterCategory('tech')">
+                <span>MODERN &amp; TECH</span>
+                <span class="dam-pill-count">10</span>
+              </button>
+              <button type="button" class="dam-pill" data-filter="classic" onclick="damFilterCategory('classic')">
+                <span>CLASSIC &amp; HISTORIC</span>
+                <span class="dam-pill-count">10</span>
+              </button>
+              <button type="button" class="dam-pill" data-filter="counter" onclick="damFilterCategory('counter')">
+                <span>AVANT-GARDE &amp; RETRO</span>
+                <span class="dam-pill-count">10</span>
+              </button>
+              <button type="button" class="dam-pill" data-filter="tactile" onclick="damFilterCategory('tactile')">
+                <span>TACTILE &amp; ORGANIC</span>
+                <span class="dam-pill-count">9</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Master Interactive Studio Stage (Live Preview Canvas) -->
+        <div class="dam-studio-stage" id="damMasterStudio">
+          <div class="dam-studio-screen" id="damStudioScreen">
+            <canvas id="damStudioCanvas" class="dam-studio-canvas"></canvas>
+            <div class="dam-studio-backdrop" id="damStudioBackdrop"></div>
+            
+            <div class="dam-studio-content">
+              <div class="dam-studio-badge-row">
+                <span class="dam-studio-num" id="damStudioNum">01 / 39</span>
+                <span class="dam-studio-cat" id="damStudioCat">MODERN &amp; TECH</span>
+                <span class="dam-studio-era" id="damStudioEra">1960s Modernism</span>
+              </div>
+
+              <h3 class="dam-studio-name" id="damStudioName">MINIMALISM</h3>
+              <p class="dam-studio-tagline" id="damStudioTagline">&ldquo;Less is infinitely more&rdquo;</p>
+              <p class="dam-studio-desc" id="damStudioDesc">
+                Extreme reduction, mathematical breathing whitespace, monochromatic elegance, and razor-sharp typographic discipline.
+              </p>
+
+              <!-- Interactive Live Widget Demonstration -->
+              <div class="dam-studio-demo-box" id="damStudioDemoBox">
+                <button type="button" class="dam-demo-btn" id="damDemoBtn" onclick="damTriggerInteractiveWidget()">
+                  <span id="damDemoBtnText">&#9889; INTERACTIVE PREVIEW WIDGET</span>
+                </button>
+                <div class="dam-demo-feedback" id="damDemoFeedback">Click widget to test dynamic physics</div>
+              </div>
+
+              <!-- Design Specs & Swatches -->
+              <div class="dam-studio-specs-row">
+                <div class="dam-spec-group">
+                  <span class="dam-spec-label">RECOMMENDED TYPOGRAPHY:</span>
+                  <strong class="dam-spec-val" id="damStudioFont">'Inter', 'Helvetica Neue', sans-serif</strong>
+                </div>
+
+                <div class="dam-spec-group">
+                  <span class="dam-spec-label">HACKATHON APPLICATION TIP:</span>
+                  <span class="dam-spec-val" id="damStudioTip">Focus on 1 hero action per screen, 8pt spatial grid, and zero decorative clutter.</span>
+                </div>
+
+                <div class="dam-spec-group">
+                  <span class="dam-spec-label">ACTIVE COLOR PALETTE:</span>
+                  <div class="dam-studio-palette" id="damStudioPalette">
+                    <span class="dam-color-dot" style="background:#000000;" title="#000000" onclick="damCopyColor('#000000')"></span>
+                    <span class="dam-color-dot" style="background:#FFFFFF;" title="#FFFFFF" onclick="damCopyColor('#FFFFFF')"></span>
+                    <span class="dam-color-dot" style="background:#E2E8F0;" title="#E2E8F0" onclick="damCopyColor('#E2E8F0')"></span>
+                    <span class="dam-color-dot" style="background:#64748B;" title="#64748B" onclick="damCopyColor('#64748B')"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 39 Movements Bento Showcase Cards Grid -->
+        <div class="dam-cards-grid" id="damCardsGrid">
+          <!-- Card: Minimalism -->
+          <article class="dam-card dam-card-minimalism" data-id="minimalism" data-cat="tech" data-name="Minimalism" data-num="01" data-era="1960s Modernism" data-colors="#000000,#FFFFFF,#E2E8F0,#64748B" onclick="damSelectTheme('minimalism')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">01</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-minimalism">
+              <div class="dam-card-fx-box fx-minimalism">
+                <span class="dam-fx-glyph glyph-minimalism"></span>
+                <span class="dam-fx-text fx-txt-minimalism">Minimalism</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Minimalism</h3>
+              <p class="dam-card-tagline">&ldquo;Less is infinitely more&rdquo;</p>
+              <p class="dam-card-desc">Extreme reduction, mathematical breathing whitespace, monochromatic elegance, and razor-sharp typographic discipline.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#000000;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+                <span class="dam-swatch-mini" style="background:#E2E8F0;"></span>
+                <span class="dam-swatch-mini" style="background:#64748B;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('minimalism');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Maximalism -->
+          <article class="dam-card dam-card-maximalism" data-id="maximalism" data-cat="counter" data-name="Maximalism" data-num="02" data-era="Post-Digital 2020s" data-colors="#FF0055,#00F5D4,#FFE600,#7928CA" onclick="damSelectTheme('maximalism')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">02</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-maximalism">
+              <div class="dam-card-fx-box fx-maximalism">
+                <span class="dam-fx-glyph glyph-maximalism"></span>
+                <span class="dam-fx-text fx-txt-maximalism">Maximalism</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Maximalism</h3>
+              <p class="dam-card-tagline">&ldquo;More is more, chaos is art&rdquo;</p>
+              <p class="dam-card-desc">Vibrant sensory saturation, dense sticker bombs, clashing neon layers, and explosive multi-pattern kinetic energy.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF0055;"></span>
+                <span class="dam-swatch-mini" style="background:#00F5D4;"></span>
+                <span class="dam-swatch-mini" style="background:#FFE600;"></span>
+                <span class="dam-swatch-mini" style="background:#7928CA;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('maximalism');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Futuristic -->
+          <article class="dam-card dam-card-futuristic" data-id="futuristic" data-cat="tech" data-name="Futuristic" data-num="03" data-era="2077 Sci-Fi HUD" data-colors="#00E5FF,#0F172A,#1E293B,#38BDF8" onclick="damSelectTheme('futuristic')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">03</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-futuristic">
+              <div class="dam-card-fx-box fx-futuristic">
+                <span class="dam-fx-glyph glyph-futuristic"></span>
+                <span class="dam-fx-text fx-txt-futuristic">Futuristic</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Futuristic</h3>
+              <p class="dam-card-tagline">&ldquo;Quantum telemetry &amp; deep space interface&rdquo;</p>
+              <p class="dam-card-desc">Holographic scanlines, orbital coordinate radar, telemetry HUD gauges, and glowing cyan optic fiber arrays.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#00E5FF;"></span>
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+                <span class="dam-swatch-mini" style="background:#1E293B;"></span>
+                <span class="dam-swatch-mini" style="background:#38BDF8;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('futuristic');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Vector Art -->
+          <article class="dam-card dam-card-vector-art" data-id="vector-art" data-cat="tactile" data-name="Vector Art" data-num="04" data-era="Modern Digital Graphic" data-colors="#FF5722,#2563EB,#10B981,#FBBF24" onclick="damSelectTheme('vector-art')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">04</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-vector-art">
+              <div class="dam-card-fx-box fx-vector-art">
+                <span class="dam-fx-glyph glyph-vector-art"></span>
+                <span class="dam-fx-text fx-txt-vector-art">Vector Art</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Vector Art</h3>
+              <p class="dam-card-tagline">&ldquo;Infinite resolution, pure geometric curves&rdquo;</p>
+              <p class="dam-card-desc">Crisp mathematical Bezier curves, bold flat color blocking, dynamic stroke weights, and scalable SVG vectors.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF5722;"></span>
+                <span class="dam-swatch-mini" style="background:#2563EB;"></span>
+                <span class="dam-swatch-mini" style="background:#10B981;"></span>
+                <span class="dam-swatch-mini" style="background:#FBBF24;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('vector-art');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Collage Art -->
+          <article class="dam-card dam-card-collage-art" data-id="collage-art" data-cat="counter" data-name="Collage Art" data-num="05" data-era="Dadaist & Mixed Media" data-colors="#FAF5EF,#1E1E1E,#D97706,#BE123C" onclick="damSelectTheme('collage-art')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">05</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-collage-art">
+              <div class="dam-card-fx-box fx-collage-art">
+                <span class="dam-fx-glyph glyph-collage-art"></span>
+                <span class="dam-fx-text fx-txt-collage-art">Collage Art</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Collage Art</h3>
+              <p class="dam-card-tagline">&ldquo;Analog memory meets digital juxtaposition&rdquo;</p>
+              <p class="dam-card-desc">Layered torn paper borders, vintage halftone newsprint, Polaroid camera snaps, and taped archival ephemera.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FAF5EF;"></span>
+                <span class="dam-swatch-mini" style="background:#1E1E1E;"></span>
+                <span class="dam-swatch-mini" style="background:#D97706;"></span>
+                <span class="dam-swatch-mini" style="background:#BE123C;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('collage-art');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Retro 80s -->
+          <article class="dam-card dam-card-retro" data-id="retro" data-cat="counter" data-name="Retro 80s" data-num="06" data-era="1980s Arcade & Synthwave" data-colors="#FF007F,#00F0FF,#1A0933,#7000FF" onclick="damSelectTheme('retro')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">06</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-retro">
+              <div class="dam-card-fx-box fx-retro">
+                <span class="dam-fx-glyph glyph-retro"></span>
+                <span class="dam-fx-text fx-txt-retro">Retro 80s</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Retro 80s</h3>
+              <p class="dam-card-tagline">&ldquo;Outrun sunsets &amp; neon arcade nostalgia&rdquo;</p>
+              <p class="dam-card-desc">Synthwave wireframe horizons, CRT television phosphor glow, chromatic chrome lettering, and vector suns.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF007F;"></span>
+                <span class="dam-swatch-mini" style="background:#00F0FF;"></span>
+                <span class="dam-swatch-mini" style="background:#1A0933;"></span>
+                <span class="dam-swatch-mini" style="background:#7000FF;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('retro');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Cyberpunk -->
+          <article class="dam-card dam-card-cyberpunk" data-id="cyberpunk" data-cat="tech" data-name="Cyberpunk" data-num="07" data-era="High Tech, Low Life" data-colors="#00FF66,#FF0055,#0B0E14,#FFE600" onclick="damSelectTheme('cyberpunk')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">07</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-cyberpunk">
+              <div class="dam-card-fx-box fx-cyberpunk">
+                <span class="dam-fx-glyph glyph-cyberpunk"></span>
+                <span class="dam-fx-text fx-txt-cyberpunk">Cyberpunk</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Cyberpunk</h3>
+              <p class="dam-card-tagline">&ldquo;Neon rain on dark silicon sprawl&rdquo;</p>
+              <p class="dam-card-desc">Hyper-contrast neon cyan and hot pink, circuit board etchings, glitching Japanese kanji, and carbon mesh.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#00FF66;"></span>
+                <span class="dam-swatch-mini" style="background:#FF0055;"></span>
+                <span class="dam-swatch-mini" style="background:#0B0E14;"></span>
+                <span class="dam-swatch-mini" style="background:#FFE600;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('cyberpunk');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Pop Art -->
+          <article class="dam-card dam-card-pop-art" data-id="pop-art" data-cat="classic" data-name="Pop Art" data-num="08" data-era="1960s Warhol & Lichtenstein" data-colors="#FFE500,#FF2A00,#0044FF,#000000" onclick="damSelectTheme('pop-art')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">08</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-pop-art">
+              <div class="dam-card-fx-box fx-pop-art">
+                <span class="dam-fx-glyph glyph-pop-art"></span>
+                <span class="dam-fx-text fx-txt-pop-art">Pop Art</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Pop Art</h3>
+              <p class="dam-card-tagline">&ldquo;Comic book punch, Ben-Day dots, mass culture&rdquo;</p>
+              <p class="dam-card-desc">High-contrast primary hues, oversized Ben-Day halftone dot screening, black comic contour strokes, and action bursts.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FFE500;"></span>
+                <span class="dam-swatch-mini" style="background:#FF2A00;"></span>
+                <span class="dam-swatch-mini" style="background:#0044FF;"></span>
+                <span class="dam-swatch-mini" style="background:#000000;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('pop-art');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Glassmorphism -->
+          <article class="dam-card dam-card-glassmorphism" data-id="glassmorphism" data-cat="tech" data-name="Glassmorphism" data-num="09" data-era="2020s Apple & Big Sur" data-colors="rgba(255,255,255,0.7),rgba(255,255,255,0.12),#3B82F6,#0F172A" onclick="damSelectTheme('glassmorphism')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">09</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-glassmorphism">
+              <div class="dam-card-fx-box fx-glassmorphism">
+                <span class="dam-fx-glyph glyph-glassmorphism"></span>
+                <span class="dam-fx-text fx-txt-glassmorphism">Glassmorphism</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Glassmorphism</h3>
+              <p class="dam-card-tagline">&ldquo;Translucent optical blur &amp; frosted light&rdquo;</p>
+              <p class="dam-card-desc">Deep multi-layer backdrop-filter blur, luminous refractive edge highlights, floating depth, and soft light dispersion.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:rgba(255,255,255,0.7);"></span>
+                <span class="dam-swatch-mini" style="background:rgba(255,255,255,0.12);"></span>
+                <span class="dam-swatch-mini" style="background:#3B82F6;"></span>
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('glassmorphism');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Clay Style -->
+          <article class="dam-card dam-card-clay-style" data-id="clay-style" data-cat="tactile" data-name="Clay Style" data-num="10" data-era="3D Claymorphism 2022" data-colors="#F87171,#60A5FA,#34D399,#FBBF24" onclick="damSelectTheme('clay-style')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">10</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-clay-style">
+              <div class="dam-card-fx-box fx-clay-style">
+                <span class="dam-fx-glyph glyph-clay-style"></span>
+                <span class="dam-fx-text fx-txt-clay-style">Clay Style</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Clay Style</h3>
+              <p class="dam-card-tagline">&ldquo;Tactile puffy 3D marshmallow playfulness&rdquo;</p>
+              <p class="dam-card-desc">Pillowy soft 3D inflated cards, extruded outer shadows combined with inset corner highlights, and velvety matte finishes.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#F87171;"></span>
+                <span class="dam-swatch-mini" style="background:#60A5FA;"></span>
+                <span class="dam-swatch-mini" style="background:#34D399;"></span>
+                <span class="dam-swatch-mini" style="background:#FBBF24;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('clay-style');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Pixel Art -->
+          <article class="dam-card dam-card-pixel-art" data-id="pixel-art" data-cat="counter" data-name="Pixel Art" data-num="11" data-era="8-Bit Golden Era" data-colors="#000000,#00E5FF,#FF0055,#00FF66" onclick="damSelectTheme('pixel-art')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">11</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-pixel-art">
+              <div class="dam-card-fx-box fx-pixel-art">
+                <span class="dam-fx-glyph glyph-pixel-art"></span>
+                <span class="dam-fx-text fx-txt-pixel-art">Pixel Art</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Pixel Art</h3>
+              <p class="dam-card-tagline">&ldquo;Grid-locked retro gaming precision&rdquo;</p>
+              <p class="dam-card-desc">Stepped staircase pixel borders, vibrant 8-bit color palettes, crisp non-anti-aliased sprites, and arcade coin HUDs.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#000000;"></span>
+                <span class="dam-swatch-mini" style="background:#00E5FF;"></span>
+                <span class="dam-swatch-mini" style="background:#FF0055;"></span>
+                <span class="dam-swatch-mini" style="background:#00FF66;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('pixel-art');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Editorial -->
+          <article class="dam-card dam-card-editorial" data-id="editorial" data-cat="classic" data-name="Editorial" data-num="12" data-era="High Fashion Magazine" data-colors="#0F172A,#F8FAFC,#C5A880,#64748B" onclick="damSelectTheme('editorial')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">12</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-editorial">
+              <div class="dam-card-fx-box fx-editorial">
+                <span class="dam-fx-glyph glyph-editorial"></span>
+                <span class="dam-fx-text fx-txt-editorial">Editorial</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Editorial</h3>
+              <p class="dam-card-tagline">&ldquo;Haute couture typography &amp; asymmetric luxury&rdquo;</p>
+              <p class="dam-card-desc">Dramatic high-contrast Didone serifs, generous magazine leading, oversized drop-caps, and editorial pull-quotes.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+                <span class="dam-swatch-mini" style="background:#F8FAFC;"></span>
+                <span class="dam-swatch-mini" style="background:#C5A880;"></span>
+                <span class="dam-swatch-mini" style="background:#64748B;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('editorial');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Y2K Aesthetic -->
+          <article class="dam-card dam-card-y2k" data-id="y2k" data-cat="tech" data-name="Y2K Aesthetic" data-num="13" data-era="Late 1990s & Millennium" data-colors="#E0E7FF,#FF70A6,#70D6FF,#FF9770" onclick="damSelectTheme('y2k')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">13</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-y2k">
+              <div class="dam-card-fx-box fx-y2k">
+                <span class="dam-fx-glyph glyph-y2k"></span>
+                <span class="dam-fx-text fx-txt-y2k">Y2K Aesthetic</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Y2K Aesthetic</h3>
+              <p class="dam-card-tagline">&ldquo;Futuristic optimism, liquid chrome &amp; glitter&rdquo;</p>
+              <p class="dam-card-desc">Cyber-star sparkles, iridescent metallic sheen, bubble gum pastels, translucent hardware plastic, and CD-ROM halos.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#E0E7FF;"></span>
+                <span class="dam-swatch-mini" style="background:#FF70A6;"></span>
+                <span class="dam-swatch-mini" style="background:#70D6FF;"></span>
+                <span class="dam-swatch-mini" style="background:#FF9770;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('y2k');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Swiss Design -->
+          <article class="dam-card dam-card-swiss-design" data-id="swiss-design" data-cat="classic" data-name="Swiss Design" data-num="14" data-era="1950s International Style" data-colors="#FF0000,#000000,#FFFFFF,#E5E5E5" onclick="damSelectTheme('swiss-design')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">14</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-swiss-design">
+              <div class="dam-card-fx-box fx-swiss-design">
+                <span class="dam-fx-glyph glyph-swiss-design"></span>
+                <span class="dam-fx-text fx-txt-swiss-design">Swiss Design</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Swiss Design</h3>
+              <p class="dam-card-tagline">&ldquo;Mathematical grid clarity &amp; objective order&rdquo;</p>
+              <p class="dam-card-desc">Strict asymmetric column layouts, neutral sans-serif typography, stark red and black palette, and universal clarity.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF0000;"></span>
+                <span class="dam-swatch-mini" style="background:#000000;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+                <span class="dam-swatch-mini" style="background:#E5E5E5;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('swiss-design');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Surreal Design -->
+          <article class="dam-card dam-card-surreal-design" data-id="surreal-design" data-cat="classic" data-name="Surreal Design" data-num="15" data-era="Dali & Magritte Dreamscape" data-colors="#1E1B4B,#F43F5E,#38BDF8,#FEF08A" onclick="damSelectTheme('surreal-design')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">15</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-surreal-design">
+              <div class="dam-card-fx-box fx-surreal-design">
+                <span class="dam-fx-glyph glyph-surreal-design"></span>
+                <span class="dam-fx-text fx-txt-surreal-design">Surreal Design</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Surreal Design</h3>
+              <p class="dam-card-tagline">&ldquo;Impossible geometry &amp; dreamlike physics&rdquo;</p>
+              <p class="dam-card-desc">Levitating floating architectural obelisks, melting temporal clocks, celestial skies, and paradox perspective illusions.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#1E1B4B;"></span>
+                <span class="dam-swatch-mini" style="background:#F43F5E;"></span>
+                <span class="dam-swatch-mini" style="background:#38BDF8;"></span>
+                <span class="dam-swatch-mini" style="background:#FEF08A;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('surreal-design');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Bohemian -->
+          <article class="dam-card dam-card-bohemian" data-id="bohemian" data-cat="tactile" data-name="Bohemian" data-num="16" data-era="Earthy Artisanal Modern" data-colors="#C27D56,#D4A373,#CCD5AE,#E9D8A6" onclick="damSelectTheme('bohemian')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">16</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-bohemian">
+              <div class="dam-card-fx-box fx-bohemian">
+                <span class="dam-fx-glyph glyph-bohemian"></span>
+                <span class="dam-fx-text fx-txt-bohemian">Bohemian</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Bohemian</h3>
+              <p class="dam-card-tagline">&ldquo;Organic sunbursts, warm terracotta &amp; soul&rdquo;</p>
+              <p class="dam-card-desc">Hand-drawn natural arches, warm earthy clay and olive botanical palettes, woven textures, and relaxed artisanal warmth.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#C27D56;"></span>
+                <span class="dam-swatch-mini" style="background:#D4A373;"></span>
+                <span class="dam-swatch-mini" style="background:#CCD5AE;"></span>
+                <span class="dam-swatch-mini" style="background:#E9D8A6;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('bohemian');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Victorian Style -->
+          <article class="dam-card dam-card-victorian-style" data-id="victorian-style" data-cat="classic" data-name="Victorian Style" data-num="17" data-era="19th Century Industrial Empire" data-colors="#2D1B36,#D4AF37,#8B0000,#FAF0E6" onclick="damSelectTheme('victorian-style')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">17</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-victorian-style">
+              <div class="dam-card-fx-box fx-victorian-style">
+                <span class="dam-fx-glyph glyph-victorian-style"></span>
+                <span class="dam-fx-text fx-txt-victorian-style">Victorian Style</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Victorian Style</h3>
+              <p class="dam-card-tagline">&ldquo;Ornate gilded filigree &amp; engraved grandeur&rdquo;</p>
+              <p class="dam-card-desc">Intricate golden acanthus leaves, heraldic flourishes, dark velvet backdrops, engraved vintage cameo frames, and wax seals.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#2D1B36;"></span>
+                <span class="dam-swatch-mini" style="background:#D4AF37;"></span>
+                <span class="dam-swatch-mini" style="background:#8B0000;"></span>
+                <span class="dam-swatch-mini" style="background:#FAF0E6;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('victorian-style');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Graffiti Street -->
+          <article class="dam-card dam-card-graffiti" data-id="graffiti" data-cat="counter" data-name="Graffiti Street" data-num="18" data-era="Urban Street Art Revolution" data-colors="#FF003C,#00F5D4,#FFE500,#121212" onclick="damSelectTheme('graffiti')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">18</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-graffiti">
+              <div class="dam-card-fx-box fx-graffiti">
+                <span class="dam-fx-glyph glyph-graffiti"></span>
+                <span class="dam-fx-text fx-txt-graffiti">Graffiti Street</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Graffiti Street</h3>
+              <p class="dam-card-tagline">&ldquo;Raw spray paint drips, stencils &amp; rebellion&rdquo;</p>
+              <p class="dam-card-desc">Street spray aerosol splatters, dynamic drip runs, layered asphalt concrete, neon marker strokes, and wildstyle stencils.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF003C;"></span>
+                <span class="dam-swatch-mini" style="background:#00F5D4;"></span>
+                <span class="dam-swatch-mini" style="background:#FFE500;"></span>
+                <span class="dam-swatch-mini" style="background:#121212;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('graffiti');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Aurora Borealis -->
+          <article class="dam-card dam-card-aurora" data-id="aurora" data-cat="tactile" data-name="Aurora Borealis" data-num="19" data-era="Atmospheric Polar Phenomenon" data-colors="#00F5D4,#8B5CF6,#3B82F6,#10B981" onclick="damSelectTheme('aurora')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">19</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-aurora">
+              <div class="dam-card-fx-box fx-aurora">
+                <span class="dam-fx-glyph glyph-aurora"></span>
+                <span class="dam-fx-text fx-txt-aurora">Aurora Borealis</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Aurora Borealis</h3>
+              <p class="dam-card-tagline">&ldquo;Celestial polar plasma in continuous motion&rdquo;</p>
+              <p class="dam-card-desc">Harmonic flowing waves of emerald green, deep cosmic violet, and solar cyan drifting smoothly across a night sky.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#00F5D4;"></span>
+                <span class="dam-swatch-mini" style="background:#8B5CF6;"></span>
+                <span class="dam-swatch-mini" style="background:#3B82F6;"></span>
+                <span class="dam-swatch-mini" style="background:#10B981;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('aurora');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Handwritten Doodles -->
+          <article class="dam-card dam-card-handwritten" data-id="handwritten" data-cat="tactile" data-name="Handwritten Doodles" data-num="20" data-era="Human Sketchbook & Studio" data-colors="#FFFBEB,#0F172A,#F59E0B,#EF4444" onclick="damSelectTheme('handwritten')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">20</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-handwritten">
+              <div class="dam-card-fx-box fx-handwritten">
+                <span class="dam-fx-glyph glyph-handwritten"></span>
+                <span class="dam-fx-text fx-txt-handwritten">Handwritten Doodles</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Handwritten Doodles</h3>
+              <p class="dam-card-tagline">&ldquo;Raw ink scribbles, sticky notes &amp; honesty&rdquo;</p>
+              <p class="dam-card-desc">Spontaneous cursive ink annotations, taped yellow sticky notes, hand-drawn circle highlights, and marker arrows.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FFFBEB;"></span>
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+                <span class="dam-swatch-mini" style="background:#F59E0B;"></span>
+                <span class="dam-swatch-mini" style="background:#EF4444;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('handwritten');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Skeuomorphism -->
+          <article class="dam-card dam-card-skeuomorphism" data-id="skeuomorphism" data-cat="tactile" data-name="Skeuomorphism" data-num="21" data-era="Early iOS & Tactile Realism" data-colors="#3E2723,#D7CCC8,#795548,#BCAAA4" onclick="damSelectTheme('skeuomorphism')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">21</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-skeuomorphism">
+              <div class="dam-card-fx-box fx-skeuomorphism">
+                <span class="dam-fx-glyph glyph-skeuomorphism"></span>
+                <span class="dam-fx-text fx-txt-skeuomorphism">Skeuomorphism</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Skeuomorphism</h3>
+              <p class="dam-card-tagline">&ldquo;Realistic stitched leather &amp; brushed steel&rdquo;</p>
+              <p class="dam-card-desc">Deep physical realism, beveled embossed buttons, realistic stitched leather textures, and tactile volume knobs.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#3E2723;"></span>
+                <span class="dam-swatch-mini" style="background:#D7CCC8;"></span>
+                <span class="dam-swatch-mini" style="background:#795548;"></span>
+                <span class="dam-swatch-mini" style="background:#BCAAA4;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('skeuomorphism');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Neumorphism -->
+          <article class="dam-card dam-card-neumorphism" data-id="neumorphism" data-cat="tech" data-name="Neumorphism" data-num="22" data-era="Soft UI 2020" data-colors="#E0E5EC,#A3B1C6,#FFFFFF,#31456A" onclick="damSelectTheme('neumorphism')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">22</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-neumorphism">
+              <div class="dam-card-fx-box fx-neumorphism">
+                <span class="dam-fx-glyph glyph-neumorphism"></span>
+                <span class="dam-fx-text fx-txt-neumorphism">Neumorphism</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Neumorphism</h3>
+              <p class="dam-card-tagline">&ldquo;Seamless extruded plastic from the surface&rdquo;</p>
+              <p class="dam-card-desc">Soft tactile monochrome interface where buttons appear extruded directly from the background with light/dark shadow pairs.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#E0E5EC;"></span>
+                <span class="dam-swatch-mini" style="background:#A3B1C6;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+                <span class="dam-swatch-mini" style="background:#31456A;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('neumorphism');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Art Nouveau -->
+          <article class="dam-card dam-card-art-nouveau" data-id="art-nouveau" data-cat="classic" data-name="Art Nouveau" data-num="23" data-era="Belle Époque 1890s" data-colors="#2E4F4F,#0E8388,#CBE4DE,#D4AF37" onclick="damSelectTheme('art-nouveau')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">23</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-art-nouveau">
+              <div class="dam-card-fx-box fx-art-nouveau">
+                <span class="dam-fx-glyph glyph-art-nouveau"></span>
+                <span class="dam-fx-text fx-txt-art-nouveau">Art Nouveau</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Art Nouveau</h3>
+              <p class="dam-card-tagline">&ldquo;Whiplash curves, flowing vines &amp; nature&rdquo;</p>
+              <p class="dam-card-desc">Elegantly flowing whiplash organic curves, golden botanical tendrils, stylized floral symmetry, and sinuous beauty.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#2E4F4F;"></span>
+                <span class="dam-swatch-mini" style="background:#0E8388;"></span>
+                <span class="dam-swatch-mini" style="background:#CBE4DE;"></span>
+                <span class="dam-swatch-mini" style="background:#D4AF37;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('art-nouveau');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Liquid Chrome -->
+          <article class="dam-card dam-card-liquid-chrome" data-id="liquid-chrome" data-cat="tech" data-name="Liquid Chrome" data-num="24" data-era="Y3K Metallic Mercury" data-colors="#E2E8F0,#94A3B8,#38BDF8,#0F172A" onclick="damSelectTheme('liquid-chrome')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">24</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-liquid-chrome">
+              <div class="dam-card-fx-box fx-liquid-chrome">
+                <span class="dam-fx-glyph glyph-liquid-chrome"></span>
+                <span class="dam-fx-text fx-txt-liquid-chrome">Liquid Chrome</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Liquid Chrome</h3>
+              <p class="dam-card-tagline">&ldquo;Reflective molten mercury in zero gravity&rdquo;</p>
+              <p class="dam-card-desc">Hyper-reflective molten silver ripples, distorted metallic reflections, chromatic aberration, and specular highlights.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#E2E8F0;"></span>
+                <span class="dam-swatch-mini" style="background:#94A3B8;"></span>
+                <span class="dam-swatch-mini" style="background:#38BDF8;"></span>
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('liquid-chrome');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: De Stijl -->
+          <article class="dam-card dam-card-de-stijl" data-id="de-stijl" data-cat="classic" data-name="De Stijl" data-num="25" data-era="1917 Mondrian & Theo" data-colors="#E50914,#0044FF,#FFCC00,#FFFFFF" onclick="damSelectTheme('de-stijl')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">25</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-de-stijl">
+              <div class="dam-card-fx-box fx-de-stijl">
+                <span class="dam-fx-glyph glyph-de-stijl"></span>
+                <span class="dam-fx-text fx-txt-de-stijl">De Stijl</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">De Stijl</h3>
+              <p class="dam-card-tagline">&ldquo;Pure primary blocks &amp; orthogonal black grids&rdquo;</p>
+              <p class="dam-card-desc">Thick black vertical and horizontal lines framing pure primary color rectangles (red, blue, yellow) and clean white space.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#E50914;"></span>
+                <span class="dam-swatch-mini" style="background:#0044FF;"></span>
+                <span class="dam-swatch-mini" style="background:#FFCC00;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('de-stijl');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Memphis Design -->
+          <article class="dam-card dam-card-memphis" data-id="memphis" data-cat="tactile" data-name="Memphis Design" data-num="26" data-era="1981 Milan Ettore Sottsass" data-colors="#FF6B6B,#4ECDC4,#FFE66D,#292F36" onclick="damSelectTheme('memphis')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">26</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-memphis">
+              <div class="dam-card-fx-box fx-memphis">
+                <span class="dam-fx-glyph glyph-memphis"></span>
+                <span class="dam-fx-text fx-txt-memphis">Memphis Design</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Memphis Design</h3>
+              <p class="dam-card-tagline">&ldquo;Postmodern squiggles, confetti &amp; joy&rdquo;</p>
+              <p class="dam-card-desc">Playful clashing pastel hues, chaotic black confetti sprinkles, geometric squiggles, triangles, and uninhibited optimism.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF6B6B;"></span>
+                <span class="dam-swatch-mini" style="background:#4ECDC4;"></span>
+                <span class="dam-swatch-mini" style="background:#FFE66D;"></span>
+                <span class="dam-swatch-mini" style="background:#292F36;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('memphis');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Psychedelic 60s -->
+          <article class="dam-card dam-card-psychedelic" data-id="psychedelic" data-cat="counter" data-name="Psychedelic 60s" data-num="27" data-era="1960s Summer of Love" data-colors="#FF007F,#FF7700,#7700FF,#00FF77" onclick="damSelectTheme('psychedelic')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">27</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-psychedelic">
+              <div class="dam-card-fx-box fx-psychedelic">
+                <span class="dam-fx-glyph glyph-psychedelic"></span>
+                <span class="dam-fx-text fx-txt-psychedelic">Psychedelic 60s</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Psychedelic 60s</h3>
+              <p class="dam-card-tagline">&ldquo;Fluid optical swirls &amp; mind-expanding waves&rdquo;</p>
+              <p class="dam-card-desc">Warped melting typography, hallucinogenic vibrating color contrasts, concentric optical waves, and fluid kaleidoscope motion.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF007F;"></span>
+                <span class="dam-swatch-mini" style="background:#FF7700;"></span>
+                <span class="dam-swatch-mini" style="background:#7700FF;"></span>
+                <span class="dam-swatch-mini" style="background:#00FF77;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('psychedelic');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Vaporwave -->
+          <article class="dam-card dam-card-vaporwave" data-id="vaporwave" data-cat="counter" data-name="Vaporwave" data-num="28" data-era="2010s Internet Nostalgia" data-colors="#FF71CE,#01CDFE,#05FFA1,#B967FF" onclick="damSelectTheme('vaporwave')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">28</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-vaporwave">
+              <div class="dam-card-fx-box fx-vaporwave">
+                <span class="dam-fx-glyph glyph-vaporwave"></span>
+                <span class="dam-fx-text fx-txt-vaporwave">Vaporwave</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Vaporwave</h3>
+              <p class="dam-card-tagline">&ldquo;Aesthetic Greek statues, Arizona tea &amp; anime&rdquo;</p>
+              <p class="dam-card-desc">Glitchy Japanese typography, pastel pink/cyan sunsets, classical marble statues, and endless wireframe perspective grids.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF71CE;"></span>
+                <span class="dam-swatch-mini" style="background:#01CDFE;"></span>
+                <span class="dam-swatch-mini" style="background:#05FFA1;"></span>
+                <span class="dam-swatch-mini" style="background:#B967FF;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('vaporwave');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Steampunk -->
+          <article class="dam-card dam-card-steampunk" data-id="steampunk" data-cat="counter" data-name="Steampunk" data-num="29" data-era="Victorian Science Romance" data-colors="#8B4513,#CD7F32,#B8860B,#2F1810" onclick="damSelectTheme('steampunk')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">29</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-steampunk">
+              <div class="dam-card-fx-box fx-steampunk">
+                <span class="dam-fx-glyph glyph-steampunk"></span>
+                <span class="dam-fx-text fx-txt-steampunk">Steampunk</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Steampunk</h3>
+              <p class="dam-card-tagline">&ldquo;Brass clockwork, steam pipes &amp; copper gears&rdquo;</p>
+              <p class="dam-card-desc">Industrial Victorian brass mechanisms, exposed copper gears, vintage glass pressure gauges, and riveted iron plates.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#8B4513;"></span>
+                <span class="dam-swatch-mini" style="background:#CD7F32;"></span>
+                <span class="dam-swatch-mini" style="background:#B8860B;"></span>
+                <span class="dam-swatch-mini" style="background:#2F1810;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('steampunk');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Grunge 90s -->
+          <article class="dam-card dam-card-grunge" data-id="grunge" data-cat="counter" data-name="Grunge 90s" data-num="30" data-era="1990s Pacific Northwest" data-colors="#1C1917,#78716C,#D6D3D1,#991B1B" onclick="damSelectTheme('grunge')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">30</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-grunge">
+              <div class="dam-card-fx-box fx-grunge">
+                <span class="dam-fx-glyph glyph-grunge"></span>
+                <span class="dam-fx-text fx-txt-grunge">Grunge 90s</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Grunge 90s</h3>
+              <p class="dam-card-tagline">&ldquo;Photocopy noise, distress &amp; raw rebellion&rdquo;</p>
+              <p class="dam-card-desc">High-grain distressed textures, photocopy bleed, smeared ink stains, ripped masking tape, and underground fanzine ethos.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#1C1917;"></span>
+                <span class="dam-swatch-mini" style="background:#78716C;"></span>
+                <span class="dam-swatch-mini" style="background:#D6D3D1;"></span>
+                <span class="dam-swatch-mini" style="background:#991B1B;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('grunge');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Paper Cutout -->
+          <article class="dam-card dam-card-paper-cutout" data-id="paper-cutout" data-cat="tactile" data-name="Paper Cutout" data-num="31" data-era="Layered Craft Art" data-colors="#064E3B,#047857,#10B981,#A7F3D0" onclick="damSelectTheme('paper-cutout')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">31</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-paper-cutout">
+              <div class="dam-card-fx-box fx-paper-cutout">
+                <span class="dam-fx-glyph glyph-paper-cutout"></span>
+                <span class="dam-fx-text fx-txt-paper-cutout">Paper Cutout</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Paper Cutout</h3>
+              <p class="dam-card-tagline">&ldquo;Multi-layered dimensional silhouette depth&rdquo;</p>
+              <p class="dam-card-desc">Stacked layered paper silhouettes with deep directional drop-shadows, creating organic topographic caverns and peaks.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#064E3B;"></span>
+                <span class="dam-swatch-mini" style="background:#047857;"></span>
+                <span class="dam-swatch-mini" style="background:#10B981;"></span>
+                <span class="dam-swatch-mini" style="background:#A7F3D0;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('paper-cutout');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Glitch Art -->
+          <article class="dam-card dam-card-glitch" data-id="glitch" data-cat="tech" data-name="Glitch Art" data-num="32" data-era="Digital Error Aesthetics" data-colors="#FF0055,#00FFFF,#0F172A,#FFFFFF" onclick="damSelectTheme('glitch')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">32</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-glitch">
+              <div class="dam-card-fx-box fx-glitch">
+                <span class="dam-fx-glyph glyph-glitch"></span>
+                <span class="dam-fx-text fx-txt-glitch">Glitch Art</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Glitch Art</h3>
+              <p class="dam-card-tagline">&ldquo;Beauty in signal corruption &amp; data decay&rdquo;</p>
+              <p class="dam-card-desc">RGB chromatic aberration color-split, horizontal digital displacement slices, scanline sync errors, and cyber twitching.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#FF0055;"></span>
+                <span class="dam-swatch-mini" style="background:#00FFFF;"></span>
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('glitch');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Anti-Design -->
+          <article class="dam-card dam-card-anti-design" data-id="anti-design" data-cat="counter" data-name="Anti-Design" data-num="33" data-era="Raw Web Brutalism" data-colors="#0000FF,#FFFF00,#000000,#FFFFFF" onclick="damSelectTheme('anti-design')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">33</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-anti-design">
+              <div class="dam-card-fx-box fx-anti-design">
+                <span class="dam-fx-glyph glyph-anti-design"></span>
+                <span class="dam-fx-text fx-txt-anti-design">Anti-Design</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Anti-Design</h3>
+              <p class="dam-card-tagline">&ldquo;Breaking all conventional rules with pride&rdquo;</p>
+              <p class="dam-card-desc">Deliberately jarring layouts, default browser form elements, unstyled raw links, overlapping text, and unapologetic chaos.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#0000FF;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFF00;"></span>
+                <span class="dam-swatch-mini" style="background:#000000;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('anti-design');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: 3D Inflated -->
+          <article class="dam-card dam-card-3d-inflated" data-id="3d-inflated" data-cat="tactile" data-name="3D Inflated" data-num="34" data-era="Modern 3D Foil Balloons" data-colors="#EC4899,#8B5CF6,#3B82F6,#F43F5E" onclick="damSelectTheme('3d-inflated')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">34</span>
+              <span class="dam-card-cat-badge">tactile</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-3d-inflated">
+              <div class="dam-card-fx-box fx-3d-inflated">
+                <span class="dam-fx-glyph glyph-3d-inflated"></span>
+                <span class="dam-fx-text fx-txt-3d-inflated">3D Inflated</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">3D Inflated</h3>
+              <p class="dam-card-tagline">&ldquo;Glossy bouncy inflated metallic balloons&rdquo;</p>
+              <p class="dam-card-desc">Soft, plump, inflated balloon typography with specular mirror reflections, bouncy squishy physics, and air pressure depth.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#EC4899;"></span>
+                <span class="dam-swatch-mini" style="background:#8B5CF6;"></span>
+                <span class="dam-swatch-mini" style="background:#3B82F6;"></span>
+                <span class="dam-swatch-mini" style="background:#F43F5E;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('3d-inflated');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Isometric 3D -->
+          <article class="dam-card dam-card-isometric" data-id="isometric" data-cat="tech" data-name="Isometric 3D" data-num="35" data-era="Orthographic Architecture" data-colors="#3B82F6,#1D4ED8,#93C5FD,#1E293B" onclick="damSelectTheme('isometric')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">35</span>
+              <span class="dam-card-cat-badge">tech</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-isometric">
+              <div class="dam-card-fx-box fx-isometric">
+                <span class="dam-fx-glyph glyph-isometric"></span>
+                <span class="dam-fx-text fx-txt-isometric">Isometric 3D</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Isometric 3D</h3>
+              <p class="dam-card-tagline">&ldquo;30-degree architectural precision &amp; voxel dioramas&rdquo;</p>
+              <p class="dam-card-desc">Axonometric 30-degree orthographic projection, miniature modular tech buildings, cube voxel grids, and diorama clarity.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#3B82F6;"></span>
+                <span class="dam-swatch-mini" style="background:#1D4ED8;"></span>
+                <span class="dam-swatch-mini" style="background:#93C5FD;"></span>
+                <span class="dam-swatch-mini" style="background:#1E293B;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('isometric');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Ukiyo-e -->
+          <article class="dam-card dam-card-ukiyo-e" data-id="ukiyo-e" data-cat="classic" data-name="Ukiyo-e" data-num="36" data-era="Edo Period Japan 1600s" data-colors="#1E3A8A,#0284C7,#FEF3C7,#DC2626" onclick="damSelectTheme('ukiyo-e')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">36</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-ukiyo-e">
+              <div class="dam-card-fx-box fx-ukiyo-e">
+                <span class="dam-fx-glyph glyph-ukiyo-e"></span>
+                <span class="dam-fx-text fx-txt-ukiyo-e">Ukiyo-e</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Ukiyo-e</h3>
+              <p class="dam-card-tagline">&ldquo;The Great Wave &amp; floating world woodblocks&rdquo;</p>
+              <p class="dam-card-desc">Hokusai-inspired oceanic wave crests, sumi-e ink woodblock lines, traditional Edo vermillion stamps, and paper texture.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#1E3A8A;"></span>
+                <span class="dam-swatch-mini" style="background:#0284C7;"></span>
+                <span class="dam-swatch-mini" style="background:#FEF3C7;"></span>
+                <span class="dam-swatch-mini" style="background:#DC2626;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('ukiyo-e');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Brutalism -->
+          <article class="dam-card dam-card-brutalism" data-id="brutalism" data-cat="counter" data-name="Brutalism" data-num="37" data-era="Architectural Beton Brut" data-colors="#000000,#FFFFFF,#FF5722,#E2E8F0" onclick="damSelectTheme('brutalism')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">37</span>
+              <span class="dam-card-cat-badge">counter</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-brutalism">
+              <div class="dam-card-fx-box fx-brutalism">
+                <span class="dam-fx-glyph glyph-brutalism"></span>
+                <span class="dam-fx-text fx-txt-brutalism">Brutalism</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Brutalism</h3>
+              <p class="dam-card-tagline">&ldquo;Raw concrete, massive black slabs &amp; honesty&rdquo;</p>
+              <p class="dam-card-desc">Heavy unpolished concrete textures, massive high-contrast solid black borders, hard zero-radius corners, and uncompromising weight.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#000000;"></span>
+                <span class="dam-swatch-mini" style="background:#FFFFFF;"></span>
+                <span class="dam-swatch-mini" style="background:#FF5722;"></span>
+                <span class="dam-swatch-mini" style="background:#E2E8F0;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('brutalism');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Bauhaus -->
+          <article class="dam-card dam-card-bauhaus" data-id="bauhaus" data-cat="classic" data-name="Bauhaus" data-num="38" data-era="1919 Weimar Walter Gropius" data-colors="#DC2626,#2563EB,#EAB308,#0F172A" onclick="damSelectTheme('bauhaus')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">38</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-bauhaus">
+              <div class="dam-card-fx-box fx-bauhaus">
+                <span class="dam-fx-glyph glyph-bauhaus"></span>
+                <span class="dam-fx-text fx-txt-bauhaus">Bauhaus</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Bauhaus</h3>
+              <p class="dam-card-tagline">&ldquo;Form follows function, primary geometry&rdquo;</p>
+              <p class="dam-card-desc">Primary geometry: circle, triangle, square. Strict functionalism, primary red, blue, yellow, and industrial modernist elegance.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#DC2626;"></span>
+                <span class="dam-swatch-mini" style="background:#2563EB;"></span>
+                <span class="dam-swatch-mini" style="background:#EAB308;"></span>
+                <span class="dam-swatch-mini" style="background:#0F172A;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('bauhaus');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+          <!-- Card: Mid-Century Modern -->
+          <article class="dam-card dam-card-mid-century" data-id="mid-century" data-cat="classic" data-name="Mid-Century Modern" data-num="39" data-era="1950s Golden Age Design" data-colors="#0D9488,#D97706,#BE185D,#FEF3C7" onclick="damSelectTheme('mid-century')">
+            <div class="dam-card-glow" aria-hidden="true"></div>
+            <div class="dam-card-header">
+              <span class="dam-card-num">39</span>
+              <span class="dam-card-cat-badge">classic</span>
+            </div>
+
+            <!-- Visual Preview Mini-Stage -->
+            <div class="dam-card-preview-stage preview-mid-century">
+              <div class="dam-card-fx-box fx-mid-century">
+                <span class="dam-fx-glyph glyph-mid-century"></span>
+                <span class="dam-fx-text fx-txt-mid-century">Mid-Century Modern</span>
+              </div>
+            </div>
+
+            <div class="dam-card-body">
+              <h3 class="dam-card-title">Mid-Century Modern</h3>
+              <p class="dam-card-tagline">&ldquo;Atomic starbursts, walnut wood &amp; optimism&rdquo;</p>
+              <p class="dam-card-desc">Eames-era atomic boomerang shapes, retro teal and mustard starbursts, organic walnut warmth, and postwar optimism.</p>
+            </div>
+
+            <div class="dam-card-footer">
+              <div class="dam-card-swatches">
+                <span class="dam-swatch-mini" style="background:#0D9488;"></span>
+                <span class="dam-swatch-mini" style="background:#D97706;"></span>
+                <span class="dam-swatch-mini" style="background:#BE185D;"></span>
+                <span class="dam-swatch-mini" style="background:#FEF3C7;"></span>
+              </div>
+              <button type="button" class="dam-card-launch-btn" onclick="event.stopPropagation(); damSelectTheme('mid-century');">
+                <span>PREVIEW &rarr;</span>
+              </button>
+            </div>
+          </article>
+        </div>
+
+        <!-- No Results Fallback -->
+        <div class="dam-no-results" id="damNoResults" style="display:none;">
+          <div class="dnr-icon">&#128065;</div>
+          <h3>NO DESIGN MOVEMENT MATCHING QUERY</h3>
+          <p>Try searching for a different style, movement name, or clear the filter to view all 39 design aesthetics.</p>
+          <button type="button" class="dam-reset-btn" onclick="damClearSearch()">
+            <span>Reset Search &amp; Filters &rarr;</span>
+          </button>
+        </div>
+
+        <!-- Bottom CTA Strip -->
+        <div class="dam-bottom-banner">
+          <div class="dam-bb-left">
+            <span class="dam-bb-tag">HACKATHON DESIGN DISCOVERY</span>
+            <h3>CHOOSE YOUR VISUAL SIGNATURE FOR UDBHAV 2027</h3>
+            <p>Every submission is evaluated on innovation, technical implementation, and creative interface aesthetics.</p>
+          </div>
+          <div class="dam-bb-right">
+            <button type="button" class="dam-register-cta-btn" onclick="go('register')">
+              <span>REGISTER SQUAD &amp; CLAIM VIP PASS &rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
+  </div>
+  <!-- ----------------------------------------
+     PAGE: OFFICIAL HACKATHON STANDINGS & LIVE LEADERBOARD
+---------------------------------------- -->
   <div id="page-standings" class="page standings-experience-page">
     <div class="std-ambient-bg" aria-hidden="true"></div>
     <div class="std-grid-overlay" aria-hidden="true"></div>
