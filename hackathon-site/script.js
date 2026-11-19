@@ -13240,7 +13240,7 @@ window.saveGasUrl = function() {
 };
 
 /* ==========================================================================
-   INTERACTIVE FLOATING & POPPING BUBBLES ENGINE (HOME SCREEN HERO)
+   INTERACTIVE BUBBLE SLIME & METABALL PHYSICS ENGINE (HOME SCREEN HERO)
    ========================================================================== */
 function initHeroBubbleAnimation() {
   const canvas = document.getElementById('heroBubbleCanvas');
@@ -13250,46 +13250,95 @@ function initHeroBubbleAnimation() {
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  const palettes = [
-    { rim: 'rgba(255, 87, 34, 0.95)', fill: 'rgba(255, 87, 34, 0.18)', glow: 'rgba(255, 87, 34, 0.50)', shine: 'rgba(255, 255, 255, 0.95)' },
-    { rim: 'rgba(0, 229, 255, 0.95)', fill: 'rgba(0, 229, 255, 0.16)', glow: 'rgba(0, 229, 255, 0.50)', shine: 'rgba(255, 255, 255, 0.95)' },
-    { rim: 'rgba(49, 91, 255, 0.95)', fill: 'rgba(49, 91, 255, 0.18)', glow: 'rgba(49, 91, 255, 0.50)', shine: 'rgba(255, 255, 255, 0.95)' },
-    { rim: 'rgba(168, 85, 247, 0.95)', fill: 'rgba(168, 85, 247, 0.18)', glow: 'rgba(168, 85, 247, 0.50)', shine: 'rgba(255, 255, 255, 0.95)' },
-    { rim: 'rgba(16, 185, 129, 0.95)', fill: 'rgba(16, 185, 129, 0.16)', glow: 'rgba(16, 185, 129, 0.50)', shine: 'rgba(255, 255, 255, 0.95)' },
-    { rim: 'rgba(255, 183, 3, 0.95)', fill: 'rgba(255, 183, 3, 0.18)', glow: 'rgba(255, 183, 3, 0.50)', shine: 'rgba(255, 255, 255, 0.95)' }
+  // Rich, juicy slime palette with translucent fills and glossy specular shine
+  const slimePalettes = [
+    { rim: '#FF5722', fill: 'rgba(255, 87, 34, 0.22)', core: 'rgba(255, 160, 120, 0.65)', glow: 'rgba(255, 87, 34, 0.50)' },
+    { rim: '#00F5D4', fill: 'rgba(0, 245, 212, 0.20)', core: 'rgba(160, 255, 240, 0.65)', glow: 'rgba(0, 245, 212, 0.50)' },
+    { rim: '#8B5CF6', fill: 'rgba(139, 92, 246, 0.22)', core: 'rgba(215, 190, 255, 0.65)', glow: 'rgba(139, 92, 246, 0.50)' },
+    { rim: '#FF3D66', fill: 'rgba(255, 61, 102, 0.22)', core: 'rgba(255, 180, 200, 0.65)', glow: 'rgba(255, 61, 102, 0.50)' },
+    { rim: '#00E5FF', fill: 'rgba(0, 229, 255, 0.20)', core: 'rgba(180, 245, 255, 0.65)', glow: 'rgba(0, 229, 255, 0.50)' },
+    { rim: '#10B981', fill: 'rgba(16, 185, 129, 0.20)', core: 'rgba(170, 250, 215, 0.65)', glow: 'rgba(16, 185, 129, 0.50)' },
+    { rim: '#F59E0B', fill: 'rgba(245, 158, 11, 0.22)', core: 'rgba(255, 225, 140, 0.65)', glow: 'rgba(245, 158, 11, 0.50)' }
   ];
 
-  const droplets = [];
-  const burstParticles = [];
-  let mouse = { x: -9999, y: -9999 };
+  const bubbles = [];
+  const splashParticles = [];
+  const trailDroplets = [];
+
+  // Pointer state with spring physics
+  const pointer = {
+    x: -9999,
+    y: -9999,
+    targetX: -9999,
+    targetY: -9999,
+    active: false,
+    radius: 30,
+    pal: { rim: '#00F5D4', fill: 'rgba(0, 245, 212, 0.32)', core: 'rgba(255, 255, 255, 0.9)', glow: 'rgba(0, 245, 212, 0.65)' }
+  };
+
+  let animId = null;
+  let width = 0;
+  let height = 0;
+
+  // Interactive Liquid Pop Audio Synthesis
+  function playSlimePop(freq) {
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      if (!window._slimeAudioCtx) window._slimeAudioCtx = new AudioCtx();
+      const aCtx = window._slimeAudioCtx;
+      if (aCtx.state === 'suspended') aCtx.resume().catch(function() {});
+
+      const now = aCtx.currentTime;
+      const osc = aCtx.createOscillator();
+      const gain = aCtx.createGain();
+      osc.type = 'sine';
+
+      const baseF = freq || (420 + Math.random() * 260);
+      osc.frequency.setValueAtTime(baseF, now);
+      osc.frequency.exponentialRampToValueAtTime(baseF * 1.9, now + 0.07);
+
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+      osc.connect(gain);
+      gain.connect(aCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.085);
+    } catch (e) {}
+  }
 
   function resize() {
     const rect = hero.getBoundingClientRect();
-    const w = rect.width;
-    const h = rect.height;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-    canvas.width = Math.floor(w * dpr);
-    canvas.height = Math.floor(h * dpr);
-    canvas.style.width = w + 'px';
-    canvas.style.height = h + 'px';
-    ctx.scale(dpr, dpr);
+    width = rect.width || window.innerWidth;
+    height = rect.height || window.innerHeight;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.floor(width * dpr);
+    canvas.height = Math.floor(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    droplets.length = 0;
-    for (let i = 0; i < 40; i++) {
-      const pal = palettes[Math.floor(Math.random() * palettes.length)];
-      const r = Math.random() < 0.25 ? Math.random() * 22 + 20 : Math.random() * 14 + 7;
-      droplets.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
+    bubbles.length = 0;
+    const count = Math.min(52, Math.floor((width * height) / 18000) + 24);
+    for (let i = 0; i < count; i++) {
+      const pal = slimePalettes[Math.floor(Math.random() * slimePalettes.length)];
+      const isHero = Math.random() < 0.22;
+      const r = isHero ? Math.random() * 26 + 28 : Math.random() * 16 + 10;
+      bubbles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.45,
-        vy: -(Math.random() * 0.8 + 0.35),
+        vy: -(Math.random() * 0.75 + 0.35),
         baseR: r,
         r: r,
         pal: pal,
-        pulsePhase: Math.random() * Math.PI * 2,
-        wobbleSpeed: Math.random() * 0.03 + 0.015,
-        wobbleAmp: Math.random() * 1.0 + 0.4,
-        opacity: Math.random() * 0.35 + 0.65
+        phase: Math.random() * Math.PI * 2,
+        speed: Math.random() * 0.032 + 0.014,
+        amp: Math.random() * 1.8 + 0.6,
+        wobblePhase: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.045 + 0.02,
+        wobbleAmp: Math.random() * 0.12 + 0.06
       });
     }
   }
@@ -13297,165 +13346,339 @@ function initHeroBubbleAnimation() {
   resize();
   window.addEventListener('resize', resize, { passive: true });
 
-  hero.addEventListener('mousemove', (e) => {
+  function onPointer(e) {
     const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  }, { passive: true });
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    pointer.targetX = clientX - rect.left;
+    pointer.targetY = clientY - rect.top;
+    pointer.active = true;
 
-  hero.addEventListener('mouseleave', () => {
-    mouse.x = -9999;
-    mouse.y = -9999;
-  });
-
-  function spawnBurst(x, y, color) {
-    if (typeof playBubblePopSound === 'function') {
-      playBubblePopSound(420 + Math.random() * 260);
+    // Spawn trail droplet on movement
+    if (Math.random() < 0.35 && pointer.x > 0) {
+      trailDroplets.push({
+        x: pointer.x + (Math.random() - 0.5) * 16,
+        y: pointer.y + (Math.random() - 0.5) * 16,
+        vx: (Math.random() - 0.5) * 1.2,
+        vy: (Math.random() - 0.5) * 1.2,
+        r: Math.random() * 8 + 4,
+        alpha: 0.85,
+        pal: slimePalettes[Math.floor(Math.random() * slimePalettes.length)]
+      });
     }
-    for (let i = 0; i < 15; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const speed = Math.random() * 6 + 2;
-      burstParticles.push({
+  }
+
+  hero.addEventListener('mousemove', onPointer, { passive: true });
+  hero.addEventListener('touchmove', onPointer, { passive: true });
+  hero.addEventListener('mouseleave', function() { pointer.active = false; });
+  hero.addEventListener('touchend', function() { pointer.active = false; });
+
+  // Slime splash burst generator
+  function spawnSlimeSplash(x, y, color) {
+    playSlimePop();
+    const count = 16;
+    for (let i = 0; i < count; i++) {
+      const a = (Math.PI * 2 / count) * i + (Math.random() - 0.5) * 0.4;
+      const sp = Math.random() * 5.2 + 2.2;
+      splashParticles.push({
         x: x,
         y: y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed,
-        r: Math.random() * 3.5 + 1.5,
+        vx: Math.cos(a) * sp,
+        vy: Math.sin(a) * sp,
+        r: Math.random() * 4.2 + 1.8,
         alpha: 1.0,
-        decay: Math.random() * 0.045 + 0.028,
+        decay: Math.random() * 0.038 + 0.022,
         color: color || '#FF5722'
       });
     }
   }
 
-  canvas.addEventListener('click', (e) => {
+  function handleInteractionClick(e) {
+    // If clicked on an interactive button or link, don't intercept
+    if (e.target.closest('button, a, input, select, textarea, .btn-liquid-primary, .btn-liquid-secondary')) {
+      return;
+    }
+
     const rect = canvas.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
     let popped = false;
 
-    for (let i = droplets.length - 1; i >= 0; i--) {
-      const d = droplets[i];
-      const dx = d.x - clickX;
-      const dy = d.y - clickY;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist <= d.r * 1.35) {
-        spawnBurst(d.x, d.y, d.pal.rim);
-        d.y = hero.clientHeight + 40;
-        d.x = Math.random() * hero.clientWidth;
+    for (let i = bubbles.length - 1; i >= 0; i--) {
+      const b = bubbles[i];
+      const dx = b.x - clickX;
+      const dy = b.y - clickY;
+      if (Math.sqrt(dx * dx + dy * dy) <= b.r * 1.45) {
+        spawnSlimeSplash(b.x, b.y, b.pal.rim);
+        b.y = height + b.r + 30;
+        b.x = Math.random() * width;
         popped = true;
         break;
       }
     }
 
+    // If clicked empty space, spawn cluster of 3 juicy slime bubbles!
     if (!popped) {
-      spawnBurst(clickX, clickY, '#00E5FF');
-      for (let s = 0; s < 2; s++) {
-        const pal = palettes[Math.floor(Math.random() * palettes.length)];
-        const r = Math.random() * 16 + 12;
-        droplets.push({
-          x: clickX + (Math.random() - 0.5) * 35,
-          y: clickY + (Math.random() - 0.5) * 35,
-          vx: (Math.random() - 0.5) * 0.7,
-          vy: -(Math.random() * 1.4 + 0.9),
+      spawnSlimeSplash(clickX, clickY, '#00F5D4');
+      for (let s = 0; s < 3; s++) {
+        const pal = slimePalettes[Math.floor(Math.random() * slimePalettes.length)];
+        const r = Math.random() * 20 + 14;
+        bubbles.push({
+          x: clickX + (Math.random() - 0.5) * 40,
+          y: clickY + (Math.random() - 0.5) * 30,
+          vx: (Math.random() - 0.5) * 0.8,
+          vy: -(Math.random() * 1.1 + 0.6),
           baseR: r,
           r: r,
           pal: pal,
-          pulsePhase: Math.random() * Math.PI * 2,
-          wobbleSpeed: Math.random() * 0.04 + 0.02,
-          wobbleAmp: Math.random() * 1.2 + 0.5,
-          opacity: 0.95
+          phase: Math.random() * Math.PI * 2,
+          speed: 0.028,
+          amp: 1.2,
+          wobblePhase: Math.random() * Math.PI * 2,
+          wobbleSpeed: 0.035,
+          wobbleAmp: 0.1
         });
       }
     }
-  });
+  }
+
+  hero.addEventListener('click', handleInteractionClick);
+
+  // DRAW VISCOUS METABALL SLIME BRIDGE
+  function drawSlimeBridge(b1, b2, r1, r2, col1, col2) {
+    const dx = b2.x - b1.x;
+    const dy = b2.y - b1.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const maxDist = (r1 + r2) * 1.48;
+    if (dist <= 0 || dist >= maxDist || dist <= Math.abs(r1 - r2)) return;
+
+    const angle = Math.atan2(dy, dx);
+    const ratio = dist / maxDist;
+    const tension = Math.pow(1 - ratio, 0.75);
+    const halfPi = Math.PI * 0.5;
+
+    const a1 = angle + halfPi * tension;
+    const a2 = angle - halfPi * tension;
+    const p1x = b1.x + Math.cos(a1) * r1;
+    const p1y = b1.y + Math.sin(a1) * r1;
+    const p2x = b1.x + Math.cos(a2) * r1;
+    const p2y = b1.y + Math.sin(a2) * r1;
+
+    const a3 = angle + Math.PI - halfPi * tension;
+    const a4 = angle + Math.PI + halfPi * tension;
+    const p3x = b2.x + Math.cos(a3) * r2;
+    const p3y = b2.y + Math.sin(a3) * r2;
+    const p4x = b2.x + Math.cos(a4) * r2;
+    const p4y = b2.y + Math.sin(a4) * r2;
+
+    const midX = (b1.x + b2.x) * 0.5;
+    const midY = (b1.y + b2.y) * 0.5;
+    const waist = (1 - tension) * 0.42;
+    const perpX = -Math.sin(angle);
+    const perpY = Math.cos(angle);
+
+    const c1x = midX + perpX * (dist * 0.14 * waist);
+    const c1y = midY + perpY * (dist * 0.14 * waist);
+    const c2x = midX - perpX * (dist * 0.14 * waist);
+    const c2y = midY - perpY * (dist * 0.14 * waist);
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(p1x, p1y);
+    ctx.quadraticCurveTo(c1x, c1y, p4x, p4y);
+    ctx.lineTo(p3x, p3y);
+    ctx.quadraticCurveTo(c2x, c2y, p2x, p2y);
+    ctx.closePath();
+
+    const grad = ctx.createLinearGradient(b1.x, b1.y, b2.x, b2.y);
+    grad.addColorStop(0, col1.fill);
+    grad.addColorStop(1, col2.fill);
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    ctx.lineWidth = 1.8;
+    const strokeGrad = ctx.createLinearGradient(b1.x, b1.y, b2.x, b2.y);
+    strokeGrad.addColorStop(0, col1.rim);
+    strokeGrad.addColorStop(1, col2.rim);
+    ctx.strokeStyle = strokeGrad;
+    ctx.shadowColor = col1.glow;
+    ctx.shadowBlur = 8;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // DRAW GELATINOUS SLIME BUBBLE WITH SPECULAR HIGHLIGHTS
+  function drawSlimeBubble(b, scaleW, scaleH) {
+    ctx.save();
+    ctx.translate(b.x, b.y);
+    ctx.scale(scaleW || 1, scaleH || 1);
+
+    ctx.shadowColor = b.pal.glow;
+    ctx.shadowBlur = 12;
+
+    // Radial body
+    const bodyGrad = ctx.createRadialGradient(-b.r * 0.3, -b.r * 0.3, 0, 0, 0, b.r);
+    bodyGrad.addColorStop(0, b.pal.core);
+    bodyGrad.addColorStop(0.55, b.pal.fill);
+    bodyGrad.addColorStop(1, b.pal.rim);
+
+    ctx.beginPath();
+    ctx.arc(0, 0, b.r, 0, Math.PI * 2);
+    ctx.fillStyle = bodyGrad;
+    ctx.fill();
+
+    // Rim
+    ctx.lineWidth = 2.2;
+    ctx.strokeStyle = b.pal.rim;
+    ctx.stroke();
+
+    // Glossy crescent reflection
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.ellipse(-b.r * 0.32, -b.r * 0.35, b.r * 0.36, b.r * 0.20, -Math.PI / 4, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.70)';
+    ctx.fill();
+
+    // Tiny glint dot
+    ctx.beginPath();
+    ctx.arc(b.r * 0.36, b.r * 0.36, Math.max(1.5, b.r * 0.12), 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
+    ctx.fill();
+
+    ctx.restore();
+  }
 
   function loop() {
-    const w = hero.clientWidth;
-    const h = hero.clientHeight;
-    ctx.clearRect(0, 0, w, h);
-
-    for (let i = 0; i < droplets.length; i++) {
-      const d = droplets[i];
-      d.pulsePhase += d.wobbleSpeed;
-      d.x += d.vx + Math.sin(d.pulsePhase) * d.wobbleAmp;
-      d.y += d.vy;
-      d.r = d.baseR + Math.sin(d.pulsePhase * 1.4) * (d.baseR * 0.08);
-
-      if (d.y < -50) {
-        d.y = h + 40;
-        d.x = Math.random() * w;
-      }
-      if (d.x < -40) d.x = w + 40;
-      if (d.x > w + 40) d.x = -40;
-
-      const dx = d.x - mouse.x;
-      const dy = d.y - mouse.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 140 && dist > 1) {
-        const force = (140 - dist) / 140;
-        d.x += (dx / dist) * force * 4.5;
-        d.y += (dy / dist) * force * 4.5;
-      }
-
-      ctx.save();
-      ctx.globalAlpha = d.opacity;
-      ctx.shadowColor = d.pal.glow;
-      ctx.shadowBlur = 14;
-
-      ctx.beginPath();
-      ctx.arc(d.x, d.y, Math.max(1, d.r), 0, Math.PI * 2);
-      ctx.fillStyle = d.pal.fill;
-      ctx.fill();
-
-      ctx.strokeStyle = d.pal.rim;
-      ctx.lineWidth = Math.max(1.2, d.r * 0.08);
-      ctx.stroke();
-
-      ctx.shadowColor = 'transparent';
-      ctx.beginPath();
-      const hlX = d.x - d.r * 0.35;
-      const hlY = d.y - d.r * 0.35;
-      const hlR = Math.max(1.5, d.r * 0.32);
-      ctx.arc(hlX, hlY, hlR, 0, Math.PI * 2);
-      ctx.fillStyle = d.pal.shine;
-      ctx.fill();
-
-      if (d.r > 12) {
-        ctx.beginPath();
-        ctx.arc(d.x + d.r * 0.3, d.y + d.r * 0.3, d.r * 0.18, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-        ctx.fill();
-      }
-      ctx.restore();
+    // Smooth pointer spring tracking
+    if (pointer.active) {
+      pointer.x += (pointer.targetX - pointer.x) * 0.22;
+      pointer.y += (pointer.targetY - pointer.y) * 0.22;
     }
 
-    for (let pIdx = burstParticles.length - 1; pIdx >= 0; pIdx--) {
-      const p = burstParticles[pIdx];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vx *= 0.94;
-      p.vy *= 0.94;
-      p.alpha -= p.decay;
-      if (p.alpha <= 0) {
-        burstParticles.splice(pIdx, 1);
+    ctx.clearRect(0, 0, width, height);
+
+    // Update bubble positions & wobble
+    for (let i = 0; i < bubbles.length; i++) {
+      const b = bubbles[i];
+      b.x += b.vx;
+      b.y += b.vy;
+      b.phase += b.speed;
+      b.wobblePhase += b.wobbleSpeed;
+
+      b.r = b.baseR + Math.sin(b.phase) * b.amp;
+      b.scaleW = 1 + Math.sin(b.wobblePhase) * b.wobbleAmp;
+      b.scaleH = 1 - Math.sin(b.wobblePhase) * b.wobbleAmp;
+
+      // Wrap screen bounds
+      if (b.y + b.r < -30) {
+        b.y = height + b.r + 30;
+        b.x = Math.random() * width;
+      }
+      if (b.x - b.r > width + 30) b.x = -b.r;
+      if (b.x + b.r < -30) b.x = width + b.r;
+
+      // Pointer interaction: slime magnetic pull
+      if (pointer.active) {
+        const dx = pointer.x - b.x;
+        const dy = pointer.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const attractRange = (pointer.radius + b.r) * 2.2;
+        if (dist < attractRange && dist > 1) {
+          const pull = (1 - dist / attractRange) * 0.08;
+          b.x += dx * pull;
+          b.y += dy * pull;
+        }
+      }
+    }
+
+    // 1. Draw Viscous Slime Bridges between nearby bubbles
+    for (let i = 0; i < bubbles.length; i++) {
+      const b1 = bubbles[i];
+      for (let j = i + 1; j < bubbles.length; j++) {
+        const b2 = bubbles[j];
+        const dist = Math.hypot(b2.x - b1.x, b2.y - b1.y);
+        if (dist < (b1.r + b2.r) * 1.48) {
+          drawSlimeBridge(b1, b2, b1.r, b2.r, b1.pal, b2.pal);
+        }
+      }
+
+      // Draw slime strand between pointer and nearby bubbles!
+      if (pointer.active) {
+        const distP = Math.hypot(pointer.x - b1.x, pointer.y - b1.y);
+        if (distP < (pointer.radius + b1.r) * 1.9) {
+          drawSlimeBridge(pointer, b1, pointer.radius, b1.r, pointer.pal, b1.pal);
+        }
+      }
+    }
+
+    // 2. Draw Trail Droplets
+    for (let t = trailDroplets.length - 1; t >= 0; t--) {
+      const td = trailDroplets[t];
+      td.x += td.vx;
+      td.y += td.vy;
+      td.r *= 0.94;
+      td.alpha -= 0.035;
+      if (td.alpha <= 0 || td.r < 1) {
+        trailDroplets.splice(t, 1);
         continue;
       }
       ctx.save();
-      ctx.globalAlpha = p.alpha;
-      ctx.fillStyle = p.color;
-      ctx.shadowColor = p.color;
-      ctx.shadowBlur = 8;
+      ctx.globalAlpha = Math.max(0, td.alpha);
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.arc(td.x, td.y, td.r, 0, Math.PI * 2);
+      ctx.fillStyle = td.pal.fill;
+      ctx.strokeStyle = td.pal.rim;
+      ctx.lineWidth = 1.4;
+      ctx.fill();
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // 3. Draw Slime Bubbles
+    for (let i = 0; i < bubbles.length; i++) {
+      const b = bubbles[i];
+      drawSlimeBubble(b, b.scaleW, b.scaleH);
+    }
+
+    // 4. Draw Pointer Slime Core if active
+    if (pointer.active && pointer.x > 0 && pointer.y > 0) {
+      drawSlimeBubble({
+        x: pointer.x,
+        y: pointer.y,
+        r: pointer.radius,
+        pal: pointer.pal
+      }, 1.05, 0.95);
+    }
+
+    // 5. Draw Splash particles
+    for (let sp = splashParticles.length - 1; sp >= 0; sp--) {
+      const pt = splashParticles[sp];
+      pt.x += pt.vx;
+      pt.y += pt.vy;
+      pt.vy += 0.14; // soft liquid gravity
+      pt.vx *= 0.96;
+      pt.vy *= 0.96;
+      pt.alpha -= pt.decay;
+      if (pt.alpha <= 0) {
+        splashParticles.splice(sp, 1);
+        continue;
+      }
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, pt.alpha);
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, pt.r, 0, Math.PI * 2);
+      ctx.fillStyle = pt.color;
+      ctx.shadowColor = pt.color;
+      ctx.shadowBlur = 6;
       ctx.fill();
       ctx.restore();
     }
 
-    requestAnimationFrame(loop);
+    animId = requestAnimationFrame(loop);
   }
 
-  requestAnimationFrame(loop);
+  if (animId) cancelAnimationFrame(animId);
+  animId = requestAnimationFrame(loop);
 }
 window.initHeroBubbleAnimation = initHeroBubbleAnimation;
 

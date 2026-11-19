@@ -41478,3 +41478,98 @@ body.crt-active::after {
     padding: 24px 20px !important;
   }
 }
+
+
+/* ==========================================================================
+   HOME PAGE HERO: SUPERB BOLD AESTHETIC & INTERACTIVE BUBBLE SLIME
+   ========================================================================== */
+
+.hero-liquid-title.hero-title-bold {
+  font-family: 'Anton', 'Bebas Neue', 'Syne', 'Impact', sans-serif !important;
+  font-size: clamp(5.2rem, 16.5vw, 15.5rem) !important;
+  font-weight: 900 !important;
+  line-height: 0.88 !important;
+  letter-spacing: -0.015em !important;
+  text-transform: uppercase !important;
+  margin: 0.15rem 0 0.85rem 0 !important;
+  color: #0F172A !important;
+  background: linear-gradient(180deg, #0F172A 0%, #1E293B 65%, #334155 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  filter: drop-shadow(0 14px 35px rgba(0, 0, 0, 0.12)) drop-shadow(0 2px 12px rgba(255, 87, 34, 0.18)) !important;
+  animation: rmHeroFloat 4s ease-in-out infinite alternate !important;
+  user-select: none !important;
+  display: block !important;
+  text-align: center !important;
+}
+
+.hero-brand-tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 6px 18px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 87, 34, 0.08) !important;
+  border: 1px solid rgba(255, 87, 34, 0.22) !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: clamp(0.72rem, 1.1vw, 0.85rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: 2px !important;
+  text-transform: uppercase !important;
+  color: #FF5722 !important;
+  margin-bottom: 12px !important;
+}
+
+.hbt-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FF5722;
+  box-shadow: 0 0 10px #FF5722;
+  animation: hbtPulse 2s ease-in-out infinite;
+}
+
+@keyframes hbtPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 0.6;
+  }
+}
+
+.hero-flavor-pill {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  padding: 8px 24px !important;
+  border-radius: 999px !important;
+  background: rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: clamp(0.78rem, 1.2vw, 0.95rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  color: #334155 !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03) !important;
+  margin-bottom: 18px !important;
+}
+
+.hfp-sparkle {
+  color: #FF5722 !important;
+  font-size: 1rem !important;
+}
+
+.hero-bubble-canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: auto !important;
+  z-index: 3 !important;
+  cursor: pointer !important;
+}
