@@ -1,4 +1,4 @@
-/* ═══════════════════════════════════════════════
+﻿/* ═══════════════════════════════════════════════
    UDBHAV 2027 — MASTER STYLESHEET
    Clean Elegant Bold · Kinetic Typography
    Luxury Minimalist · Ticket Dispenser Animation
@@ -1079,9 +1079,9 @@ button {
   padding: 70px 0;
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   PAGE 1: HOME PAGE HERO â€” 3D LIQUID FLUID & LAYERED TYPOGRAPHY
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ========================================
+   PAGE 1: HOME PAGE HERO - 3D LIQUID FLUID & LAYERED TYPOGRAPHY
+   ======================================== */
 :root {
   --cream-bg: #faf8f5;
   --cream-surface: #ffffff;
